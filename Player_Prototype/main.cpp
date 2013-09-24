@@ -2,7 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <Box2D/Box2D.h>
 
-const float SCALE = 30.f; // SFML => BOX2D We have to divide by SCALE and multiply it the other way round
+const float SCALE = 30.f; // Box2D works in a scale of 30 pixels = 1 meter
 
 
 int main()
@@ -72,9 +72,12 @@ int main()
             if (event.type == sf::Event::Closed)
                 window.close();
         }
-
+        
+        // Update physic
         world.Step(1.0f/60.0f, 8, 4);
-
+        
+        // Moving left/right
+        // 703 matches the position of the floor, to be remplaced by a sensor
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q))
         {
             if (playerBody->GetPosition().y * SCALE > 703)
@@ -85,11 +88,15 @@ int main()
             if (playerBody->GetPosition().y * SCALE > 703)
                 playerBody->ApplyForce(b2Vec2(playerBody->GetMass()*6,0), playerBody->GetWorldCenter());
         }
+        
+        // Jumping
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
         {
             if (playerBody->GetPosition().y * SCALE > 703)
                 playerBody->ApplyLinearImpulse(b2Vec2(0,-playerBody->GetMass()*8), playerBody->GetWorldCenter());
         }
+        
+        // Thrusters
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up))
         {
             playerBody->ApplyForce(b2Vec2(0, playerBody->GetMass()*25), playerBody->GetWorldCenter());
@@ -107,17 +114,13 @@ int main()
             playerBody->ApplyForce(b2Vec2(-playerBody->GetMass()*10, 0), playerBody->GetWorldCenter());
         }
 
-
-
-
-
-
-
-
+        // Aplly physic to objects
         floor.setPosition(groundBody->GetPosition().x * SCALE, groundBody->GetPosition().y * SCALE);
         player.setPosition(playerBody->GetPosition().x * SCALE, playerBody->GetPosition().y * SCALE);
+        // DEBUG
         std::cout << "X: " << playerBody->GetPosition().x * SCALE << " Y: " << playerBody->GetPosition().y * SCALE << std::endl;
-
+        
+        // Display methods
         window.clear(sf::Color::White);
 
         window.draw(floor);
