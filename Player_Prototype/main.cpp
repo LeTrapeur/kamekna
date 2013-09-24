@@ -77,23 +77,45 @@ int main()
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q))
         {
-            playerBody->ApplyForce(b2Vec2(-playerBody->GetMass()*6,0), playerBody->GetWorldCenter());
+            if (playerBody->GetPosition().y * SCALE > 703)
+                playerBody->ApplyForce(b2Vec2(-playerBody->GetMass()*6,0), playerBody->GetWorldCenter());
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
         {
-            playerBody->ApplyForce(b2Vec2(playerBody->GetMass()*6,0), playerBody->GetWorldCenter());
+            if (playerBody->GetPosition().y * SCALE > 703)
+                playerBody->ApplyForce(b2Vec2(playerBody->GetMass()*6,0), playerBody->GetWorldCenter());
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
         {
             if (playerBody->GetPosition().y * SCALE > 703)
-            {
                 playerBody->ApplyLinearImpulse(b2Vec2(0,-playerBody->GetMass()*8), playerBody->GetWorldCenter());
-            }
         }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up))
+        {
+            playerBody->ApplyForce(b2Vec2(0, playerBody->GetMass()*25), playerBody->GetWorldCenter());
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down))
+        {
+            playerBody->ApplyForce(b2Vec2(0, -playerBody->GetMass()*25), playerBody->GetWorldCenter());
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left))
+        {
+            playerBody->ApplyForce(b2Vec2(playerBody->GetMass()*10, 0), playerBody->GetWorldCenter());
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right))
+        {
+            playerBody->ApplyForce(b2Vec2(-playerBody->GetMass()*10, 0), playerBody->GetWorldCenter());
+        }
+
+
+
+
+
+
+
 
         floor.setPosition(groundBody->GetPosition().x * SCALE, groundBody->GetPosition().y * SCALE);
         player.setPosition(playerBody->GetPosition().x * SCALE, playerBody->GetPosition().y * SCALE);
-
         std::cout << "X: " << playerBody->GetPosition().x * SCALE << " Y: " << playerBody->GetPosition().y * SCALE << std::endl;
 
         window.clear(sf::Color::White);
