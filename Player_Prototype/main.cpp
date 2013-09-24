@@ -60,6 +60,7 @@ int main()
     PlayerShape.SetAsBox((PLAYER_LENGTH/2.0f)/SCALE, (PLAYER_WIDTH/2.0f)/SCALE);
     PlayerFixtureDef.shape = &PlayerShape;
     PlayerFixtureDef.density = 1.0f;
+    PlayerFixtureDef.friction = 0.3f;
     playerBody->CreateFixture(&PlayerFixtureDef);
 
     // Game loop
@@ -74,8 +75,26 @@ int main()
 
         world.Step(1.0f/60.0f, 8, 4);
 
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q))
+        {
+            playerBody->ApplyForce(b2Vec2(-playerBody->GetMass()*6,0), playerBody->GetWorldCenter());
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
+        {
+            playerBody->ApplyForce(b2Vec2(playerBody->GetMass()*6,0), playerBody->GetWorldCenter());
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
+        {
+            if (playerBody->GetPosition().y * SCALE > 703)
+            {
+                playerBody->ApplyLinearImpulse(b2Vec2(0,-playerBody->GetMass()*8), playerBody->GetWorldCenter());
+            }
+        }
+
         floor.setPosition(groundBody->GetPosition().x * SCALE, groundBody->GetPosition().y * SCALE);
         player.setPosition(playerBody->GetPosition().x * SCALE, playerBody->GetPosition().y * SCALE);
+
+        std::cout << "X: " << playerBody->GetPosition().x * SCALE << " Y: " << playerBody->GetPosition().y * SCALE << std::endl;
 
         window.clear(sf::Color::White);
 
