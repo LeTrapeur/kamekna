@@ -12,5 +12,7 @@
 *.la
 *.a
 
-# C::B Project Files
+# C::B
 *.cbp
+*.exe
+*.depend
