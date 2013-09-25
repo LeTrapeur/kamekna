@@ -11,10 +11,12 @@ int main()
     const int WINDOW_LENGTH = 1024;
     const int WINDOW_WIDTH = 768;
     sf::RenderWindow window(sf::VideoMode(WINDOW_LENGTH, WINDOW_WIDTH), "Prototype player");
+    sf::View view = window.getDefaultView();
+    window.setView(view);
     window.setFramerateLimit(60);
 
     // Physical world
-    const float WORLD_GRAVITY = 9.8f;
+    const float WORLD_GRAVITY = 15.0f;
     b2World world(b2Vec2(0, WORLD_GRAVITY));
 
     //Floor
@@ -71,11 +73,24 @@ int main()
         {
             if (event.type == sf::Event::Closed)
                 window.close();
+            if (event.type == sf::Event::KeyPressed)
+            {
+                if (event.key.code == sf::Keyboard::Key::Add)
+                {
+                    view.zoom(0.8f);
+                    window.setView(view);
+                }
+                if (event.key.code == sf::Keyboard::Key::Subtract)
+                {
+                    view.zoom(1.2f);
+                    window.setView(view);
+                }
+            }
         }
-        
+
         // Update physic
         world.Step(1.0f/60.0f, 8, 4);
-        
+
         // Moving left/right
         // 703 matches the position of the floor, to be remplaced by a sensor
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q))
@@ -88,14 +103,14 @@ int main()
             if (playerBody->GetPosition().y * SCALE > 703)
                 playerBody->ApplyForce(b2Vec2(playerBody->GetMass()*6,0), playerBody->GetWorldCenter());
         }
-        
+
         // Jumping
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
         {
             if (playerBody->GetPosition().y * SCALE > 703)
                 playerBody->ApplyLinearImpulse(b2Vec2(0,-playerBody->GetMass()*8), playerBody->GetWorldCenter());
         }
-        
+
         // Thrusters
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up))
         {
@@ -119,7 +134,7 @@ int main()
         player.setPosition(playerBody->GetPosition().x * SCALE, playerBody->GetPosition().y * SCALE);
         // DEBUG
         std::cout << "X: " << playerBody->GetPosition().x * SCALE << " Y: " << playerBody->GetPosition().y * SCALE << std::endl;
-        
+
         // Display methods
         window.clear(sf::Color::White);
 
