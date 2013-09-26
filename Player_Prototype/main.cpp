@@ -75,12 +75,12 @@ int main()
                 window.close();
             if (event.type == sf::Event::KeyPressed)
             {
-                if (event.key.code == sf::Keyboard::Key::Add)
+                if (event.key.code == sf::Keyboard::Key::Add || event.key.code == sf::Keyboard::Key::P)
                 {
                     view.zoom(0.8f);
                     window.setView(view);
                 }
-                if (event.key.code == sf::Keyboard::Key::Subtract)
+                if (event.key.code == sf::Keyboard::Key::Subtract || event.key.code == sf::Keyboard::Key::O)
                 {
                     view.zoom(1.2f);
                     window.setView(view);
