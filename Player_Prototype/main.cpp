@@ -65,6 +65,18 @@ int main()
     PlayerFixtureDef.friction = 0.3f;
     playerBody->CreateFixture(&PlayerFixtureDef);
 
+    // DEBUG Text
+    sf::Font font;
+    if (!font.loadFromFile("arial.ttf"))
+    {
+        std::cout << "Unable to load font..." << std::endl;
+    }
+    sf::Text text;
+    text.setFont(font);
+    text.setString("DEBUG");
+    text.setCharacterSize(24);
+    text.setColor(sf::Color::Blue);
+
     // Game loop
     while (window.isOpen())
     {
@@ -95,12 +107,12 @@ int main()
         // 703 matches the position of the floor, to be remplaced by a sensor
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q))
         {
-            if (playerBody->GetPosition().y * SCALE > 703)
+            if (playerBody->GetPosition().y * SCALE > 703 && playerBody->GetLinearVelocity().x * SCALE > -150)
                 playerBody->ApplyForce(b2Vec2(-playerBody->GetMass()*6,0), playerBody->GetWorldCenter());
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
         {
-            if (playerBody->GetPosition().y * SCALE > 703)
+            if (playerBody->GetPosition().y * SCALE > 703 && playerBody->GetLinearVelocity().x * SCALE < 150)
                 playerBody->ApplyForce(b2Vec2(playerBody->GetMass()*6,0), playerBody->GetWorldCenter());
         }
 
@@ -133,14 +145,13 @@ int main()
         floor.setPosition(groundBody->GetPosition().x * SCALE, groundBody->GetPosition().y * SCALE);
         player.setPosition(playerBody->GetPosition().x * SCALE, playerBody->GetPosition().y * SCALE);
         // DEBUG
-        std::cout << "X: " << playerBody->GetPosition().x * SCALE << " Y: " << playerBody->GetPosition().y * SCALE << std::endl;
+        std::cout << "X: " << playerBody->GetLinearVelocity().x * SCALE << " Y: " << playerBody->GetLinearVelocity().y * SCALE << std::endl;
 
         // Display methods
         window.clear(sf::Color::White);
-
         window.draw(floor);
         window.draw(player);
-
+        window.draw(text);
         window.display();
     }
 
