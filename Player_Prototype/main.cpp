@@ -4,7 +4,6 @@
 
 const float SCALE = 30.f; // Box2D works in a scale of 30 pixels = 1 meter
 
-
 int main()
 {
     // Graphic window
@@ -85,23 +84,33 @@ int main()
         {
             if (event.type == sf::Event::Closed)
                 window.close();
+
+            if (event.type == sf::Event::Resized)
+            {
+                sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
+                window.setView(sf::View(visibleArea));
+            }
             if (event.type == sf::Event::KeyPressed)
             {
                 if (event.key.code == sf::Keyboard::Key::Add || event.key.code == sf::Keyboard::Key::P)
                 {
-                    view.zoom(0.8f);
+
+                    view.zoom(0.75);
                     window.setView(view);
+                    text.setCharacterSize(text.getCharacterSize()* 0.75);
+                    text.setPosition(sf::Vector2f(window.mapPixelToCoords(sf::Vector2i(0,0))));
                 }
                 if (event.key.code == sf::Keyboard::Key::Subtract || event.key.code == sf::Keyboard::Key::O)
                 {
-                    view.zoom(1.2f);
+
+                    view.zoom(1.25);
                     window.setView(view);
+                    text.setCharacterSize(text.getCharacterSize() * 1.25);
+                    text.setScale(1.25,1.25);
+                    text.setPosition(sf::Vector2f(window.mapPixelToCoords(sf::Vector2i(0,0))));
                 }
             }
         }
-
-        // Update physic
-        world.Step(1.0f/60.0f, 8, 4);
 
         // Moving left/right
         // 703 matches the position of the floor, to be remplaced by a sensor
@@ -140,12 +149,14 @@ int main()
         {
             playerBody->ApplyForce(b2Vec2(-playerBody->GetMass()*10, 0), playerBody->GetWorldCenter());
         }
+        // Update physic
+        world.Step(1.0f/60.0f, 8, 4);
 
         // Aplly physic to objects
         floor.setPosition(groundBody->GetPosition().x * SCALE, groundBody->GetPosition().y * SCALE);
         player.setPosition(playerBody->GetPosition().x * SCALE, playerBody->GetPosition().y * SCALE);
         // DEBUG
-        std::cout << "X: " << playerBody->GetLinearVelocity().x * SCALE << " Y: " << playerBody->GetLinearVelocity().y * SCALE << std::endl;
+        //std::cout << "X: " << playerBody->GetLinearVelocity().x * SCALE << " Y: " << playerBody->GetLinearVelocity().y * SCALE << std::endl;
 
         // Display methods
         window.clear(sf::Color::White);
