@@ -1,4 +1,6 @@
 #include <iostream>
+#include <sstream>
+#include <string>
 #include <SFML/Graphics.hpp>
 #include <Box2D/Box2D.h>
 
@@ -87,8 +89,9 @@ int main()
 
             if (event.type == sf::Event::Resized)
             {
-                sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
-                window.setView(sf::View(visibleArea));
+//                sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
+//                window.setView(sf::View(visibleArea));
+//                text.setPosition(sf::Vector2f(window.mapPixelToCoords(sf::Vector2i(0,0))));
             }
             if (event.type == sf::Event::KeyPressed)
             {
@@ -113,22 +116,22 @@ int main()
         }
 
         // Moving left/right
-        // 703 matches the position of the floor, to be remplaced by a sensor
+        // 655 matches the position of the floor, to be remplaced by a sensor
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q))
         {
-            if (playerBody->GetPosition().y * SCALE > 703 && playerBody->GetLinearVelocity().x * SCALE > -150)
+            if (playerBody->GetPosition().y * SCALE > 655 && playerBody->GetLinearVelocity().x * SCALE > -150)
                 playerBody->ApplyForce(b2Vec2(-playerBody->GetMass()*6,0), playerBody->GetWorldCenter());
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
         {
-            if (playerBody->GetPosition().y * SCALE > 703 && playerBody->GetLinearVelocity().x * SCALE < 150)
+            if (playerBody->GetPosition().y * SCALE > 655 && playerBody->GetLinearVelocity().x * SCALE < 150)
                 playerBody->ApplyForce(b2Vec2(playerBody->GetMass()*6,0), playerBody->GetWorldCenter());
         }
 
         // Jumping
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
         {
-            if (playerBody->GetPosition().y * SCALE > 703)
+            if (playerBody->GetPosition().y * SCALE > 655)
                 playerBody->ApplyLinearImpulse(b2Vec2(0,-playerBody->GetMass()*8), playerBody->GetWorldCenter());
         }
 
@@ -156,7 +159,10 @@ int main()
         floor.setPosition(groundBody->GetPosition().x * SCALE, groundBody->GetPosition().y * SCALE);
         player.setPosition(playerBody->GetPosition().x * SCALE, playerBody->GetPosition().y * SCALE);
         // DEBUG
-        //std::cout << "X: " << playerBody->GetLinearVelocity().x * SCALE << " Y: " << playerBody->GetLinearVelocity().y * SCALE << std::endl;
+        std::string str = static_cast<std::ostringstream*>(&(std::ostringstream() << "X: " << playerBody->GetPosition().x * SCALE << " Y: " << playerBody->GetPosition().y * SCALE
+                                                         << "\nvX: " << playerBody->GetLinearVelocity().x * SCALE << " vY: " << playerBody->GetLinearVelocity().y * SCALE))
+                                                         ->str();
+        text.setString(str);
 
         // Display methods
         window.clear(sf::Color::White);
