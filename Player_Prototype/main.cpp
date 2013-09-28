@@ -149,8 +149,8 @@ int main()
         floor.setPosition(groundBody->GetPosition().x * SCALE, groundBody->GetPosition().y * SCALE);
         player.setPosition(playerBody->GetPosition().x * SCALE, playerBody->GetPosition().y * SCALE);
         // DEBUG
-        std::string str = static_cast<std::ostringstream*>(&(std::ostringstream() << "X: " << playerBody->GetPosition().x * SCALE << " Y: " << playerBody->GetPosition().y * SCALE
-                                                         << "\nvX: " << playerBody->GetLinearVelocity().x * SCALE << " vY: " << playerBody->GetLinearVelocity().y * SCALE))
+        std::string str = static_cast<std::ostringstream*>(&(std::ostringstream() << "X: " << static_cast<int>(playerBody->GetPosition().x * SCALE) << " Y: " << static_cast<int>(playerBody->GetPosition().y * SCALE)
+                                                         << "\nvX: " << static_cast<int>(playerBody->GetLinearVelocity().x * SCALE) << " vY: " << static_cast<int>(playerBody->GetLinearVelocity().y * SCALE)))
                                                          ->str();
         text.setString(str);
 
