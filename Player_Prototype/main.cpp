@@ -7,8 +7,8 @@ const float SCALE = 30.f; // Box2D works in a scale of 30 pixels = 1 meter
 int main()
 {
     // Graphic window
-    const int WINDOW_LENGTH = 1024;
-    const int WINDOW_WIDTH = 768;
+    const int WINDOW_LENGTH = 1280;
+    const int WINDOW_WIDTH = 720;
     sf::RenderWindow window(sf::VideoMode(WINDOW_LENGTH, WINDOW_WIDTH), "Prototype player");
     sf::View view = window.getDefaultView();
     window.setView(view);
