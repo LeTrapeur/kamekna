@@ -12,8 +12,11 @@ int main()
     const int WINDOW_LENGTH = 1280;
     const int WINDOW_WIDTH = 720;
     sf::RenderWindow window(sf::VideoMode(WINDOW_LENGTH, WINDOW_WIDTH), "Prototype player");
-    sf::View view = window.getDefaultView();
-    window.setView(view);
+    sf::View game_view = window.getView();
+    window.setView(game_view);
+    sf::View mini_map_view = window.getView();
+    mini_map_view.setViewport(sf::FloatRect(0.85f, 0.f, 0.15f, 0.15f));
+    //window.setView(mini_map_view);
     window.setFramerateLimit(60);
 
     // Physical world
@@ -88,29 +91,16 @@ int main()
                 window.close();
 
             if (event.type == sf::Event::Resized)
-            {
-//                sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
-//                window.setView(sf::View(visibleArea));
-//                text.setPosition(sf::Vector2f(window.mapPixelToCoords(sf::Vector2i(0,0))));
-            }
+            {}
             if (event.type == sf::Event::KeyPressed)
             {
                 if (event.key.code == sf::Keyboard::Key::Add || event.key.code == sf::Keyboard::Key::P)
                 {
-
-                    view.zoom(0.75);
-                    window.setView(view);
-                    text.setCharacterSize(text.getCharacterSize()* 0.75);
-                    text.setPosition(sf::Vector2f(window.mapPixelToCoords(sf::Vector2i(0,0))));
+                    mini_map_view.zoom(0.75f);
                 }
                 if (event.key.code == sf::Keyboard::Key::Subtract || event.key.code == sf::Keyboard::Key::O)
                 {
-
-                    view.zoom(1.25);
-                    window.setView(view);
-                    text.setCharacterSize(text.getCharacterSize() * 1.25);
-                    text.setScale(1.25,1.25);
-                    text.setPosition(sf::Vector2f(window.mapPixelToCoords(sf::Vector2i(0,0))));
+                    mini_map_view.zoom(1.25f);
                 }
             }
         }
@@ -166,9 +156,16 @@ int main()
 
         // Display methods
         window.clear(sf::Color::White);
+
+        window.setView(game_view);
         window.draw(floor);
         window.draw(player);
         window.draw(text);
+
+        window.setView(mini_map_view);
+        window.draw(floor);
+        window.draw(player);
+
         window.display();
     }
 
