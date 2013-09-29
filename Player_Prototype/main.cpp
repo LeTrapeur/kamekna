@@ -5,13 +5,48 @@
 #include <Box2D/Box2D.h>
 
 const float SCALE = 30.f; // Box2D works in a scale of 30 pixels = 1 meter
+int numFootContacts = 0;
+
+class MyContactListener : public b2ContactListener
+  {
+      void BeginContact(b2Contact* contact) {
+          //check if fixture A was the foot sensor
+          void* fixtureUserData = contact->GetFixtureA()->GetUserData();
+          if ( (int)fixtureUserData == 3 )
+          {
+             numFootContacts++;
+          }
+
+          //check if fixture B was the foot sensor
+          fixtureUserData = contact->GetFixtureB()->GetUserData();
+          if ( (int)fixtureUserData == 3 )
+          {
+              numFootContacts++;
+          }
+      }
+
+      void EndContact(b2Contact* contact) {
+          //check if fixture A was the foot sensor
+          void* fixtureUserData = contact->GetFixtureA()->GetUserData();
+          if ( (int)fixtureUserData == 3 )
+          {
+                numFootContacts--;
+          }
+          //check if fixture B was the foot sensor
+          fixtureUserData = contact->GetFixtureB()->GetUserData();
+          if ( (int)fixtureUserData == 3 )
+          {
+                numFootContacts--;
+          }
+      }
+  };
 
 int main()
 {
     // Graphic window
-    const int WINDOW_LENGTH = 1280;
-    const int WINDOW_WIDTH = 720;
-    sf::RenderWindow window(sf::VideoMode(WINDOW_LENGTH, WINDOW_WIDTH), "Prototype player");
+    const int WINDOW_WIDTH = 1280;
+    const int WINDOW_HEIGHT = 720;
+    sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Prototype player");
     sf::View game_view = window.getView();
     window.setView(game_view);
     window.setFramerateLimit(60);
@@ -23,16 +58,18 @@ int main()
     // Physical world
     const float WORLD_GRAVITY = 15.0f;
     b2World world(b2Vec2(0, WORLD_GRAVITY));
+    MyContactListener contact_listener;
+    world.SetContactListener(&contact_listener);
 
     //Floor
-    const int FLOOR_LENGTH = 1024;
-    const int FLOOR_WIDTH = 32;
+    const int FLOOR_WIDTH = 1024;
+    const int FLOOR_HEIGHT = 32;
 
     sf::RectangleShape floor;
-    floor.setSize(sf::Vector2f(FLOOR_LENGTH,FLOOR_WIDTH));
-    floor.setOrigin(sf::Vector2f(FLOOR_LENGTH/2,FLOOR_WIDTH/2));
+    floor.setSize(sf::Vector2f(FLOOR_WIDTH,FLOOR_HEIGHT));
+    floor.setOrigin(sf::Vector2f(FLOOR_WIDTH/2,FLOOR_HEIGHT/2));
     floor.setFillColor(sf::Color::Black);
-    floor.setPosition(WINDOW_LENGTH/2,WINDOW_WIDTH-(FLOOR_WIDTH/2));// Center
+    floor.setPosition(WINDOW_WIDTH/2,WINDOW_HEIGHT-(FLOOR_HEIGHT/2));// Center
 
     b2BodyDef GroundBodyDef;
     GroundBodyDef.position = b2Vec2(floor.getPosition().x/SCALE, floor.getPosition().y/SCALE);
@@ -41,20 +78,20 @@ int main()
 
     b2FixtureDef GroundFixtureDef;
     b2PolygonShape GroundShape;
-    GroundShape.SetAsBox((FLOOR_LENGTH/2.0f)/SCALE, (FLOOR_WIDTH/2.0f)/SCALE);
+    GroundShape.SetAsBox((FLOOR_WIDTH/2.0f)/SCALE, (FLOOR_HEIGHT/2.0f)/SCALE);
     GroundFixtureDef.shape = &GroundShape;
     GroundFixtureDef.density = 1.0f;
     groundBody->CreateFixture(&GroundFixtureDef);
 
     // Player
-    const int PLAYER_LENGTH = 32;
-    const int PLAYER_WIDTH = 64;
+    const int PLAYER_WIDTH = 32;
+    const int PLAYER_HEIGHT = 64;
 
     sf::RectangleShape player;
-    player.setSize(sf::Vector2f(PLAYER_LENGTH,PLAYER_WIDTH));
-    player.setOrigin(sf::Vector2f(PLAYER_LENGTH/2,PLAYER_WIDTH/2));
+    player.setSize(sf::Vector2f(PLAYER_WIDTH,PLAYER_HEIGHT));
+    player.setOrigin(sf::Vector2f(PLAYER_WIDTH/2,PLAYER_HEIGHT/2));
     player.setFillColor(sf::Color::Red);
-    player.setPosition(WINDOW_LENGTH/2,WINDOW_WIDTH/2);// Center
+    player.setPosition(WINDOW_WIDTH/2,WINDOW_HEIGHT/2);// Center
 
     b2BodyDef PlayerBodyDef;
     PlayerBodyDef.type = b2_dynamicBody;
@@ -64,11 +101,17 @@ int main()
 
     b2FixtureDef PlayerFixtureDef;
     b2PolygonShape PlayerShape;
-    PlayerShape.SetAsBox((PLAYER_LENGTH/2.0f)/SCALE, (PLAYER_WIDTH/2.0f)/SCALE);
+    PlayerShape.SetAsBox((PLAYER_WIDTH/2.0f)/SCALE, (PLAYER_HEIGHT/2.0f)/SCALE);
     PlayerFixtureDef.shape = &PlayerShape;
     PlayerFixtureDef.density = 1.0f;
     PlayerFixtureDef.friction = 0.3f;
     playerBody->CreateFixture(&PlayerFixtureDef);
+
+    //add foot sensor fixture
+    PlayerShape.SetAsBox(((PLAYER_WIDTH-10)/2.0f)/SCALE, 5/SCALE, b2Vec2(0,(PLAYER_HEIGHT/2.0f)/SCALE), 0);
+    PlayerFixtureDef.isSensor = true;
+    b2Fixture* footSensorFixture = playerBody->CreateFixture(&PlayerFixtureDef);
+    footSensorFixture->SetUserData( (void*)3 );
 
     // DEBUG Text
     sf::Font font;
@@ -94,27 +137,26 @@ int main()
             if (event.type == sf::Event::Resized)
             {}
             if (event.type == sf::Event::KeyPressed)
-            {}
+            {
+                // Jumping
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
+                {
+                    if (numFootContacts >= 1)
+                    playerBody->ApplyLinearImpulse(b2Vec2(0,-playerBody->GetMass()*8), playerBody->GetWorldCenter());
+                }
+            }
         }
 
         // Moving left/right
-        // 655 matches the position of the floor, to be remplaced by a sensor
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q))
         {
-            if (playerBody->GetPosition().y * SCALE > 655 && playerBody->GetLinearVelocity().x * SCALE > -150)
-                playerBody->ApplyForce(b2Vec2(-playerBody->GetMass()*6,0), playerBody->GetWorldCenter());
+            if (numFootContacts >= 1 && playerBody->GetLinearVelocity().x * SCALE > -150)
+                playerBody->ApplyForce(b2Vec2(-playerBody->GetMass()*8,0), playerBody->GetWorldCenter());
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
         {
-            if (playerBody->GetPosition().y * SCALE > 655 && playerBody->GetLinearVelocity().x * SCALE < 150)
-                playerBody->ApplyForce(b2Vec2(playerBody->GetMass()*6,0), playerBody->GetWorldCenter());
-        }
-
-        // Jumping
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
-        {
-            if (playerBody->GetPosition().y * SCALE > 655)
-                playerBody->ApplyLinearImpulse(b2Vec2(0,-playerBody->GetMass()*8), playerBody->GetWorldCenter());
+            if (numFootContacts >= 1 && playerBody->GetLinearVelocity().x * SCALE < 150)
+                playerBody->ApplyForce(b2Vec2(playerBody->GetMass()*8,0), playerBody->GetWorldCenter());
         }
 
         // Thrusters
