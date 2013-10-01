@@ -18,7 +18,6 @@ Game::Game():
     numFootContacts = 0;
     m_world.SetContactListener(&m_contactListener);
 
-
         //Floor
     const int FLOOR_WIDTH = 1024;
     const int FLOOR_HEIGHT = 32;
@@ -154,7 +153,8 @@ void Game::render()
     m_window.setView(m_gameView);
     m_window.draw(m_groundShape);
     m_window.draw(m_playerShape);
-    m_debugText.setPosition(sf::Vector2f(m_window.mapPixelToCoords(sf::Vector2i(0,0))));
+
+    m_window.setView(m_window.getDefaultView());
     m_window.draw(m_debugText);
 
     m_window.setView(m_miniMapView);
