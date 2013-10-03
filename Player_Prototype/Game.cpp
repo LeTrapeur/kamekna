@@ -3,7 +3,6 @@
 int numFootContacts = 0;
 const float SCALE = 30.f; // Box2D works in a scale of 30 pixels = 1 meter
 
-
 Game::Game():
     m_window(sf::VideoMode(1280, 720), "Prototype player"),
     m_world(b2Vec2(0, 15.0f)),
@@ -149,6 +148,7 @@ void Game::update()
 void Game::render()
 {
     m_window.clear(sf::Color::White);
+
     m_gameView.setCenter(m_playerShape.getPosition());
     m_window.setView(m_gameView);
     m_window.draw(m_groundShape);
@@ -164,12 +164,22 @@ void Game::render()
     m_window.display();
 }
 
+const sf::Time TIMEPERFRAME = sf::seconds(1.f/60.f);
+
 void Game::run()
 {
+    sf::Clock clock;
+    sf::Time timeSinceLastUpdate = sf::Time::Zero;
     while(m_window.isOpen())
     {
-        processEvents();
-        update();
+
+        timeSinceLastUpdate += clock.restart();
+        while(timeSinceLastUpdate > TIMEPERFRAME)
+        {
+            timeSinceLastUpdate -= TIMEPERFRAME;
+            processEvents();
+            update();
+        }
         render();
     }
 }
