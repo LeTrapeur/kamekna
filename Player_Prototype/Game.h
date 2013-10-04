@@ -18,7 +18,8 @@ class Game
 
     private:
         void processEvents();
-        void update();
+        void update(sf::Time elapsedTime);
+        void updateStatistics(sf::Time elapsedTime);
         void render();
 
     private:
@@ -35,8 +36,10 @@ class Game
         sf::RectangleShape m_playerShape;
         b2Body* m_playerBody;
 
-        sf::Text m_debugText;
+        sf::Text m_statisticsText;
         sf::Font m_font;
+        sf::Time m_statisticsUpdateTime;
+		std::size_t	m_statisticsNumFrames;
 };
 
 #endif // GAME_H

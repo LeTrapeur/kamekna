@@ -2,6 +2,7 @@
 
 int numFootContacts = 0;
 const float SCALE = 30.f; // Box2D works in a scale of 30 pixels = 1 meter
+const sf::Time TIME_PER_FRAME = sf::seconds(1.f/60.f);
 
 Game::Game():
     m_window(sf::VideoMode(1280, 720), "Prototype player"),
@@ -10,7 +11,6 @@ Game::Game():
     m_miniMapView(m_window.getView())
 {
     m_window.setView(m_gameView);
-    m_window.setFramerateLimit(60);
     m_miniMapView.zoom(4.0f);
     m_miniMapView.setViewport(sf::FloatRect(0.85f, 0.f, 0.15f, 0.15f));
 
@@ -72,10 +72,10 @@ Game::Game():
     {
         std::cout << "Unable to load font..." << std::endl;
     }
-    m_debugText.setFont(m_font);
-    m_debugText.setString("DEBUG");
-    m_debugText.setCharacterSize(24);
-    m_debugText.setColor(sf::Color::Blue);
+    m_statisticsText.setFont(m_font);
+    m_statisticsText.setString("DEBUG");
+    m_statisticsText.setCharacterSize(24);
+    m_statisticsText.setColor(sf::Color::Blue);
 }
 
 void Game::processEvents()
@@ -100,7 +100,7 @@ void Game::processEvents()
     }
 }
 
-void Game::update()
+void Game::update(sf::Time elapsedTime)
 {
     // Moving left/right
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q))
@@ -132,17 +132,11 @@ void Game::update()
         m_playerBody->ApplyForce(b2Vec2(-m_playerBody->GetMass()*10, 0), m_playerBody->GetWorldCenter());
     }
     // Update physic
-    m_world.Step(1.0f/60.0f, 8, 4);
+    m_world.Step(elapsedTime.asSeconds(), 8, 4);
 
     // Aplly physic to objects
     m_groundShape.setPosition(m_groundBody->GetPosition().x * SCALE, m_groundBody->GetPosition().y * SCALE);
     m_playerShape.setPosition(m_playerBody->GetPosition().x * SCALE, m_playerBody->GetPosition().y * SCALE);
-
-    // DEBUG
-    std::string str = static_cast<std::ostringstream*>(&(std::ostringstream() << "X: " << static_cast<int>(m_playerBody->GetPosition().x * SCALE) << " Y: " << static_cast<int>(m_playerBody->GetPosition().y * SCALE)
-                                                     << "\nvX: " << static_cast<int>(m_playerBody->GetLinearVelocity().x * SCALE) << " vY: " << static_cast<int>(m_playerBody->GetLinearVelocity().y * SCALE)))
-                                                     ->str();
-    m_debugText.setString(str);
 }
 
 void Game::render()
@@ -155,7 +149,7 @@ void Game::render()
     m_window.draw(m_playerShape);
 
     m_window.setView(m_window.getDefaultView());
-    m_window.draw(m_debugText);
+    m_window.draw(m_statisticsText);
 
     m_window.setView(m_miniMapView);
     m_window.draw(m_groundShape);
@@ -164,7 +158,6 @@ void Game::render()
     m_window.display();
 }
 
-const sf::Time TIMEPERFRAME = sf::seconds(1.f/60.f);
 
 void Game::run()
 {
@@ -174,13 +167,32 @@ void Game::run()
     {
 
         timeSinceLastUpdate += clock.restart();
-        while(timeSinceLastUpdate > TIMEPERFRAME)
+        while(timeSinceLastUpdate > TIME_PER_FRAME)
         {
-            timeSinceLastUpdate -= TIMEPERFRAME;
+            timeSinceLastUpdate -= TIME_PER_FRAME;
             processEvents();
-            update();
+            update(TIME_PER_FRAME);
         }
+        updateStatistics(TIME_PER_FRAME);
         render();
+    }
+}
+
+void Game::updateStatistics(sf::Time elapsedTime)
+{
+    m_statisticsUpdateTime += elapsedTime;
+    m_statisticsNumFrames += 1;
+
+    if(m_statisticsUpdateTime >= sf::seconds(1.0f))
+    {
+        std::string str = static_cast<std::ostringstream*>(&(std::ostringstream() << "X: " << static_cast<int>(m_playerBody->GetPosition().x * SCALE) << " Y: " << static_cast<int>(m_playerBody->GetPosition().y * SCALE)
+        << "\nvX: " << static_cast<int>(m_playerBody->GetLinearVelocity().x * SCALE) << " vY: " << static_cast<int>(m_playerBody->GetLinearVelocity().y * SCALE)
+        << "\nFps: " << m_statisticsNumFrames << "\nTime/update: " << m_statisticsUpdateTime.asMicroseconds()/m_statisticsNumFrames << "us"))
+        ->str();
+        m_statisticsText.setString(str);
+
+        m_statisticsUpdateTime -= sf::seconds(1.0f);
+        m_statisticsNumFrames = 0;
     }
 }
 
