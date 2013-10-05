@@ -1,15 +1,13 @@
-#ifndef HERO_H
-#define HERO_H
+#ifndef PLATFORM_H
+#define PLATFORM_H
 
 #include "Entity.h"
 
-class Hero : public Entity
+class Platform : public Entity
 {
     public:
-        Hero(b2World& world);
+        Platform(b2World& world);
 
-        void handleEvent(const sf::Event& event);
-        void handlerealTimeInput();
         virtual void update();
     private:
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
@@ -17,4 +15,4 @@ class Hero : public Entity
         sf::RectangleShape m_shape;
 };
 
-#endif // HERO_H
+#endif // PLATFORM_H
