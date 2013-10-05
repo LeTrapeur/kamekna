@@ -48,7 +48,7 @@ void Hero::handleEvent(const sf::Event& event)
     }
 }
 
-void Hero::handlerealTimeInput()
+void Hero::handleRealTimeInput()
 {
     // Moving left/right
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q))
