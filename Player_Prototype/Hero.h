@@ -9,7 +9,7 @@ class Hero : public Entity
         Hero(b2World& world);
 
         void handleEvent(const sf::Event& event);
-        void handlerealTimeInput();
+        void handleRealTimeInput();
         virtual void update();
     private:
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;

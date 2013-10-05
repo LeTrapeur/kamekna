@@ -52,7 +52,7 @@ void Game::processEvents()
 
 void Game::processInputs()
 {
-    ladral->handlerealTimeInput();
+    ladral->handleRealTimeInput();
 }
 
 void Game::update(sf::Time elapsedTime)
