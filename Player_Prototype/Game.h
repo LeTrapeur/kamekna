@@ -5,6 +5,7 @@
 #include <sstream>
 #include <string>
 #include <memory>
+#include <list>
 
 #include <SFML/Graphics.hpp>
 #include <Box2D/Box2D.h>
@@ -15,6 +16,8 @@
 
 class Game
 {
+    public:
+        typedef std::list<std::unique_ptr<Entity> > ListEntities;
     public:
         Game();
         void run();
@@ -35,6 +38,7 @@ class Game
         MyContactListener m_contactListener;
 
         std::unique_ptr<Hero> ladral;
+        ListEntities m_entities;
 
         sf::RectangleShape m_groundShape;
         b2Body* m_groundBody;

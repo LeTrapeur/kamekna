@@ -11,7 +11,6 @@ class Entity : public sf::Transformable, public sf::Drawable, private sf::NonCop
     protected:
         b2Body* m_body;
         virtual void update();
-    private:
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
 };
