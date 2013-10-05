@@ -4,11 +4,14 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <memory>
 
 #include <SFML/Graphics.hpp>
 #include <Box2D/Box2D.h>
 
 #include "MyContactListener.h"
+#include "Entity.h"
+#include "Hero.h"
 
 class Game
 {
@@ -18,6 +21,7 @@ class Game
 
     private:
         void processEvents();
+        void processInputs();
         void update(sf::Time elapsedTime);
         void updateStatistics(sf::Time elapsedTime);
         void render();
@@ -30,11 +34,10 @@ class Game
         b2World m_world;
         MyContactListener m_contactListener;
 
+        std::unique_ptr<Hero> ladral;
+
         sf::RectangleShape m_groundShape;
         b2Body* m_groundBody;
-
-        sf::RectangleShape m_playerShape;
-        b2Body* m_playerBody;
 
         sf::Text m_statisticsText;
         sf::Font m_font;
