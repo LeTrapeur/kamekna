@@ -19,29 +19,12 @@ Game::Game():
     m_world.SetContactListener(&m_contactListener);
 
         //Floor
-    const int FLOOR_WIDTH = 1024;
-    const int FLOOR_HEIGHT = 32;
-
-    m_groundShape.setSize(sf::Vector2f(FLOOR_WIDTH,FLOOR_HEIGHT));
-    m_groundShape.setOrigin(sf::Vector2f(FLOOR_WIDTH/2,FLOOR_HEIGHT/2));
-    m_groundShape.setFillColor(sf::Color::Black);
-    m_groundShape.setPosition(1280/2, 720-(FLOOR_HEIGHT/2));// Center
-
-    b2BodyDef GroundBodyDef;
-    GroundBodyDef.position = b2Vec2(m_groundShape.getPosition().x/SCALE, m_groundShape.getPosition().y/SCALE);
-    GroundBodyDef.type = b2_staticBody;
-    m_groundBody = m_world.CreateBody(&GroundBodyDef);
-
-    b2FixtureDef GroundFixtureDef;
-    b2PolygonShape GroundShape;
-    GroundShape.SetAsBox((FLOOR_WIDTH/2.0f)/SCALE, (FLOOR_HEIGHT/2.0f)/SCALE);
-    GroundFixtureDef.shape = &GroundShape;
-    GroundFixtureDef.density = 1.0f;
-    m_groundBody->CreateFixture(&GroundFixtureDef);
+    std::unique_ptr<Platform> tempPlatform(new Platform(m_world));
+    platform = std::move(tempPlatform);
 
     // Player
-    std::unique_ptr<Hero> temp(new Hero(m_world));
-    ladral = std::move(temp);
+    std::unique_ptr<Hero> tempLadral(new Hero(m_world));
+    ladral = std::move(tempLadral);
 
 
 
@@ -79,8 +62,7 @@ void Game::update(sf::Time elapsedTime)
     m_world.Step(elapsedTime.asSeconds(), 8, 4);
     // Aplly physic to objects
     ladral->update();
-    m_groundShape.setPosition(m_groundBody->GetPosition().x * SCALE, m_groundBody->GetPosition().y * SCALE);
-
+    platform->update();
 }
 
 void Game::render()
@@ -90,13 +72,14 @@ void Game::render()
     m_gameView.setCenter(ladral->getPosition());
     m_window.setView(m_gameView);
     m_window.draw(*ladral);
-    m_window.draw(m_groundShape);
+    m_window.draw(*platform);
 
     m_window.setView(m_window.getDefaultView());
     m_window.draw(m_statisticsText);
 
     m_window.setView(m_miniMapView);
-    m_window.draw(m_groundShape);
+    m_window.draw(*ladral);
+    m_window.draw(*platform);
 
     m_window.display();
 }

@@ -13,11 +13,12 @@
 #include "MyContactListener.h"
 #include "Entity.h"
 #include "Hero.h"
+#include "Platform.h"
 
 class Game
 {
     public:
-        typedef std::list<std::unique_ptr<Entity> > ListEntities;
+        //typedef std::list<std::unique_ptr<Entity> > ListEntities;
     public:
         Game();
         void run();
@@ -38,7 +39,8 @@ class Game
         MyContactListener m_contactListener;
 
         std::unique_ptr<Hero> ladral;
-        ListEntities m_entities;
+        std::unique_ptr<Platform> platform;
+        //ListEntities m_entities;
 
         sf::RectangleShape m_groundShape;
         b2Body* m_groundBody;
