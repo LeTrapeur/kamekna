@@ -8,15 +8,15 @@ Hero::Hero(b2World& world)
     // Player
     const int PLAYER_WIDTH = 32;
     const int PLAYER_HEIGHT = 64;
-    setOrigin(sf::Vector2f(PLAYER_WIDTH/2,PLAYER_HEIGHT/2));
-    setPosition(1280/2, 720/2);// Center
 
+//    setPosition(1280/2, 720/2);// Center
+    setOrigin(sf::Vector2f(PLAYER_WIDTH/2,PLAYER_HEIGHT/2));
     m_shape.setSize(sf::Vector2f(PLAYER_WIDTH,PLAYER_HEIGHT));
     m_shape.setFillColor(sf::Color::Red);
 
     b2BodyDef PlayerBodyDef;
     PlayerBodyDef.type = b2_dynamicBody;
-    PlayerBodyDef.position = b2Vec2(getPosition().x/SCALE, getPosition().y/SCALE);
+    PlayerBodyDef.position = b2Vec2(1280/2/SCALE, 720/2/SCALE);
     PlayerBodyDef.fixedRotation = true;
     m_body = world.CreateBody(&PlayerBodyDef);
 

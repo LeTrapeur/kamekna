@@ -10,6 +10,8 @@ class Entity : public sf::Transformable, public sf::Drawable, private sf::NonCop
         explicit Entity();
         virtual void update();
 
+        void setPosition(float x, float y);
+
     protected:
         b2Body* m_body;
 
