@@ -15,10 +15,8 @@
 #include "Hero.h"
 #include "Platform.h"
 
-class Game
+class Game : private sf::NonCopyable
 {
-    public:
-        //typedef std::list<std::unique_ptr<Entity> > ListEntities;
     public:
         Game();
         void run();
@@ -41,9 +39,6 @@ class Game
         std::unique_ptr<Hero> ladral;
         std::unique_ptr<Platform> platform;
         //ListEntities m_entities;
-
-        sf::RectangleShape m_groundShape;
-        b2Body* m_groundBody;
 
         sf::Text m_statisticsText;
         sf::Font m_font;
