@@ -10,10 +10,10 @@ Platform::Platform(b2World& world)
     m_shape.setSize(sf::Vector2f(FLOOR_WIDTH,FLOOR_HEIGHT));
     setOrigin(sf::Vector2f(FLOOR_WIDTH/2,FLOOR_HEIGHT/2));
     m_shape.setFillColor(sf::Color::Black);
-    setPosition(1280/2, 720-(FLOOR_HEIGHT/2));// Center
+//    setPosition(1280/2, 720-(FLOOR_HEIGHT/2));// Center
 
     b2BodyDef GroundBodyDef;
-    GroundBodyDef.position = b2Vec2(getPosition().x/SCALE, getPosition().y/SCALE);
+    GroundBodyDef.position = b2Vec2((1280/2)/SCALE, (720-(FLOOR_HEIGHT/2))/SCALE);
     GroundBodyDef.type = b2_staticBody;
     m_body = world.CreateBody(&GroundBodyDef);
 

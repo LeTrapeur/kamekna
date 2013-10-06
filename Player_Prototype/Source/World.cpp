@@ -23,6 +23,7 @@ void World::buildScene()
     m_entities.push_back(std::move(tempPlatform));
 
     std::unique_ptr<Hero> tempLadral(new Hero(m_physicWorld));
+    tempLadral->setPosition(0,0);
     m_player = tempLadral.get();
     m_entities.push_back(std::move(tempLadral));
 }
