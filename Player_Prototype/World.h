@@ -20,10 +20,13 @@ class World
     public:
         typedef std::list<std::unique_ptr<Entity> > ListEntities;
     public:
-        explicit World();
+        explicit World(sf::RenderWindow& window);
 
         void update(sf::Time dt);
         void draw();
+
+        // Has to be changed with the commands system
+        Hero* getPtrPlayer();
 
     private:
         void loadTextures();
@@ -32,9 +35,13 @@ class World
     private:
         sf::RenderWindow& m_window;
         sf::View m_worldView;
+        sf::View m_minimapView;
+
+        b2World m_physicWorld;
+        MyContactListener m_contactListener;
 
         ListEntities m_entities;
-
+        // To be improved
         Hero* m_player;
 
 };

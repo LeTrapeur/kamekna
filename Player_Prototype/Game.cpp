@@ -1,32 +1,13 @@
 #include "Game.h"
 
-int numFootContacts = 0;
-const float SCALE = 30.f; // Box2D works in a scale of 30 pixels = 1 meter
 const sf::Time TIME_PER_FRAME = sf::seconds(1.f/60.f);
 
 Game::Game():
     m_window(sf::VideoMode(1280, 720), "Prototype player"),
-    m_world(b2Vec2(0, 15.0f)),
-    m_gameView(m_window.getView()),
-    m_miniMapView(m_window.getView()),
-    ladral(nullptr)
+    m_world(m_window)
 {
-    m_window.setView(m_gameView);
-    m_miniMapView.zoom(4.0f);
-    m_miniMapView.setViewport(sf::FloatRect(0.85f, 0.f, 0.15f, 0.15f));
 
     numFootContacts = 0;
-    m_world.SetContactListener(&m_contactListener);
-
-        //Floor
-    std::unique_ptr<Platform> tempPlatform(new Platform(m_world));
-    platform = std::move(tempPlatform);
-
-    // Player
-    std::unique_ptr<Hero> tempLadral(new Hero(m_world));
-    ladral = std::move(tempLadral);
-
-
 
         // DEBUG Text
     if (!m_font.loadFromFile("arial.ttf"))
@@ -44,7 +25,8 @@ void Game::processEvents()
     sf::Event event;
     while (m_window.pollEvent(event))
     {
-        ladral->handleEvent(event);
+        // to be improved
+        m_world.getPtrPlayer()->handleEvent(event);
         if (event.type == sf::Event::Closed)
             m_window.close();
     }
@@ -52,34 +34,23 @@ void Game::processEvents()
 
 void Game::processInputs()
 {
-    ladral->handleRealTimeInput();
+    //to be improved
+    m_world.getPtrPlayer()->handleRealTimeInput();
 }
 
 void Game::update(sf::Time elapsedTime)
 {
-
-    // Update physic
-    m_world.Step(elapsedTime.asSeconds(), 8, 4);
-    // Aplly physic to objects
-    ladral->update();
-    platform->update();
+    m_world.update(elapsedTime);
 }
 
 void Game::render()
 {
     m_window.clear(sf::Color::White);
 
-    m_gameView.setCenter(ladral->getPosition());
-    m_window.setView(m_gameView);
-    m_window.draw(*ladral);
-    m_window.draw(*platform);
+    m_world.draw();
 
     m_window.setView(m_window.getDefaultView());
     m_window.draw(m_statisticsText);
-
-    m_window.setView(m_miniMapView);
-    m_window.draw(*ladral);
-    m_window.draw(*platform);
 
     m_window.display();
 }
