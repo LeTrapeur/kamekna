@@ -1,6 +1,7 @@
 #ifndef ENTITY_H
 #define ENTITY_H
 
+#include <iostream>
 #include <SFML/Graphics.hpp>
 #include <Box2D/Box2D.h>
 
