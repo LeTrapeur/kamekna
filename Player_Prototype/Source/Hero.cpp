@@ -29,10 +29,14 @@ Hero::Hero(b2World& world)
     m_body->CreateFixture(&PlayerFixtureDef);
 
     //add foot sensor fixture
-    PlayerShape.SetAsBox(((PLAYER_WIDTH-10)/2.0f)/SCALE, 5/SCALE, b2Vec2(0,(PLAYER_HEIGHT/2.0f)/SCALE), 0);
-    PlayerFixtureDef.isSensor = true;
-    b2Fixture* footSensorFixture = m_body->CreateFixture(&PlayerFixtureDef);
-    footSensorFixture->SetUserData( (void*)3 );
+    b2PolygonShape FootShape;
+    FootShape.SetAsBox(((PLAYER_WIDTH-10)/2.0f)/SCALE, 5/SCALE, b2Vec2(0,(PLAYER_HEIGHT/2.0f)/SCALE), 0);
+    b2FixtureDef footSensorFixture;
+    footSensorFixture.shape = &FootShape;
+    footSensorFixture.isSensor = true;
+    footSensorFixture.userData = ((void*)3);
+    m_body->CreateFixture(&footSensorFixture);
+
 }
 
 void Hero::handleEvent(const sf::Event& event)
