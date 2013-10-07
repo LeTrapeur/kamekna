@@ -15,7 +15,8 @@ void Entity::draw(sf::RenderTarget& target, sf::RenderStates states) const
 
 void Entity::update()
 {
-
+    setPosition(m_body->GetPosition().x * SCALE, m_body->GetPosition().y * SCALE);
+    setRotation(m_body->GetAngle());
 }
 
 void Entity::setPosition(float x, float y)

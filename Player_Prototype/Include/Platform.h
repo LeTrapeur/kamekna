@@ -8,7 +8,6 @@ class Platform : public Entity
     public:
         Platform(b2World& world);
 
-        virtual void update();
     private:
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
     private:

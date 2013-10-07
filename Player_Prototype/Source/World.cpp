@@ -6,6 +6,7 @@ const float SCALE = 30.f; // Box2D works in a scale of 30 pixels = 1 meter
 World::World(sf::RenderWindow& window):
     m_window(window),
     m_worldView(window.getDefaultView()),
+    m_minimapView(window.getDefaultView()),
     m_physicWorld(b2Vec2(0, 15.0f)),
     m_entities(),
     m_player(nullptr)
@@ -20,10 +21,11 @@ World::World(sf::RenderWindow& window):
 void World::buildScene()
 {
     std::unique_ptr<Platform> tempPlatform(new Platform(m_physicWorld));
+    tempPlatform->setPosition(50, 500);
     m_entities.push_back(std::move(tempPlatform));
 
     std::unique_ptr<Hero> tempLadral(new Hero(m_physicWorld));
-    tempLadral->setPosition(0,0);
+    tempLadral->setPosition(60,450);
     m_player = tempLadral.get();
     m_entities.push_back(std::move(tempLadral));
 }
