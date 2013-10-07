@@ -30,9 +30,3 @@ void Platform::draw(sf::RenderTarget& target, sf::RenderStates states) const
     states.transform *= getTransform();
     target.draw(m_shape, states);
 }
-
-void Platform::update()
-{
-    setPosition(m_body->GetPosition().x * SCALE, m_body->GetPosition().y * SCALE);
-    //setRotation(m_body->GetAngle());
-}
