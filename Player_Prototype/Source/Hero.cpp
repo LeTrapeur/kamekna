@@ -90,5 +90,5 @@ void Hero::draw(sf::RenderTarget& target, sf::RenderStates states) const
 void Hero::update()
 {
     setPosition(m_body->GetPosition().x * SCALE, m_body->GetPosition().y * SCALE);
-    //setRotation(m_body->GetAngle());
+    setRotation(m_body->GetAngle());
 }

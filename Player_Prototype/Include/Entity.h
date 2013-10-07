@@ -11,6 +11,7 @@ class Entity : public sf::Transformable, public sf::Drawable, private sf::NonCop
         virtual void update();
 
         void setPosition(float x, float y);
+        void setRotation(float angle);
 
     protected:
         b2Body* m_body;
@@ -19,5 +20,7 @@ class Entity : public sf::Transformable, public sf::Drawable, private sf::NonCop
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
 };
+
+constexpr float pi() { return std::atan(1)*4; }
 
 #endif // ENTITY_H
