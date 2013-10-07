@@ -5,10 +5,10 @@
 
 struct EntityData
 {
-    int width;
-    int height;
-    b2BodyDef bodyDef;
-    std::vector<b2FixtureDef> fixturesDef;
+//    int width;
+//    int height;
+//    b2BodyDef bodyDef;
+//    std::vector<b2FixtureDef> fixturesDef;
 };
 
 struct HeroData
