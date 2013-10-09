@@ -20,12 +20,15 @@ World::World(sf::RenderWindow& window):
 
 void World::buildScene()
 {
-    std::unique_ptr<Platform> tempPlatform(new Platform(m_physicWorld));
-    tempPlatform->setPosition(50, 500);
-    m_entities.push_back(std::move(tempPlatform));
+    for(int i=0; i < 5; i++)
+    {
+        std::unique_ptr<Platform> tempPlatform(new Platform(m_physicWorld));
+        tempPlatform->setPosition(100.f, i*500.f);
+        m_entities.push_back(std::move(tempPlatform));
+    }
 
     std::unique_ptr<Hero> tempLadral(new Hero(m_physicWorld));
-    tempLadral->setPosition(60,450);
+    tempLadral->setPosition(200,450);
     m_player = tempLadral.get();
     m_entities.push_back(std::move(tempLadral));
 }
@@ -52,6 +55,7 @@ void World::draw()
     for(auto it = m_entities.begin(); it != m_entities.end(); it++)
         m_window.draw(*(*it));
 
+    m_minimapView.setCenter(m_player->getPosition());
     m_window.setView(m_minimapView);
     for(auto it = m_entities.begin(); it != m_entities.end(); it++)
         m_window.draw(*(*it));
