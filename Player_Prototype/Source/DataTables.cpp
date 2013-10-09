@@ -13,7 +13,6 @@ std::vector<EntityData> initializeEntityData()
 
     b2BodyDef PlayerBodyDef;
     PlayerBodyDef.type = b2_dynamicBody;
-    PlayerBodyDef.position = b2Vec2(1280/2/SCALE, 720/2/SCALE);
     PlayerBodyDef.fixedRotation = true;
     data[Entity::Hero].bodyDef = PlayerBodyDef;
 
@@ -22,7 +21,7 @@ std::vector<EntityData> initializeEntityData()
     PlayerShape.SetAsBox((32/2.0f)/SCALE, (64/2.0f)/SCALE);
     PlayerFixtureDef.shape = &PlayerShape;
     PlayerFixtureDef.density = 1.0f;
-    PlayerFixtureDef.friction = 0.3f;
+    PlayerFixtureDef.friction = 0.4f;
     data[Entity::Hero].fixturesDef.push_back(PlayerFixtureDef);
 
     b2FixtureDef footSensorFixtureDef;
@@ -37,7 +36,6 @@ std::vector<EntityData> initializeEntityData()
     data[Entity::Platform].height = 32;
 
     b2BodyDef GroundBodyDef;
-    GroundBodyDef.position = b2Vec2((1280/2)/SCALE, (720-(32/2))/SCALE);
     GroundBodyDef.type = b2_staticBody;
     data[Entity::Platform].bodyDef = GroundBodyDef;
 
