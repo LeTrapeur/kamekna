@@ -9,7 +9,6 @@ Hero::Hero(b2World& world): Entity(world, Entity::Type::Hero)
     const int PLAYER_WIDTH = 32;
     const int PLAYER_HEIGHT = 64;
 
-    setPosition(1280/2, 720/2);// Center
     setOrigin(sf::Vector2f(PLAYER_WIDTH/2,PLAYER_HEIGHT/2));
     m_shape.setSize(sf::Vector2f(PLAYER_WIDTH,PLAYER_HEIGHT));
     m_shape.setFillColor(sf::Color::Red);

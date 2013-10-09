@@ -7,7 +7,6 @@ Platform::Platform(b2World& world): Entity(world, Entity::Type::Platform)
     const int FLOOR_WIDTH = 1024;
     const int FLOOR_HEIGHT = 32;
 
-    setPosition(1280/2, 720-(FLOOR_HEIGHT/2));// Center
     setOrigin(sf::Vector2f(FLOOR_WIDTH/2,FLOOR_HEIGHT/2));
     m_shape.setSize(sf::Vector2f(FLOOR_WIDTH,FLOOR_HEIGHT));
     m_shape.setFillColor(sf::Color::Black);
