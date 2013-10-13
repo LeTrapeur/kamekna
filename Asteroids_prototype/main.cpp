@@ -61,12 +61,12 @@ int main()
 {
     sf::RenderWindow window(sf::VideoMode(800, 600), "Asteroids prototype");
 
-    std::vector< sf::Vector2f > randomPoints(5);
-    randomPoints[0] = sf::Vector2f(100,500);
-    randomPoints[1] = sf::Vector2f(120,375);
-    randomPoints[2] = sf::Vector2f(400,300);
-    randomPoints[3] = sf::Vector2f(50,500);
-    randomPoints[4] = sf::Vector2f(70,220);
+    std::vector< sf::Vector2f > randomPoints;
+    randomPoints.push_back(sf::Vector2f(100,500));
+    randomPoints.push_back(sf::Vector2f(120,375));
+    randomPoints.push_back(sf::Vector2f(400,300));
+//    randomPoints.push_back(sf::Vector2f(50,500));
+//    randomPoints.push_back(sf::Vector2f(70,220));
 
     std::vector< sf::Vector2f > sortPoints;
     sortPoints = ConvexHull(randomPoints);
