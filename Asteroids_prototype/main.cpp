@@ -3,7 +3,7 @@
 #include<iostream>
 #include<vector>
 
-int Orientation(sf::Vector2f p1, sf::Vector2f p2, sf::Vector2f p)
+int Orientation(const sf::Vector2f& p1, const sf::Vector2f& p2, const sf::Vector2f& p)
 {
     // Determinant
     int Orin = (p2.x - p1.x) * (p.y - p1.y) - (p.x - p1.x) * (p2.y - p1.y);
@@ -18,7 +18,7 @@ int Orientation(sf::Vector2f p1, sf::Vector2f p2, sf::Vector2f p)
 
 sf::Vector2f getMostLeft(const std::vector< sf::Vector2f >& pts)
 {
-    sf::Vector2f ptLeft = pts[0];
+    sf::Vector2f ptLeft = pts.at(0);
     for(int i = 1; i < pts.size() ; i++)
         {
             if(pts[i].x < ptLeft.x)
@@ -27,7 +27,7 @@ sf::Vector2f getMostLeft(const std::vector< sf::Vector2f >& pts)
     return ptLeft;
 }
 
-std::vector< sf::Vector2f > ConvexHull(std::vector< sf::Vector2f > points)
+std::vector< sf::Vector2f > ConvexHull(const std::vector< sf::Vector2f >& points)
         {
             std::vector< sf::Vector2f > hull;
 
@@ -65,11 +65,14 @@ int main()
     randomPoints.push_back(sf::Vector2f(100,500));
     randomPoints.push_back(sf::Vector2f(120,375));
     randomPoints.push_back(sf::Vector2f(400,300));
-//    randomPoints.push_back(sf::Vector2f(50,500));
-//    randomPoints.push_back(sf::Vector2f(70,220));
+    randomPoints.push_back(sf::Vector2f(50,500));
+    randomPoints.push_back(sf::Vector2f(70,220));
 
     std::vector< sf::Vector2f > sortPoints;
     sortPoints = ConvexHull(randomPoints);
+
+    std::cout << randomPoints.size() << std::endl;
+    std::cout << sortPoints.size() << std::endl;
 
     while (window.isOpen())
     {
