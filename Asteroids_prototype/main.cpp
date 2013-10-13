@@ -19,14 +19,11 @@ int Orientation(sf::Vector2f p1, sf::Vector2f p2, sf::Vector2f p)
 sf::Vector2f getMostLeft(const std::vector< sf::Vector2f >& pts)
 {
     sf::Vector2f ptLeft = pts[0];
-    std::cout << ptLeft.x << std::endl;
     for(int i = 1; i < pts.size() ; i++)
         {
             if(pts[i].x < ptLeft.x)
                 ptLeft = pts[i];
-                std::cout << ptLeft.x << std::endl;
         }
-    std::cout << ptLeft.x << std::endl;
     return ptLeft;
 }
 
@@ -71,7 +68,7 @@ int main()
     randomPoints[3] = sf::Vector2f(50,500);
     randomPoints[4] = sf::Vector2f(70,220);
 
-    std::vector< sf::Vector2f > sortPoints(5);
+    std::vector< sf::Vector2f > sortPoints;
     sortPoints = ConvexHull(randomPoints);
 
     while (window.isOpen())
@@ -89,7 +86,8 @@ int main()
 
         for(int i=0; i<5; i++)
         {
-            sf::RectangleShape point(sf::Vector2f(10,10));
+            sf::RectangleShape point(sf::Vector2f(5,5));
+            point.setOrigin(2.5f,2.5f);
             point.setFillColor(sf::Color::Red);
             point.setPosition(randomPoints.at(i));
 
@@ -98,8 +96,8 @@ int main()
 
         for(int i=0; i< sortPoints.size(); i++)
         {
-            sf::ConvexShape envelop(4);
-            envelop.setFillColor(sf::Color::Black);
+            sf::ConvexShape envelop(sortPoints.size());
+            envelop.setFillColor(sf::Color(80, 170, 200, 200));
             for(int i=0; i<sortPoints.size(); i++)
             {
                 envelop.setPoint(i, sortPoints[i]);
