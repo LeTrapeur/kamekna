@@ -2,17 +2,18 @@
 #define UTILITY_H
 
 #include <SFML/graphics.hpp>
-#include<iostream>
-#include<vector>
+#include <iostream>
+#include <vector>
 
-#include "Asteroid.h"
+
+class Asteroid;
 
 namespace AsteroidGenerator
 {
-    Asteroid getRandomAsteroid();
+    void makeRandomAsteroid(Asteroid* asteroid);
 }
 
-namespace
+namespace Utility
 {
     int Orientation(const sf::Vector2f& p1, const sf::Vector2f& p2, const sf::Vector2f& p);
 
