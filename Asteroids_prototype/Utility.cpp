@@ -8,7 +8,7 @@ namespace AsteroidGenerator
     std::vector<sf::Vector2f> getRandomPoints(int nbPoints)
     {
         std::vector<sf::Vector2f> data(nbPoints);
-        for (size_t i = 0 ; i < nbPoints ; ++i)
+        for (size_t i = 0 ; i < nbPoints ; i++)
         {
             data.push_back(sf::Vector2f(Utility::randomFloatGenerator(200.f, 600.f),Utility::randomFloatGenerator(200.f, 600.f)));
             //std::cout << i << " : " << data[data.size()].x << " " << data[data.size()].y << std::endl;
@@ -16,7 +16,7 @@ namespace AsteroidGenerator
         return data;
     }
 
-    void makeRandomAsteroid(Asteroid* asteroid)
+    void makeRandomAsteroid(Asteroid& asteroid)
     {
         std::vector< sf::Vector2f > randomPoints = getRandomPoints(10);
         for(int i = 0 ; i< 10; ++i)
@@ -26,11 +26,11 @@ namespace AsteroidGenerator
         std::vector< sf::Vector2f > sortPoints;
         sortPoints = Utility::ConvexHull(randomPoints);
 
-        asteroid->shape.setPointCount(sortPoints.size());
-        asteroid->shape.setFillColor(sf::Color(80, 170, 200, 200));
+        asteroid.shape.setPointCount(sortPoints.size());
+        asteroid.shape.setFillColor(sf::Color(80, 170, 200, 200));
         for(size_t i=0; i < sortPoints.size(); i++)
         {
-            asteroid->shape.setPoint(i, sortPoints.at(i));
+            asteroid.shape.setPoint(i, sortPoints.at(i));
         }
     }
 }

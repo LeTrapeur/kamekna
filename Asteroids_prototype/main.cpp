@@ -10,7 +10,7 @@ int main()
 {
     sf::RenderWindow window(sf::VideoMode(800, 600), "Asteroids prototype");
     Asteroid asteroid;
-    AsteroidGenerator::makeRandomAsteroid(&asteroid);
+    AsteroidGenerator::makeRandomAsteroid(asteroid);
 
     while (window.isOpen())
     {

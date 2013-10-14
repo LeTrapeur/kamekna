@@ -10,7 +10,7 @@ class Asteroid : public sf::Transformable, public sf::Drawable, private sf::NonC
 {
     public:
         Asteroid();
-        friend void AsteroidGenerator::makeRandomAsteroid(Asteroid* asteroid);
+        friend void AsteroidGenerator::makeRandomAsteroid(Asteroid& asteroid);
 
     private:
         virtual void draw (sf::RenderTarget& target, sf::RenderStates states) const;
