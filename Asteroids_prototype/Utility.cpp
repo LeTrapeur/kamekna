@@ -1,6 +1,7 @@
 #include "Utility.h"
 #include "Asteroid.h"
 #include <random>
+#include <ctime>
 
 
 namespace AsteroidGenerator
@@ -19,10 +20,6 @@ namespace AsteroidGenerator
     void makeRandomAsteroid(Asteroid& asteroid)
     {
         std::vector< sf::Vector2f > randomPoints = getRandomPoints(10);
-        for(int i = 0 ; i< 10; ++i)
-        {
-            //afficher les coordonnées
-        }
         std::vector< sf::Vector2f > sortPoints;
         sortPoints = Utility::ConvexHull(randomPoints);
 
@@ -39,8 +36,8 @@ namespace Utility
 {
     float randomFloatGenerator(float a, float b)
     {
-        static std::default_random_engine e{051715};
-        static std::uniform_int_distribution<int> d{a, b};
+        static std::default_random_engine e(time(NULL));
+        static std::uniform_int_distribution<int> d(a, b);
 
         return d(e);
     }
