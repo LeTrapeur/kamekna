@@ -8,11 +8,10 @@ namespace AsteroidGenerator
 {
     std::vector<sf::Vector2f> getRandomPoints(int nbPoints)
     {
-        std::vector<sf::Vector2f> data(nbPoints);
+        std::vector<sf::Vector2f> data;
         for (size_t i = 0 ; i < nbPoints ; i++)
         {
             data.push_back(sf::Vector2f(Utility::randomFloatGenerator(200.f, 600.f),Utility::randomFloatGenerator(200.f, 600.f)));
-            //std::cout << i << " : " << data[data.size()].x << " " << data[data.size()].y << std::endl;
         }
         return data;
     }
@@ -20,12 +19,11 @@ namespace AsteroidGenerator
     void makeRandomAsteroid(Asteroid& asteroid)
     {
         std::vector< sf::Vector2f > randomPoints = getRandomPoints(10);
-        std::vector< sf::Vector2f > sortPoints;
-        sortPoints = Utility::ConvexHull(randomPoints);
+        std::vector< sf::Vector2f > sortPoints = Utility::ConvexHull(randomPoints);
 
         asteroid.shape.setPointCount(sortPoints.size());
         asteroid.shape.setFillColor(sf::Color(80, 170, 200, 200));
-        for(size_t i=0; i < sortPoints.size(); i++)
+        for(size_t i = 0; i < sortPoints.size(); i++)
         {
             asteroid.shape.setPoint(i, sortPoints.at(i));
         }
@@ -38,7 +36,7 @@ namespace Utility
     {
         static std::default_random_engine e(time(NULL));
         static std::uniform_int_distribution<int> d(a, b);
-
+        std::cout << d(e) << std::endl;
         return d(e);
     }
 
