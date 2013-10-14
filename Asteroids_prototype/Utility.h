@@ -11,6 +11,8 @@ class Asteroid;
 namespace AsteroidGenerator
 {
     void makeRandomAsteroid(Asteroid* asteroid);
+
+    std::vector<sf::Vector2f> getRandomPoints(int nbPoints);
 }
 
 namespace Utility
@@ -20,6 +22,8 @@ namespace Utility
     sf::Vector2f getMostLeft(const std::vector< sf::Vector2f >& pts);
 
     std::vector< sf::Vector2f > ConvexHull(const std::vector< sf::Vector2f >& points);
+
+    float randomFloatGenerator(float a, float b);
 }
 
 #endif // UTILITY_H
