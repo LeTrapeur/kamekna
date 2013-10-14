@@ -19,9 +19,9 @@ int Orientation(const sf::Vector2f& p1, const sf::Vector2f& p2, const sf::Vector
 sf::Vector2f getMostLeft(const std::vector< sf::Vector2f >& pts)
 {
     sf::Vector2f ptLeft = pts.at(0);
-    for(int i = 1; i < pts.size() ; i++)
+    for(size_t i = 1; i < pts.size() ; i++)
         {
-            if(pts[i].x < ptLeft.x)
+            if(pts.at(i).x < ptLeft.x)
                 ptLeft = pts[i];
         }
     return ptLeft;
@@ -37,9 +37,9 @@ std::vector< sf::Vector2f > ConvexHull(const std::vector< sf::Vector2f >& points
             do
             {
                 hull.push_back(vPointOnHull);
-                vEndpoint = points[0];
+                vEndpoint = points.at(0);
 
-                for (int i = 1; i < points.size(); i++)
+                for (size_t i = 1; i < points.size(); i++)
                 {
                     if ((vPointOnHull == vEndpoint)
                         || (Orientation(vPointOnHull, vEndpoint, points[i]) == -1))
@@ -51,11 +51,10 @@ std::vector< sf::Vector2f > ConvexHull(const std::vector< sf::Vector2f >& points
                 vPointOnHull = vEndpoint;
 
             }
-            while (vEndpoint != hull[0]);
+            while (vEndpoint != hull.at(0));
 
             return hull;
 }
-
 
 int main()
 {
@@ -87,7 +86,7 @@ int main()
         // Clear screen
         window.clear(sf::Color::White);
 
-        for(int i=0; i<randomPoints.size(); i++)
+        for(size_t i=0; i<randomPoints.size(); i++)
         {
             sf::RectangleShape point(sf::Vector2f(5,5));
             point.setOrigin(2.5f,2.5f);
@@ -99,9 +98,9 @@ int main()
 
         sf::ConvexShape envelop(sortPoints.size());
         envelop.setFillColor(sf::Color(80, 170, 200, 200));
-        for(int i=0; i< sortPoints.size(); i++)
+        for(size_t i=0; i< sortPoints.size(); i++)
         {
-            for(int i=0; i< sortPoints.size(); i++)
+            for(size_t i=0; i< sortPoints.size(); i++)
             {
                 envelop.setPoint(i, sortPoints[i]);
             }
