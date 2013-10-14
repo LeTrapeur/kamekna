@@ -34,9 +34,8 @@ namespace Utility
 {
     float randomFloatGenerator(float a, float b)
     {
-        static std::default_random_engine e(time(NULL));
-        static std::uniform_int_distribution<int> d(a, b);
-        std::cout << d(e) << std::endl;
+        static std::mt19937 e(time(NULL));
+        static std::uniform_real_distribution<float> d(a, b);
         return d(e);
     }
 
@@ -44,7 +43,6 @@ namespace Utility
     {
         // Determinant
         int Orin = (p2.x - p1.x) * (p.y - p1.y) - (p.x - p1.x) * (p2.y - p1.y);
-
         if (Orin > 0)
             return -1; //          (* Orientaion is to the left-hand side  *)
         if (Orin < 0)
