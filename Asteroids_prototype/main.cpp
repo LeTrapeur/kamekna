@@ -1,5 +1,4 @@
 #include <SFML/graphics.hpp>
-#include <cmath>
 #include<iostream>
 #include<vector>
 
@@ -69,9 +68,6 @@ int main()
 
     std::vector< sf::Vector2f > sortPoints;
     sortPoints = ConvexHull(randomPoints);
-
-    std::cout << randomPoints.size() << std::endl;
-    std::cout << sortPoints.size() << std::endl;
 
     while (window.isOpen())
     {
