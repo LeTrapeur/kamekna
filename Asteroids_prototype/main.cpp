@@ -87,7 +87,7 @@ int main()
         // Clear screen
         window.clear(sf::Color::White);
 
-        for(int i=0; i<5; i++)
+        for(int i=0; i<randomPoints.size(); i++)
         {
             sf::RectangleShape point(sf::Vector2f(5,5));
             point.setOrigin(2.5f,2.5f);
@@ -97,15 +97,14 @@ int main()
             window.draw(point);
         }
 
+        sf::ConvexShape envelop(sortPoints.size());
+        envelop.setFillColor(sf::Color(80, 170, 200, 200));
         for(int i=0; i< sortPoints.size(); i++)
         {
-            sf::ConvexShape envelop(sortPoints.size());
-            envelop.setFillColor(sf::Color(80, 170, 200, 200));
-            for(int i=0; i<sortPoints.size(); i++)
+            for(int i=0; i< sortPoints.size(); i++)
             {
                 envelop.setPoint(i, sortPoints[i]);
             }
-
             window.draw(envelop);
         }
 
