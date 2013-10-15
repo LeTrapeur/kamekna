@@ -4,7 +4,7 @@
 #include <vector>
 #include <SFML/graphics.hpp>
 
-#include "Utility.h"
+#include "AsteroidGenerator.h"
 
 class Asteroid : public sf::Transformable, public sf::Drawable, private sf::NonCopyable
 {

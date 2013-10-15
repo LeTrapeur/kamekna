@@ -21,6 +21,14 @@ int main()
             // Close window : exit
             if (event.type == sf::Event::Closed)
                 window.close();
+            if (event.type == sf::Event::KeyPressed)
+            {
+                if (event.key.code == sf::Keyboard::R)
+                {
+                    // Refresh randomization
+                    AsteroidGenerator::makeRandomAsteroid(asteroid);
+                }
+            }
         }
         // Clear screen
         window.clear(sf::Color::White);
