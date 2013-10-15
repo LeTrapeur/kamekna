@@ -2,18 +2,9 @@
 #define UTILITY_H
 
 #include <SFML/graphics.hpp>
-#include <iostream>
 #include <vector>
-
-
-class Asteroid;
-
-namespace AsteroidGenerator
-{
-    void makeRandomAsteroid(Asteroid& asteroid);
-
-    std::vector<sf::Vector2f> getRandomPoints(int nbPoints);
-}
+#include <random>
+#include <ctime>
 
 namespace Utility
 {
