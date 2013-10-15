@@ -11,7 +11,7 @@ namespace AsteroidGenerator
         std::vector<sf::Vector2f> data;
         for (size_t i = 0 ; i < nbPoints ; i++)
         {
-            data.push_back(sf::Vector2f(Utility::randomFloatGenerator(200.f, 600.f),Utility::randomFloatGenerator(200.f, 600.f)));
+            data.push_back(sf::Vector2f(Utility::randomFloatGenerator(100.f, 700.f),Utility::randomFloatGenerator(100.f, 400.f)));
         }
         return data;
     }
