@@ -17,6 +17,7 @@ class Asteroid : public sf::Transformable, public sf::Drawable, private sf::NonC
 
     private:
         sf::ConvexShape shape;
+        sf::Texture textureAsteroid;
 };
 
 
