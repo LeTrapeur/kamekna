@@ -31,7 +31,7 @@ int main()
             }
         }
         // Clear screen
-        window.clear(sf::Color::White);
+        window.clear(sf::Color::Black);
 
         window.draw(asteroid);
 
