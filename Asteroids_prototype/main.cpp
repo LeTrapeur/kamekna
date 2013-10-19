@@ -12,6 +12,8 @@ int main()
     Asteroid asteroid;
     AsteroidGenerator::makeRandomAsteroid(asteroid);
 
+    asteroid.setPosition(0,0);
+
     while (window.isOpen())
     {
         // Process events
