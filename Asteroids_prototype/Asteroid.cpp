@@ -5,7 +5,6 @@ Asteroid::Asteroid()
 
     textureAsteroid.loadFromFile("textureAsteroid.png");
     shape.setTexture(&textureAsteroid);
-
 }
 
 void Asteroid::draw(sf::RenderTarget& target, sf::RenderStates states) const
@@ -16,7 +15,7 @@ void Asteroid::draw(sf::RenderTarget& target, sf::RenderStates states) const
     {
         sf::RectangleShape point(sf::Vector2f(5.f, 5.f));
         point.setFillColor(sf::Color::Red);
-        point.setOrigin(sf::Vector2f(2.5f, 2.5f));
+        point.setOrigin(shape.getOrigin().x + 2.5f, shape.getOrigin().y + 2.5f);
         point.setPosition(shape.getPoint(i));
         target.draw(point, states);
     }
