@@ -21,6 +21,7 @@ namespace AsteroidGenerator
         std::vector< sf::Vector2f > sortPoints = Utility::ConvexHull(randomPoints);
 
         asteroid.shape.setPointCount(sortPoints.size());
+        asteroid.shape.setOrigin(sortPoints.at(0));
         for(size_t i = 0; i < sortPoints.size(); i++)
         {
             asteroid.shape.setPoint(i, sortPoints.at(i));

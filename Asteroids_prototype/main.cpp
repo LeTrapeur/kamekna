@@ -11,8 +11,8 @@ int main()
     sf::RenderWindow window(sf::VideoMode(800, 600), "Asteroids prototype");
     Asteroid asteroid;
     AsteroidGenerator::makeRandomAsteroid(asteroid);
+    asteroid.setPosition(400, 300);
 
-    asteroid.setPosition(0,0);
 
     while (window.isOpen())
     {
@@ -36,7 +36,6 @@ int main()
         window.clear(sf::Color::Black);
 
         window.draw(asteroid);
-
         // Update the window
         window.display();
     }
