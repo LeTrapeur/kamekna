@@ -5,9 +5,10 @@
 #include <SFML/Graphics.hpp>
 #include <Box2D/Box2D.h>
 
+#include "scenenode.h"
 #include "DataTables.h"
 
-class Entity : public sf::Transformable, public sf::Drawable, private sf::NonCopyable
+class Entity : public SceneNode
 {
     public:
         enum Type
@@ -18,7 +19,7 @@ class Entity : public sf::Transformable, public sf::Drawable, private sf::NonCop
         };
     public:
         explicit Entity(b2World& world, Entity::Type type);
-        virtual void update();
+        virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
 
         void setPosition(float x, float y);
         void setRotation(float angle);
@@ -27,7 +28,9 @@ class Entity : public sf::Transformable, public sf::Drawable, private sf::NonCop
         b2Body* m_body;
 
     private:
-        virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+        virtual void updateCurrent(sf::Time dt);
+
+
 
 };
 

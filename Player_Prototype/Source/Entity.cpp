@@ -17,12 +17,12 @@ Entity::Entity(b2World& world, Entity::Type type):
     }
 }
 
-void Entity::draw(sf::RenderTarget& target, sf::RenderStates states) const
+void Entity::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
 {
     states.transform *= getTransform();
 }
 
-void Entity::update()
+void Entity::updateCurrent(sf::Time dt)
 {
     setPosition(m_body->GetPosition().x * SCALE, m_body->GetPosition().y * SCALE);
     setRotation(m_body->GetAngle()*pi()/180);

@@ -60,9 +60,9 @@ void Hero::handleRealTimeInput()
     }
 }
 
-void Hero::draw(sf::RenderTarget& target, sf::RenderStates states) const
+void Hero::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
 {
-    states.transform *= getTransform();
+    //states.transform *= getTransform();
     target.draw(m_shape, states);
 }
 

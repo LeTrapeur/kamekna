@@ -12,8 +12,8 @@ Platform::Platform(b2World& world): Entity(world, Entity::Type::Platform)
     m_shape.setFillColor(sf::Color::Black);
 }
 
-void Platform::draw(sf::RenderTarget& target, sf::RenderStates states) const
+void Platform::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
 {
-    states.transform *= getTransform();
+    //states.transform *= getTransform();
     target.draw(m_shape, states);
 }
