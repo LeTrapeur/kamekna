@@ -5,20 +5,27 @@
 #include <sstream>
 #include <string>
 #include <memory>
+#include <array>
 #include <list>
 
 #include <SFML/Graphics.hpp>
 #include <Box2D/Box2D.h>
 
 #include "MyContactListener.h"
+#include "scenenode.h"
 #include "Entity.h"
 #include "Hero.h"
 #include "Platform.h"
 
 class World
 {
-    public:
-        typedef std::list<std::unique_ptr<Entity> > ListEntities;
+    private:
+        enum Layer
+        {
+            Background,
+            Space,
+            LayerCount
+        };
     public:
         explicit World(sf::RenderWindow& window);
 
@@ -40,7 +47,8 @@ class World
         b2World m_physicWorld;
         MyContactListener m_contactListener;
 
-        ListEntities m_entities;
+        SceneNode m_sceneGraph;
+        std::array<SceneNode*, LayerCount> m_sceneLayers;
         // To be improved
         Hero* m_player;
 

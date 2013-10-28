@@ -8,9 +8,7 @@ World::World(sf::RenderWindow& window):
     m_worldView(window.getDefaultView()),
     m_minimapView(window.getDefaultView()),
     m_physicWorld(b2Vec2(0, 15.0f)),
-    m_entities(),
     m_player(nullptr)
-
 {
     m_minimapView.zoom(4.0f);
     m_minimapView.setViewport(sf::FloatRect(0.85f, 0.f, 0.15f, 0.15f));
@@ -20,17 +18,25 @@ World::World(sf::RenderWindow& window):
 
 void World::buildScene()
 {
+    // Init layers
+    for(std::size_t i = 0; i < LayerCount; ++i)
+    {
+        SceneNode::Ptr layer(new SceneNode());
+        m_sceneLayers[i] = layer.get();
+        m_sceneGraph.attachChild(std::move(layer));
+    }
+
     for(int i=0; i < 5; i++)
     {
         std::unique_ptr<Platform> tempPlatform(new Platform(m_physicWorld));
         tempPlatform->setPosition(100.f, i*500.f);
-        m_entities.push_back(std::move(tempPlatform));
+        m_sceneLayers[Space]->attachChild(std::move(tempPlatform));
     }
 
-    std::unique_ptr<Hero> tempLadral(new Hero(m_physicWorld));
-    tempLadral->setPosition(200,450);
-    m_player = tempLadral.get();
-    m_entities.push_back(std::move(tempLadral));
+    std::unique_ptr<Hero> ladral(new Hero(m_physicWorld));
+    m_player = ladral.get();
+    ladral->setPosition(200,450);
+    m_sceneLayers[Space]->attachChild(std::move(ladral));
 }
 
 // To be improved
@@ -43,20 +49,18 @@ void World::update(sf::Time dt)
 {
     // Update physic
     m_physicWorld.Step(dt.asSeconds(), 8, 4);
-    // Aplly physic to objects
-    for(auto it = m_entities.begin(); it != m_entities.end(); it++)
-        (*it)->update();
+
+    m_sceneGraph.update(dt);
+
 }
 
 void World::draw()
 {
     m_worldView.setCenter(m_player->getPosition());
     m_window.setView(m_worldView);
-    for(auto it = m_entities.begin(); it != m_entities.end(); it++)
-        m_window.draw(*(*it));
+    m_window.draw(m_sceneGraph);
 
     m_minimapView.setCenter(m_player->getPosition());
     m_window.setView(m_minimapView);
-    for(auto it = m_entities.begin(); it != m_entities.end(); it++)
-        m_window.draw(*(*it));
+    m_window.draw(m_sceneGraph);
 }

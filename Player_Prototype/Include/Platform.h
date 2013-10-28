@@ -9,7 +9,7 @@ class Platform : public Entity
         Platform(b2World& world);
 
     private:
-        virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+        virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
     private:
         sf::RectangleShape m_shape;
 };
