@@ -14,6 +14,7 @@
 #include "MyContactListener.h"
 #include "ResourceHolder.h"
 #include "SceneNode.h"
+#include "SpriteNode.h"
 #include "Entity.h"
 #include "Hero.h"
 #include "Platform.h"
@@ -45,7 +46,7 @@ class World
         sf::View m_worldView;
         sf::View m_minimapView;
 
-
+        TextureHolder m_textures;
 
         b2World m_physicWorld;
         MyContactListener m_contactListener;

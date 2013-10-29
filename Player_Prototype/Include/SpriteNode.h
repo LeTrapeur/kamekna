@@ -15,7 +15,7 @@ class SpriteNode : public SceneNode
                 virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
 
         private:
-                sf::Sprite                        mSprite;
+                sf::Sprite mSprite;
 };
 
 #endif // SPRITENODE_H
