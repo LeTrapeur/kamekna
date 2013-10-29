@@ -4,6 +4,7 @@
 #include<memory>
 #include <algorithm>
 #include<vector>
+#include<assert.h>
 
 #include <SFML/Graphics.hpp>
 

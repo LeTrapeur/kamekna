@@ -5,7 +5,7 @@
 #include <SFML/Graphics.hpp>
 #include <Box2D/Box2D.h>
 
-#include "scenenode.h"
+#include "SceneNode.h"
 #include "DataTables.h"
 
 class Entity : public SceneNode
@@ -18,7 +18,7 @@ class Entity : public SceneNode
             TypeCount,
         };
     public:
-        explicit Entity(b2World& world, Entity::Type type);
+        explicit Entity(b2World& world);
         virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
 
         void setPosition(float x, float y);
