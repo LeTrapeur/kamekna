@@ -2,20 +2,9 @@
 
 const float SCALE = 30.f; // Box2D works in a scale of 30 pixels = 1 meter
 
-namespace
-{
-    const std::vector<EntityData> dataTable = initializeEntityData();
-}
-
-Entity::Entity(b2World& world, Entity::Type type):
+Entity::Entity(b2World& world):
     m_body(nullptr)
-{
-    m_body = world.CreateBody(&dataTable[type].bodyDef);
-    for(auto it = dataTable[type].fixturesDef.begin(); it != dataTable[type].fixturesDef.end(); it++)
-    {
-        m_body->CreateFixture(&(*it));
-    }
-}
+{}
 
 void Entity::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
 {
