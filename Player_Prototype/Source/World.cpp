@@ -16,10 +16,17 @@ World::World(sf::RenderWindow& window):
                   ),
     m_player(nullptr)
 {
+    loadTextures();
+
     m_minimapView.zoom(4.0f);
     m_minimapView.setViewport(sf::FloatRect(0.85f, 0.f, 0.15f, 0.15f));
     m_physicWorld.SetContactListener(&m_contactListener);
     buildScene();
+}
+
+void World::loadTextures()
+{
+    m_textures.load(Textures::SpaceBackground, "background.png");
 }
 
 void World::buildScene()
@@ -32,6 +39,15 @@ void World::buildScene()
         m_sceneGraph.attachChild(std::move(layer));
     }
 
+    // background
+    sf::Texture& texture = m_textures.get(Textures::SpaceBackground);
+    sf::IntRect textureRect(m_worldBounds);
+    texture.setRepeated(true);
+    std::unique_ptr<SpriteNode> backgroundSprite(new SpriteNode(texture, textureRect));
+    backgroundSprite->setPosition(m_worldBounds.left, m_worldBounds.top);
+    m_sceneLayers[Background]->attachChild(std::move(backgroundSprite));
+
+    // platforms
     for(int i=0; i < 5; i++)
     {
         std::unique_ptr<Platform> tempPlatform(new Platform(m_physicWorld));
@@ -39,6 +55,7 @@ void World::buildScene()
         m_sceneLayers[Space]->attachChild(std::move(tempPlatform));
     }
 
+    // heroe
     std::unique_ptr<Hero> ladral(new Hero(m_physicWorld));
     m_player = ladral.get();
     ladral->setPosition(200,450);
