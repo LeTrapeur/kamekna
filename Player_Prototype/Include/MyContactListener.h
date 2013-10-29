@@ -5,8 +5,6 @@
 
 #include <Box2D/Box2D.h>
 
-extern int numFootContacts;
-
 class MyContactListener : public b2ContactListener
   {
   public:
