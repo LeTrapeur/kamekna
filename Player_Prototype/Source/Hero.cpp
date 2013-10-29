@@ -1,9 +1,10 @@
 #include "Hero.h"
 
 const float SCALE = 30.f; // Box2D works in a scale of 30 pixels = 1 meter
-extern int numFootContacts;
 
-Hero::Hero(b2World& world): Entity(world)
+Hero::Hero(b2World& world):
+    Entity(world),
+    m_numFootContacts(0)
 {
     // Player
     const int PLAYER_WIDTH = 32;
@@ -33,7 +34,7 @@ Hero::Hero(b2World& world): Entity(world)
     b2FixtureDef footSensorFixture;
     footSensorFixture.shape = &FootShape;
     footSensorFixture.isSensor = true;
-    footSensorFixture.userData = ((void*)3);
+    footSensorFixture.userData = this;
     m_body->CreateFixture(&footSensorFixture);
 }
 
@@ -44,7 +45,7 @@ void Hero::handleEvent(const sf::Event& event)
         // Jumping
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
         {
-            if (numFootContacts >= 1)
+            if (m_numFootContacts >= 1)
                 m_body->ApplyLinearImpulse(b2Vec2(0,-m_body->GetMass()*8), m_body->GetWorldCenter());
         }
     }
@@ -55,12 +56,12 @@ void Hero::handleRealTimeInput()
     // Moving left/right
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q))
     {
-        if (numFootContacts >= 1 && m_body->GetLinearVelocity().x * SCALE > -150)
+        if (m_numFootContacts >= 1 && m_body->GetLinearVelocity().x * SCALE > -150)
             m_body->ApplyForce(b2Vec2(-m_body->GetMass()*8,0), m_body->GetWorldCenter());
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
     {
-        if (numFootContacts >= 1 && m_body->GetLinearVelocity().x * SCALE < 150)
+        if (m_numFootContacts >= 1 && m_body->GetLinearVelocity().x * SCALE < 150)
             m_body->ApplyForce(b2Vec2(m_body->GetMass()*8,0), m_body->GetWorldCenter());
     }
 
@@ -81,6 +82,16 @@ void Hero::handleRealTimeInput()
     {
         m_body->ApplyForce(b2Vec2(-m_body->GetMass()*10, 0), m_body->GetWorldCenter());
     }
+}
+
+void Hero::addFootContact()
+{
+    m_numFootContacts++;
+}
+
+void Hero::removeFootContact()
+{
+    m_numFootContacts--;
 }
 
 void Hero::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
