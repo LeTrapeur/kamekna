@@ -6,9 +6,6 @@ Game::Game():
     m_window(sf::VideoMode(1280, 720), "Prototype player"),
     m_world(m_window)
 {
-
-    numFootContacts = 0;
-
         // DEBUG Text
     if (!m_font.loadFromFile("arial.ttf"))
     {
