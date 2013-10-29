@@ -8,10 +8,10 @@ World::World(sf::RenderWindow& window):
     m_minimapView(window.getDefaultView()),
     m_physicWorld(b2Vec2(0, 15.0f)),
     m_worldBounds(
-                  -1280,
-                  -720,
-                  3840,
-                  2160
+                  -m_worldView.getSize().x,
+                  -m_worldView.getSize().y,
+                  3*m_worldView.getSize().x,
+                  3*m_worldView.getSize().y
                   ),
     m_player(nullptr)
 {
@@ -19,7 +19,9 @@ World::World(sf::RenderWindow& window):
 
     m_minimapView.zoom(4.0f);
     m_minimapView.setViewport(sf::FloatRect(0.85f, 0.f, 0.15f, 0.15f));
+
     m_physicWorld.SetContactListener(&m_contactListener);
+
     buildScene();
 }
 
