@@ -6,7 +6,18 @@
 #include <memory>
 #include <stdexcept>
 #include <cassert>
+namespace sf
+{
+        class Texture;
+}
 
+namespace Textures
+{
+        enum ID
+        {
+            SpaceBackground
+        };
+}
 
 template <typename Resource, typename Identifier>
 class ResourceHolder
@@ -26,6 +37,8 @@ class ResourceHolder
         private:
                 std::map<Identifier, std::unique_ptr<Resource>>        mResourceMap;
 };
+
+typedef ResourceHolder<sf::Texture, Textures::ID> TextureHolder;
 
 #include "ResourceHolder.inl"
 #endif // RESOURCEHOLDER_H

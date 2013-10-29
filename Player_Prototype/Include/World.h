@@ -12,7 +12,8 @@
 #include <Box2D/Box2D.h>
 
 #include "MyContactListener.h"
-#include "scenenode.h"
+#include "ResourceHolder.h"
+#include "SceneNode.h"
 #include "Entity.h"
 #include "Hero.h"
 #include "Platform.h"
@@ -43,6 +44,8 @@ class World
         sf::RenderWindow& m_window;
         sf::View m_worldView;
         sf::View m_minimapView;
+
+
 
         b2World m_physicWorld;
         MyContactListener m_contactListener;
