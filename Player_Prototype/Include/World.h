@@ -46,6 +46,7 @@ class World
 
         b2World m_physicWorld;
         MyContactListener m_contactListener;
+        sf::FloatRect m_worldBounds;
 
         SceneNode m_sceneGraph;
         std::array<SceneNode*, LayerCount> m_sceneLayers;

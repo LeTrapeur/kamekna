@@ -8,6 +8,12 @@ World::World(sf::RenderWindow& window):
     m_worldView(window.getDefaultView()),
     m_minimapView(window.getDefaultView()),
     m_physicWorld(b2Vec2(0, 15.0f)),
+    m_worldBounds(
+                  -1280,
+                  -720,
+                  3840,
+                  2160
+                  ),
     m_player(nullptr)
 {
     m_minimapView.zoom(4.0f);
@@ -51,7 +57,6 @@ void World::update(sf::Time dt)
     m_physicWorld.Step(dt.asSeconds(), 8, 4);
 
     m_sceneGraph.update(dt);
-
 }
 
 void World::draw()
