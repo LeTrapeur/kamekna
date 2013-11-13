@@ -8,10 +8,10 @@ World::World(sf::RenderWindow& window):
     m_minimapView(window.getDefaultView()),
     m_physicWorld(b2Vec2(0, 15.0f)),
     m_worldBounds(
-                  -m_worldView.getSize().x,
-                  -m_worldView.getSize().y,
-                  3*m_worldView.getSize().x,
-                  3*m_worldView.getSize().y
+                  -1280,
+                  -720,
+                  2*1280,
+                  2*720
                   ),
     m_player(nullptr)
 {
@@ -71,19 +71,33 @@ Hero* World::getPtrPlayer()
 
 void World::update(sf::Time dt)
 {
-    // Update physic
-    m_physicWorld.Step(dt.asSeconds(), 8, 4);
+    if(m_player->getPosition().x > -1280 && m_player->getPosition().x < 1280
+       &&
+       m_player->getPosition().y > -720 && m_player->getPosition().y < 720)
+    {
+        m_physicWorld.Step(dt.asSeconds(), 8, 4);
+        m_sceneGraph.update(dt);
+    }
+    else
+    {
+        m_player->setPosition(200,450);
+    }
 
-    m_sceneGraph.update(dt);
 }
 
 void World::draw()
 {
-    m_worldView.setCenter(m_player->getPosition());
+    if(m_player->getPosition().x > -1280 && m_player->getPosition().x < 1280
+       &&
+       m_player->getPosition().y > -720 && m_player->getPosition().y < 720)
+    {
+        m_worldView.setCenter(m_player->getPosition());
+        m_minimapView.setCenter(m_player->getPosition());
+    }
+
     m_window.setView(m_worldView);
     m_window.draw(m_sceneGraph);
 
-    m_minimapView.setCenter(m_player->getPosition());
     m_window.setView(m_minimapView);
     m_window.draw(m_sceneGraph);
 }

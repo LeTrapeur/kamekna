@@ -42,7 +42,7 @@ void Game::update(sf::Time elapsedTime)
 
 void Game::render()
 {
-    m_window.clear(sf::Color::Black);
+    m_window.clear(sf::Color::Yellow);
 
     m_world.draw();
 
