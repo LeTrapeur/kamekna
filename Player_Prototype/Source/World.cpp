@@ -82,6 +82,7 @@ void World::update(sf::Time dt)
     else
     {
         m_player->setPosition(m_spawnPosition);
+        m_player->resetForces();
     }
 
     sf::Vector2f myscroll(m_player->getPosition());

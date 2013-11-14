@@ -13,8 +13,11 @@ void Entity::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) cons
 
 void Entity::updateCurrent(sf::Time dt)
 {
-    setPosition(m_body->GetPosition().x * SCALE, m_body->GetPosition().y * SCALE);
-    setRotation(m_body->GetAngle()*pi()/180);
+    if(m_body->GetType() == b2_dynamicBody)
+    {
+        setPosition(m_body->GetPosition().x * SCALE, m_body->GetPosition().y * SCALE);
+        setRotation(m_body->GetAngle()*pi()/180);
+    }
 }
 
 void Entity::setPosition(float x, float y)
@@ -33,4 +36,10 @@ void Entity::setRotation(float angle)
 {
     sf::Transformable::setRotation(angle);
     m_body->SetTransform(b2Vec2(sf::Transformable::getPosition().x/SCALE, sf::Transformable::getPosition().y/SCALE), (angle*pi())/180);
+}
+
+void Entity::resetForces()
+{
+    m_body->SetAngularVelocity(0);
+    m_body->SetLinearVelocity(b2Vec2(0.f,0.f));
 }
