@@ -56,6 +56,7 @@ class World
         std::array<SceneNode*, LayerCount> m_sceneLayers;
         // To be improved
         Hero* m_player;
+        sf::Vector2f m_spawnPosition;
 
 };
 

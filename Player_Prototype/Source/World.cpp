@@ -8,17 +8,21 @@ World::World(sf::RenderWindow& window):
     m_minimapView(window.getDefaultView()),
     m_physicWorld(b2Vec2(0, 15.0f)),
     m_worldBounds(
-                  -1280,
-                  -720,
-                  2*1280,
-                  2*720
+                  -m_worldView.getSize().x,
+                  -m_worldView.getSize().y,
+                  2*m_worldView.getSize().x,
+                  2*m_worldView.getSize().y
                   ),
+    m_spawnPosition(200.f,200.f),
     m_player(nullptr)
 {
     loadTextures();
 
     m_minimapView.zoom(4.0f);
     m_minimapView.setViewport(sf::FloatRect(0.85f, 0.f, 0.15f, 0.15f));
+    m_minimapView.setCenter(m_spawnPosition);
+
+    m_worldView.setCenter(m_spawnPosition);
 
     m_physicWorld.SetContactListener(&m_contactListener);
 
@@ -56,7 +60,7 @@ void World::buildScene()
     // heroe
     std::unique_ptr<Hero> ladral(new Hero(m_physicWorld));
     m_player = ladral.get();
-    ladral->setPosition(200,450);
+    ladral->setPosition(m_spawnPosition.x, m_spawnPosition.y);
     m_sceneLayers[Space]->attachChild(std::move(ladral));
 }
 
@@ -77,28 +81,20 @@ void World::update(sf::Time dt)
     }
     else
     {
-        m_player->setPosition(200,450);
+        m_player->setPosition(200.f,450.f);
     }
 
-    if(m_player->getPosition().x > -640 && m_player->getPosition().x < 640)
-    {
-        if(m_player->getPosition().x < m_worldView.getCenter().x)
-            m_worldView.move(-150 * dt.asSeconds(), 0);
-        if(m_player->getPosition().x >= m_worldView.getCenter().x)
-            m_worldView.move(150 * dt.asSeconds(), 0);
-    }
-    if(m_player->getPosition().y > -360 && m_player->getPosition().y < 360)
-    {
-        if(m_player->getPosition().y < m_worldView.getCenter().y)
-            m_worldView.move(0, -150 * dt.asSeconds());
-        if(m_player->getPosition().y >= m_worldView.getCenter().y)
-            m_worldView.move(0, 150 * dt.asSeconds());
-    }
+    sf::Vector2f myscroll(m_player->getPosition());
+    if(myscroll.x < m_worldBounds.left/2)  myscroll.x = m_worldBounds.left/2;
+    if(myscroll.x > (m_worldBounds.width + m_worldBounds.left)/2)  myscroll.x = (m_worldBounds.width + m_worldBounds.left)/2;
+    if(myscroll.y < m_worldBounds.top/2)  myscroll.y = m_worldBounds.top/2;
+    if(myscroll.y > (m_worldBounds.height + m_worldBounds.top)/2)  myscroll.y = (m_worldBounds.height + m_worldBounds.top)/2;
+    m_worldView.setCenter(myscroll);
+    m_minimapView.setCenter(myscroll);
 }
 
 void World::draw()
 {
-
     m_window.setView(m_worldView);
     m_window.draw(m_sceneGraph);
 
