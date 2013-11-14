@@ -49,12 +49,9 @@ void World::buildScene()
     m_sceneLayers[Background]->attachChild(std::move(backgroundSprite));
 
     // platforms
-    for(int i=0; i < 5; i++)
-    {
-        std::unique_ptr<Platform> tempPlatform(new Platform(m_physicWorld));
-        tempPlatform->setPosition(100.f, i*500.f);
-        m_sceneLayers[Space]->attachChild(std::move(tempPlatform));
-    }
+    std::unique_ptr<Platform> platform(new Platform(m_physicWorld));
+    platform->setPosition(100.f, 500.f);
+    m_sceneLayers[Space]->attachChild(std::move(platform));
 
     // heroe
     std::unique_ptr<Hero> ladral(new Hero(m_physicWorld));
@@ -83,17 +80,24 @@ void World::update(sf::Time dt)
         m_player->setPosition(200,450);
     }
 
+    if(m_player->getPosition().x > -640 && m_player->getPosition().x < 640)
+    {
+        if(m_player->getPosition().x < m_worldView.getCenter().x)
+            m_worldView.move(-150 * dt.asSeconds(), 0);
+        if(m_player->getPosition().x >= m_worldView.getCenter().x)
+            m_worldView.move(150 * dt.asSeconds(), 0);
+    }
+    if(m_player->getPosition().y > -360 && m_player->getPosition().y < 360)
+    {
+        if(m_player->getPosition().y < m_worldView.getCenter().y)
+            m_worldView.move(0, -150 * dt.asSeconds());
+        if(m_player->getPosition().y >= m_worldView.getCenter().y)
+            m_worldView.move(0, 150 * dt.asSeconds());
+    }
 }
 
 void World::draw()
 {
-    if(m_player->getPosition().x > -1280 && m_player->getPosition().x < 1280
-       &&
-       m_player->getPosition().y > -720 && m_player->getPosition().y < 720)
-    {
-        m_worldView.setCenter(m_player->getPosition());
-        m_minimapView.setCenter(m_player->getPosition());
-    }
 
     m_window.setView(m_worldView);
     m_window.draw(m_sceneGraph);
