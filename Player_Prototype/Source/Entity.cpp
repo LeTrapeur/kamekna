@@ -23,6 +23,12 @@ void Entity::setPosition(float x, float y)
     m_body->SetTransform(b2Vec2(x/SCALE, y/SCALE), m_body->GetAngle());
 }
 
+void Entity::setPosition(const sf::Vector2f& pos)
+{
+    sf::Transformable::setPosition(pos);
+    m_body->SetTransform(b2Vec2(pos.x/SCALE, pos.y/SCALE), m_body->GetAngle());
+}
+
 void Entity::setRotation(float angle)
 {
     sf::Transformable::setRotation(angle);
