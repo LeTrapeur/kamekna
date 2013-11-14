@@ -66,20 +66,19 @@ void Hero::handleRealTimeInput()
     }
 
     // Thrusters
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up) && m_body->GetLinearVelocity().y * SCALE < -150)
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up) && m_body->GetLinearVelocity().y * SCALE < -300)
     {
         m_body->ApplyForce(b2Vec2(0, m_body->GetMass()*25), m_body->GetWorldCenter());
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down) && m_body->GetLinearVelocity().y * SCALE > -150)
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down) && m_body->GetLinearVelocity().y * SCALE > -300)
     {
         m_body->ApplyForce(b2Vec2(0, -m_body->GetMass()*25), m_body->GetWorldCenter());
     }
-    std::cout << m_body->GetLinearVelocity().x * SCALE << std::endl;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left) && m_body->GetLinearVelocity().x * SCALE < 150)
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left) && m_body->GetLinearVelocity().x * SCALE < 300)
     {
         m_body->ApplyForce(b2Vec2(m_body->GetMass()*10, 0), m_body->GetWorldCenter());
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right) && m_body->GetLinearVelocity().x * SCALE > -150)
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right) && m_body->GetLinearVelocity().x * SCALE > -300)
     {
         m_body->ApplyForce(b2Vec2(-m_body->GetMass()*10, 0), m_body->GetWorldCenter());
     }
