@@ -17,6 +17,7 @@ class Entity : public SceneNode
         void setPosition(float x, float y);
         void setPosition(const sf::Vector2f& pos);
         void setRotation(float angle);
+        void resetForces();
 
     protected:
         b2Body* m_body;
