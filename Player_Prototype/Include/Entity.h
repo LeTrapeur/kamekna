@@ -11,17 +11,11 @@
 class Entity : public SceneNode
 {
     public:
-        enum Type
-        {
-            Hero,
-            Platform,
-            TypeCount,
-        };
-    public:
         explicit Entity(b2World& world);
         virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
 
         void setPosition(float x, float y);
+        void setPosition(const sf::Vector2f& pos);
         void setRotation(float angle);
 
     protected:

@@ -13,8 +13,8 @@ World::World(sf::RenderWindow& window):
                   2*m_worldView.getSize().x,
                   2*m_worldView.getSize().y
                   ),
-    m_spawnPosition(200.f,200.f),
-    m_player(nullptr)
+    m_player(nullptr),
+    m_spawnPosition(200.f,200.f)
 {
     loadTextures();
 
@@ -60,7 +60,7 @@ void World::buildScene()
     // heroe
     std::unique_ptr<Hero> ladral(new Hero(m_physicWorld));
     m_player = ladral.get();
-    ladral->setPosition(m_spawnPosition.x, m_spawnPosition.y);
+    ladral->setPosition(m_spawnPosition);
     m_sceneLayers[Space]->attachChild(std::move(ladral));
 }
 
@@ -81,7 +81,7 @@ void World::update(sf::Time dt)
     }
     else
     {
-        m_player->setPosition(200.f,450.f);
+        m_player->setPosition(m_spawnPosition);
     }
 
     sf::Vector2f myscroll(m_player->getPosition());
