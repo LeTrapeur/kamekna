@@ -72,9 +72,9 @@ Hero* World::getPtrPlayer()
 
 void World::update(sf::Time dt)
 {
-    if(m_player->getPosition().x > -1280 && m_player->getPosition().x < 1280
+    if(m_player->getPosition().x > m_worldBounds.left && m_player->getPosition().x < m_worldBounds.width + m_worldBounds.left
        &&
-       m_player->getPosition().y > -720 && m_player->getPosition().y < 720)
+       m_player->getPosition().y > m_worldBounds.top && m_player->getPosition().y < m_worldBounds.height + m_worldBounds.top)
     {
         m_physicWorld.Step(dt.asSeconds(), 8, 4);
         m_sceneGraph.update(dt);
