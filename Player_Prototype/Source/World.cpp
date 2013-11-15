@@ -32,6 +32,7 @@ World::World(sf::RenderWindow& window):
 void World::loadTextures()
 {
     m_textures.load(Textures::SpaceBackground, "background.png");
+    m_textures.load(Textures::Hero, "astronaut.png");
 }
 
 void World::buildScene()
@@ -57,8 +58,8 @@ void World::buildScene()
     platform->setPosition(100.f, 500.f);
     m_sceneLayers[Space]->attachChild(std::move(platform));
 
-    // heroe
-    std::unique_ptr<Being> ladral(new Being(m_physicWorld));
+    // hero
+    std::unique_ptr<Being> ladral(new Being(Being::Hero, m_textures,m_physicWorld));
     m_player = ladral.get();
     ladral->setPosition(m_spawnPosition);
     m_sceneLayers[Space]->attachChild(std::move(ladral));

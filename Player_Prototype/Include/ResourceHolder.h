@@ -16,7 +16,8 @@ namespace Textures
 {
     enum ID
     {
-        SpaceBackground
+        SpaceBackground,
+        Hero,
     };
 }
 
