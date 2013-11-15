@@ -1,28 +1,36 @@
 #include "Being.h"
+#include "ResourceHolder.h"
 
 const float SCALE = 30.f; // Box2D works in a scale of 30 pixels = 1 meter
 
-Being::Being(b2World& world):
+Textures::ID toTextureID(Being::Type type)
+{
+    switch (type)
+    {
+        case Being::Hero:
+            return Textures::Hero;
+    }
+    return Textures::Hero;
+}
+
+Being::Being(Type type, const TextureHolder& textures, b2World& world):
     Entity(world),
+    m_sprite(textures.get(toTextureID(type))),
     m_numFootContacts(0)
 {
     // Player
-    const int PLAYER_WIDTH = 32;
-    const int PLAYER_HEIGHT = 64;
+    sf::Rect<float> spriteBounds = m_sprite.getGlobalBounds();
 
-    setOrigin(sf::Vector2f(PLAYER_WIDTH/2,PLAYER_HEIGHT/2));
-    m_shape.setSize(sf::Vector2f(PLAYER_WIDTH,PLAYER_HEIGHT));
-    m_shape.setFillColor(sf::Color::Red);
+    setOrigin(sf::Vector2f(spriteBounds.width/2,spriteBounds.height/2));
 
     b2BodyDef PlayerBodyDef;
     PlayerBodyDef.type = b2_dynamicBody;
-    PlayerBodyDef.position = b2Vec2(1280/2/SCALE, 720/2/SCALE);
     PlayerBodyDef.fixedRotation = true;
     m_body = world.CreateBody(&PlayerBodyDef);
 
     b2FixtureDef PlayerFixtureDef;
     b2PolygonShape PlayerShape;
-    PlayerShape.SetAsBox((PLAYER_WIDTH/2.0f)/SCALE, (PLAYER_HEIGHT/2.0f)/SCALE);
+    PlayerShape.SetAsBox((spriteBounds.width/2.0f)/SCALE, (spriteBounds.height/2.0f)/SCALE);
     PlayerFixtureDef.shape = &PlayerShape;
     PlayerFixtureDef.density = 1.0f;
     PlayerFixtureDef.friction = 0.3f;
@@ -30,7 +38,7 @@ Being::Being(b2World& world):
 
     //add foot sensor fixture
     b2PolygonShape FootShape;
-    FootShape.SetAsBox(((PLAYER_WIDTH-10)/2.0f)/SCALE, 5/SCALE, b2Vec2(0,(PLAYER_HEIGHT/2.0f)/SCALE), 0);
+    FootShape.SetAsBox(((spriteBounds.width-10)/2.0f)/SCALE, 5/SCALE, b2Vec2(0,(spriteBounds.height/2.0f)/SCALE), 0);
     b2FixtureDef footSensorFixture;
     footSensorFixture.shape = &FootShape;
     footSensorFixture.isSensor = true;
@@ -96,6 +104,6 @@ void Being::removeFootContact()
 
 void Being::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
 {
-    target.draw(m_shape, states);
+    target.draw(m_sprite, states);
 }
 

@@ -2,6 +2,7 @@
 #define BEING_H
 
 #include "Entity.h"
+#include "ResourceHolder.h"
 
 class Being : public Entity
 {
@@ -11,7 +12,7 @@ class Being : public Entity
             Hero,
         };
     public:
-        Being(b2World& world);
+        Being(Type type, const TextureHolder& textures, b2World& world);
 
         void handleEvent(const sf::Event& event);
         void handleRealTimeInput();
@@ -22,7 +23,7 @@ class Being : public Entity
     private:
         virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
     private:
-        sf::RectangleShape m_shape;
+        sf::Sprite m_sprite;
         unsigned int m_numFootContacts;
 };
 

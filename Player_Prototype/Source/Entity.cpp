@@ -1,5 +1,6 @@
 #include "Entity.h"
 
+
 const float SCALE = 30.f; // Box2D works in a scale of 30 pixels = 1 meter
 
 Entity::Entity(b2World& world):
