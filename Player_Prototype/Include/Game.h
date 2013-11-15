@@ -11,10 +11,6 @@
 #include <Box2D/Box2D.h>
 
 #include "World.h"
-#include "MyContactListener.h"
-#include "Entity.h"
-#include "Hero.h"
-#include "Platform.h"
 
 class Game : private sf::NonCopyable
 {

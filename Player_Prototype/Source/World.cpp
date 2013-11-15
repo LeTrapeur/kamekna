@@ -58,14 +58,14 @@ void World::buildScene()
     m_sceneLayers[Space]->attachChild(std::move(platform));
 
     // heroe
-    std::unique_ptr<Hero> ladral(new Hero(m_physicWorld));
+    std::unique_ptr<Being> ladral(new Being(m_physicWorld));
     m_player = ladral.get();
     ladral->setPosition(m_spawnPosition);
     m_sceneLayers[Space]->attachChild(std::move(ladral));
 }
 
 // To be improved
-Hero* World::getPtrPlayer()
+Being* World::getPtrPlayer()
 {
     return m_player;
 }

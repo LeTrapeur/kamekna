@@ -1,8 +1,8 @@
-#include "Hero.h"
+#include "Being.h"
 
 const float SCALE = 30.f; // Box2D works in a scale of 30 pixels = 1 meter
 
-Hero::Hero(b2World& world):
+Being::Being(b2World& world):
     Entity(world),
     m_numFootContacts(0)
 {
@@ -38,7 +38,7 @@ Hero::Hero(b2World& world):
     m_body->CreateFixture(&footSensorFixture);
 }
 
-void Hero::handleEvent(const sf::Event& event)
+void Being::handleEvent(const sf::Event& event)
 {
     if (event.type == sf::Event::KeyPressed)
     {
@@ -51,7 +51,7 @@ void Hero::handleEvent(const sf::Event& event)
     }
 }
 
-void Hero::handleRealTimeInput()
+void Being::handleRealTimeInput()
 {
     // Moving left/right
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q))
@@ -84,17 +84,17 @@ void Hero::handleRealTimeInput()
     }
 }
 
-void Hero::addFootContact()
+void Being::addFootContact()
 {
     m_numFootContacts++;
 }
 
-void Hero::removeFootContact()
+void Being::removeFootContact()
 {
     m_numFootContacts--;
 }
 
-void Hero::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
+void Being::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
 {
     target.draw(m_shape, states);
 }

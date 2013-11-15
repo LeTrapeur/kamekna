@@ -16,7 +16,7 @@
 #include "SceneNode.h"
 #include "SpriteNode.h"
 #include "Entity.h"
-#include "Hero.h"
+#include "Being.h"
 #include "Platform.h"
 
 class World
@@ -35,7 +35,7 @@ class World
         void draw();
 
         // Has to be changed with the commands system
-        Hero* getPtrPlayer();
+        Being* getPtrPlayer();
 
     private:
         void loadTextures();
@@ -55,7 +55,7 @@ class World
         SceneNode m_sceneGraph;
         std::array<SceneNode*, LayerCount> m_sceneLayers;
         // To be improved
-        Hero* m_player;
+        Being* m_player;
         sf::Vector2f m_spawnPosition;
 
 };
