@@ -1,12 +1,17 @@
-#ifndef HERO_H
-#define HERO_H
+#ifndef BEING_H
+#define BEING_H
 
 #include "Entity.h"
 
-class Hero : public Entity
+class Being : public Entity
 {
     public:
-        Hero(b2World& world);
+        enum Type
+        {
+            Hero,
+        };
+    public:
+        Being(b2World& world);
 
         void handleEvent(const sf::Event& event);
         void handleRealTimeInput();

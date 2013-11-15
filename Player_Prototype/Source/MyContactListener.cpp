@@ -1,7 +1,7 @@
 #include "MyContactListener.h"
 
 #include "Entity.h"
-#include "Hero.h"
+#include "Being.h"
 
 
 MyContactListener::MyContactListener()
@@ -13,12 +13,12 @@ void MyContactListener::BeginContact(b2Contact* contact)
 {
     Entity* A = static_cast<Entity*>(contact->GetFixtureA()->GetUserData());
     Entity* B = static_cast<Entity*>(contact->GetFixtureB()->GetUserData());
-    Hero* hero = dynamic_cast<Hero*>(A);
+    Being* hero = dynamic_cast<Being*>(A);
     if (hero)
     {
         hero->addFootContact();
     }
-    hero = dynamic_cast<Hero*>(B);
+    hero = dynamic_cast<Being*>(B);
     if (hero)
     {
         hero->addFootContact();
@@ -29,12 +29,12 @@ void MyContactListener::EndContact(b2Contact* contact)
 {
     Entity* A = static_cast<Entity*>(contact->GetFixtureA()->GetUserData());
     Entity* B = static_cast<Entity*>(contact->GetFixtureB()->GetUserData());
-    Hero* hero = dynamic_cast<Hero*>(A);
+    Being* hero = dynamic_cast<Being*>(A);
     if (hero)
     {
         hero->removeFootContact();
     }
-    hero = dynamic_cast<Hero*>(B);
+    hero = dynamic_cast<Being*>(B);
     if (hero)
     {
         hero->removeFootContact();
