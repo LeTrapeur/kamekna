@@ -20,11 +20,10 @@ namespace AsteroidGenerator
         std::vector< sf::Vector2f > randomPoints = getRandomPoints(10);
         std::vector< sf::Vector2f > sortPoints = Utility::ConvexHull(randomPoints);
 
-        asteroid.shape.setPointCount(sortPoints.size());
-        asteroid.shape.setOrigin(sortPoints.at(0));
+        asteroid.m_shape.setPointCount(sortPoints.size());
         for(size_t i = 0; i < sortPoints.size(); i++)
         {
-            asteroid.shape.setPoint(i, sortPoints.at(i));
+            asteroid.m_shape.setPoint(i, sortPoints.at(i));
         }
     }
 }

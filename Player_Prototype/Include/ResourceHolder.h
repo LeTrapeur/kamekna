@@ -18,6 +18,7 @@ namespace Textures
     {
         SpaceBackground,
         Hero,
+        Asteroid,
     };
 }
 

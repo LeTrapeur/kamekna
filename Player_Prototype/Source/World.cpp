@@ -33,6 +33,7 @@ void World::loadTextures()
 {
     m_textures.load(Textures::SpaceBackground, "background.png");
     m_textures.load(Textures::Hero, "astronaut.png");
+    m_textures.load(Textures::Asteroid, "asteroid.png");
 }
 
 void World::buildScene()
@@ -57,6 +58,16 @@ void World::buildScene()
     std::unique_ptr<Platform> platform(new Platform(m_physicWorld));
     platform->setPosition(100.f, 500.f);
     m_sceneLayers[Space]->attachChild(std::move(platform));
+
+    //Asteroid
+    std::unique_ptr<Asteroid> asteroid_1(new Asteroid(m_textures,m_physicWorld));
+    asteroid_1->setPosition(-200.f, -100.f);
+    m_sceneLayers[Space]->attachChild(std::move(asteroid_1));
+
+    //Asteroid
+    std::unique_ptr<Asteroid> asteroid_2(new Asteroid(m_textures,m_physicWorld));
+    asteroid_2->setPosition(200.f, 100.f);
+    m_sceneLayers[Space]->attachChild(std::move(asteroid_2));
 
     // hero
     std::unique_ptr<Being> ladral(new Being(Being::Hero, m_textures,m_physicWorld));

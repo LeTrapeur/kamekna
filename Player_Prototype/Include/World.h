@@ -18,6 +18,7 @@
 #include "Entity.h"
 #include "Being.h"
 #include "Platform.h"
+#include "Asteroid.h"
 
 class World
 {
