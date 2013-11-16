@@ -26,6 +26,8 @@ Asteroid::Asteroid(const TextureHolder& textures, b2World& world): Entity(world)
     AsteroidFixtureDef.shape = &AsteroidShape;
     AsteroidFixtureDef.density = 1.0f;
     m_body->CreateFixture(&AsteroidFixtureDef);
+
+    m_shape.setOrigin(m_body->GetWorldCenter().x, m_body->GetWorldCenter().y);
 }
 
 void Asteroid::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
