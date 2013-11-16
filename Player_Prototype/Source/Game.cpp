@@ -13,7 +13,7 @@ Game::Game():
     }
     m_statisticsText.setFont(m_font);
     m_statisticsText.setString("DEBUG");
-    m_statisticsText.setCharacterSize(24);
+    m_statisticsText.setCharacterSize(20);
     m_statisticsText.setColor(sf::Color::Blue);
 }
 
