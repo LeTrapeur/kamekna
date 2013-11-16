@@ -66,14 +66,14 @@ void World::buildScene()
 
     //Asteroid
     std::unique_ptr<Asteroid> asteroid_2(new Asteroid(m_textures,m_physicWorld));
-    asteroid_2->setPosition(200.f, 100.f);
+    asteroid_2->setPosition(800.f, 100.f);
     m_sceneLayers[Space]->attachChild(std::move(asteroid_2));
 
     // hero
-    std::unique_ptr<Being> ladral(new Being(Being::Hero, m_textures,m_physicWorld));
-    m_player = ladral.get();
-    ladral->setPosition(m_spawnPosition);
-    m_sceneLayers[Space]->attachChild(std::move(ladral));
+    std::unique_ptr<Being> hero(new Being(Being::Hero, m_textures,m_physicWorld));
+    m_player = hero.get();
+    hero->setPosition(m_spawnPosition);
+    m_sceneLayers[Space]->attachChild(std::move(hero));
 }
 
 // To be improved
