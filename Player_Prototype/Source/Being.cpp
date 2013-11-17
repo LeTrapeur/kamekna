@@ -67,26 +67,29 @@ void Being::walkRight()
         m_body->ApplyForce(b2Vec2(m_body->GetMass()*8,0), m_body->GetWorldCenter());
 }
 
-void Being::handleRealTimeInput()
+void Being::thrusterUp()
+{
+    if (m_body->GetLinearVelocity().y * SCALE < -300)
+        m_body->ApplyForce(b2Vec2(0, m_body->GetMass()*25), m_body->GetWorldCenter());
+}
+
+void Being::thrusterDown()
+{
+    if (m_body->GetLinearVelocity().y * SCALE > -300)
+        m_body->ApplyForce(b2Vec2(0, -m_body->GetMass()*25), m_body->GetWorldCenter());
+}
+
+void Being::thrusterLeft()
+{
+    if (m_body->GetLinearVelocity().x * SCALE < 300)
+        m_body->ApplyForce(b2Vec2(m_body->GetMass()*10, 0), m_body->GetWorldCenter());
+}
+
+void Being::thrusterRight()
 {
 
-    // Thrusters
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up) && m_body->GetLinearVelocity().y * SCALE < -300)
-    {
-        m_body->ApplyForce(b2Vec2(0, m_body->GetMass()*25), m_body->GetWorldCenter());
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down) && m_body->GetLinearVelocity().y * SCALE > -300)
-    {
-        m_body->ApplyForce(b2Vec2(0, -m_body->GetMass()*25), m_body->GetWorldCenter());
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left) && m_body->GetLinearVelocity().x * SCALE < 300)
-    {
-        m_body->ApplyForce(b2Vec2(m_body->GetMass()*10, 0), m_body->GetWorldCenter());
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right) && m_body->GetLinearVelocity().x * SCALE > -300)
-    {
+    if (m_body->GetLinearVelocity().x * SCALE > -300)
         m_body->ApplyForce(b2Vec2(-m_body->GetMass()*10, 0), m_body->GetWorldCenter());
-    }
 }
 
 void Being::addFootContact()
@@ -112,4 +115,3 @@ unsigned int Being::getCategory() const
         return Category::PlayerBeing;
     }
 }
-

@@ -36,13 +36,14 @@ class World
         void update(sf::Time dt);
         void draw();
 
-        // Has to be changed with the commands system
-        Being* getPtrPlayer();
         CommandQueue& getCommandQueue();
 
     private:
         void loadTextures();
         void buildScene();
+        void adaptPlayerPosition();
+        void adaptScrolling();
+
 
     private:
         sf::RenderWindow& m_window;
@@ -58,7 +59,6 @@ class World
         SceneNode m_sceneGraph;
         std::array<SceneNode*, LayerCount> m_sceneLayers;
 
-        // To be improved
         Being* m_player;
         sf::Vector2f m_spawnPosition;
 
