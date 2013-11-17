@@ -38,7 +38,6 @@ void Player::handleEvent(const sf::Event& event, CommandQueue& commands)
             commands.push(jump);
         }
     }
-
 }
 
 void Player::handleRealTimeInput(CommandQueue& commands)
