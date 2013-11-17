@@ -76,12 +76,6 @@ void World::buildScene()
     m_sceneLayers[Space]->attachChild(std::move(hero));
 }
 
-// To be improved
-Being* World::getPtrPlayer()
-{
-    return m_player;
-}
-
 void World::update(sf::Time dt)
 {
     while(!m_commandQueue.isEmpty())
@@ -90,12 +84,21 @@ void World::update(sf::Time dt)
     m_physicWorld.Step(dt.asSeconds(), 8, 4);
     m_sceneGraph.update(dt);
 
+    adaptPlayerPosition();
+    adaptScrolling();
+}
+
+void World::adaptPlayerPosition()
+{
     if(!(m_player->getPosition().x > m_worldBounds.left && m_player->getPosition().x < m_worldBounds.width + m_worldBounds.left && m_player->getPosition().y > m_worldBounds.top && m_player->getPosition().y < m_worldBounds.height + m_worldBounds.top))
     {
         m_player->setPosition(m_spawnPosition);
         m_player->resetForces();
     }
+}
 
+void World::adaptScrolling()
+{
     sf::Vector2f myscroll(m_player->getPosition());
     if(myscroll.x < m_worldBounds.left/2)  myscroll.x = m_worldBounds.left/2;
     if(myscroll.x > (m_worldBounds.width + m_worldBounds.left)/2)  myscroll.x = (m_worldBounds.width + m_worldBounds.left)/2;

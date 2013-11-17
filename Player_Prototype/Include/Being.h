@@ -15,11 +15,14 @@ class Being : public Entity
     public:
         Being(Type type, const TextureHolder& textures, b2World& world);
 
-        void handleRealTimeInput();
-
         void jump();
         void walkLeft();
         void walkRight();
+        //to be improved
+        void thrusterUp();
+        void thrusterDown();
+        void thrusterLeft();
+        void thrusterRight();
 
         void addFootContact();
         void removeFootContact();

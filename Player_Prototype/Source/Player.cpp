@@ -20,6 +20,8 @@ struct BeingRightWalker
     void operator()(Being& being, sf::Time) const {being.walkRight();}
 };
 
+
+
 Player::Player()
 {}
 
@@ -54,5 +56,33 @@ void Player::handleRealTimeInput(CommandQueue& commands)
         walkRight.category = Category::PlayerBeing;
         walkRight.action = derivedAction<Being>(BeingRightWalker());
         commands.push(walkRight);
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up))
+    {
+        Command thrustUp;
+        thrustUp.category = Category::PlayerBeing;
+        thrustUp.action = derivedAction<Being>([] (Being& being, sf::Time){being.thrusterUp();});
+        commands.push(thrustUp);
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down))
+    {
+        Command thrustDown;
+        thrustDown.category = Category::PlayerBeing;
+        thrustDown.action = derivedAction<Being>([] (Being& being, sf::Time){being.thrusterDown();});
+        commands.push(thrustDown);
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left))
+    {
+        Command thrustLeft;
+        thrustLeft.category = Category::PlayerBeing;
+        thrustLeft.action = derivedAction<Being>([] (Being& being, sf::Time){being.thrusterLeft();});
+        commands.push(thrustLeft);
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right))
+    {
+        Command thrustRight;
+        thrustRight.category = Category::PlayerBeing;
+        thrustRight.action = derivedAction<Being>([] (Being& being, sf::Time){being.thrusterRight();});
+        commands.push(thrustRight);
     }
 }
