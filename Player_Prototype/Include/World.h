@@ -19,6 +19,7 @@
 #include "Being.h"
 #include "Platform.h"
 #include "Asteroid.h"
+#include "CommandQueue.h"
 
 class World
 {
@@ -37,6 +38,7 @@ class World
 
         // Has to be changed with the commands system
         Being* getPtrPlayer();
+        CommandQueue& getCommandQueue();
 
     private:
         void loadTextures();
@@ -55,9 +57,12 @@ class World
 
         SceneNode m_sceneGraph;
         std::array<SceneNode*, LayerCount> m_sceneLayers;
+
         // To be improved
         Being* m_player;
         sf::Vector2f m_spawnPosition;
+
+        CommandQueue m_commandQueue;
 
 };
 

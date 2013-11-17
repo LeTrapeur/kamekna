@@ -3,6 +3,7 @@
 
 #include "Entity.h"
 #include "ResourceHolder.h"
+#include "Category.h"
 
 class Being : public Entity
 {
@@ -14,17 +15,24 @@ class Being : public Entity
     public:
         Being(Type type, const TextureHolder& textures, b2World& world);
 
-        void handleEvent(const sf::Event& event);
         void handleRealTimeInput();
+
+        void jump();
+        void walkLeft();
+        void walkRight();
 
         void addFootContact();
         void removeFootContact();
+
+        virtual unsigned int getCategory() const;
 
     private:
         virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
     private:
         sf::Sprite m_sprite;
         unsigned int m_numFootContacts;
+
+        Type m_type;
 };
 
 #endif // HERO_H

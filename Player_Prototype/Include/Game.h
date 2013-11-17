@@ -11,6 +11,7 @@
 #include <Box2D/Box2D.h>
 
 #include "World.h"
+#include "Player.h"
 
 class Game : private sf::NonCopyable
 {
@@ -19,7 +20,6 @@ class Game : private sf::NonCopyable
         void run();
 
     private:
-        void processEvents();
         void processInputs();
         void update(sf::Time elapsedTime);
         void updateStatistics(sf::Time elapsedTime);
@@ -29,6 +29,7 @@ class Game : private sf::NonCopyable
         sf::RenderWindow m_window;
 
         World m_world;
+        Player m_player;
 
         sf::Text m_statisticsText;
         sf::Font m_font;

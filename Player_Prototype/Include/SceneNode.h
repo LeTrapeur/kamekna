@@ -8,6 +8,9 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "Command.h"
+#include "Category.h"
+
 class SceneNode : public sf::Transformable, public sf::Drawable, private sf::NonCopyable
 {
     public:
@@ -18,7 +21,11 @@ class SceneNode : public sf::Transformable, public sf::Drawable, private sf::Non
 
         void attachChild(Ptr child);
         Ptr detachChild(const SceneNode& node);
+
         void update(sf::Time dt);
+
+        virtual unsigned int getCategory() const;
+        void onCommand(const Command& command, sf::Time dt);
 
     private:
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const final;
