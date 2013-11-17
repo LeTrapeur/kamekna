@@ -2,12 +2,16 @@
 
 const float SCALE = 30.f; // Box2D works in a scale of 30 pixels = 1 meter
 
-Asteroid::Asteroid(const TextureHolder& textures, b2World& world): Entity(world)
+Asteroid::Asteroid(const TextureHolder& textures, b2World& world): Entity()
 {
     AsteroidGenerator::makeRandomAsteroid(*this);
     m_shape.setTexture(&textures.get(Textures::Asteroid));
 
     int pointsCount = m_shape.getPointCount();
+
+    if(pointsCount > b2_maxPolygonVertices)
+        std::cout << "Asteroid constructor: too much vertices." << std::endl;
+
     b2Vec2 vertices[pointsCount];
     int j = pointsCount - 1;
     for(int i = 0; i < pointsCount; ++i) // CCW

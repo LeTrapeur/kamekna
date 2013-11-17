@@ -84,14 +84,13 @@ Being* World::getPtrPlayer()
 
 void World::update(sf::Time dt)
 {
-    if(m_player->getPosition().x > m_worldBounds.left && m_player->getPosition().x < m_worldBounds.width + m_worldBounds.left
-       &&
-       m_player->getPosition().y > m_worldBounds.top && m_player->getPosition().y < m_worldBounds.height + m_worldBounds.top)
-    {
-        m_physicWorld.Step(dt.asSeconds(), 8, 4);
-        m_sceneGraph.update(dt);
-    }
-    else
+    while(!m_commandQueue.isEmpty())
+        m_sceneGraph.onCommand(m_commandQueue.pop(), dt);
+
+    m_physicWorld.Step(dt.asSeconds(), 8, 4);
+    m_sceneGraph.update(dt);
+
+    if(!(m_player->getPosition().x > m_worldBounds.left && m_player->getPosition().x < m_worldBounds.width + m_worldBounds.left && m_player->getPosition().y > m_worldBounds.top && m_player->getPosition().y < m_worldBounds.height + m_worldBounds.top))
     {
         m_player->setPosition(m_spawnPosition);
         m_player->resetForces();
@@ -113,4 +112,9 @@ void World::draw()
 
     m_window.setView(m_minimapView);
     m_window.draw(m_sceneGraph);
+}
+
+CommandQueue& World::getCommandQueue()
+{
+    return m_commandQueue;
 }

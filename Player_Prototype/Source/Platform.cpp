@@ -2,7 +2,7 @@
 
 const float SCALE = 30.f; // Box2D works in a scale of 30 pixels = 1 meter
 
-Platform::Platform(b2World& world): Entity(world)
+Platform::Platform(b2World& world): Entity()
 {
     const int FLOOR_WIDTH = 1024;
     const int FLOOR_HEIGHT = 32;

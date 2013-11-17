@@ -11,7 +11,7 @@
 class Entity : public SceneNode
 {
     public:
-        explicit Entity(b2World& world);
+        explicit Entity();
         virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
 
         void setPosition(float x, float y);

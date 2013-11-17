@@ -1,5 +1,7 @@
 #include "Being.h"
 #include "ResourceHolder.h"
+// Being => walk left.. etc jump
+// Astronaut => thrusters
 
 const float SCALE = 30.f; // Box2D works in a scale of 30 pixels = 1 meter
 
@@ -14,8 +16,9 @@ Textures::ID toTextureID(Being::Type type)
 }
 
 Being::Being(Type type, const TextureHolder& textures, b2World& world):
-    Entity(world),
+    Entity(),
     m_sprite(textures.get(toTextureID(type))),
+    m_type(type),
     m_numFootContacts(0)
 {
     // Player
@@ -46,32 +49,26 @@ Being::Being(Type type, const TextureHolder& textures, b2World& world):
     m_body->CreateFixture(&footSensorFixture);
 }
 
-void Being::handleEvent(const sf::Event& event)
+void Being::jump()
 {
-    if (event.type == sf::Event::KeyPressed)
-    {
-        // Jumping
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
-        {
-            if (m_numFootContacts >= 1)
-                m_body->ApplyLinearImpulse(b2Vec2(0,-m_body->GetMass()*8), m_body->GetWorldCenter());
-        }
-    }
+    if (m_numFootContacts >= 1)
+        m_body->ApplyLinearImpulse(b2Vec2(0,-m_body->GetMass()*8), m_body->GetWorldCenter());
+}
+
+void Being::walkLeft()
+{
+    if (m_numFootContacts >= 1 && m_body->GetLinearVelocity().x * SCALE > -150)
+        m_body->ApplyForce(b2Vec2(-m_body->GetMass()*8,0), m_body->GetWorldCenter());
+}
+
+void Being::walkRight()
+{
+    if (m_numFootContacts >= 1 && m_body->GetLinearVelocity().x * SCALE < 150)
+        m_body->ApplyForce(b2Vec2(m_body->GetMass()*8,0), m_body->GetWorldCenter());
 }
 
 void Being::handleRealTimeInput()
 {
-    // Moving left/right
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q))
-    {
-        if (m_numFootContacts >= 1 && m_body->GetLinearVelocity().x * SCALE > -150)
-            m_body->ApplyForce(b2Vec2(-m_body->GetMass()*8,0), m_body->GetWorldCenter());
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
-    {
-        if (m_numFootContacts >= 1 && m_body->GetLinearVelocity().x * SCALE < 150)
-            m_body->ApplyForce(b2Vec2(m_body->GetMass()*8,0), m_body->GetWorldCenter());
-    }
 
     // Thrusters
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up) && m_body->GetLinearVelocity().y * SCALE < -300)
@@ -105,5 +102,14 @@ void Being::removeFootContact()
 void Being::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
 {
     target.draw(m_sprite, states);
+}
+
+unsigned int Being::getCategory() const
+{
+    switch(m_type)
+    {
+        case Hero:
+        return Category::PlayerBeing;
+    }
 }
 
