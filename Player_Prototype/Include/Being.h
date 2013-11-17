@@ -31,6 +31,7 @@ class Being : public Entity
 
     private:
         virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
+
     private:
         sf::Sprite m_sprite;
         unsigned int m_numFootContacts;
