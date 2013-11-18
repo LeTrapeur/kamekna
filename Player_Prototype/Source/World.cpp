@@ -21,7 +21,6 @@ World::World(sf::RenderWindow& window):
     m_minimapView.zoom(4.0f);
     m_minimapView.setViewport(sf::FloatRect(0.85f, 0.f, 0.15f, 0.15f));
     m_minimapView.setCenter(m_spawnPosition);
-
     m_worldView.setCenter(m_spawnPosition);
 
     m_physicWorld.SetContactListener(&m_contactListener);
@@ -46,7 +45,7 @@ void World::buildScene()
         m_sceneGraph.attachChild(std::move(layer));
     }
 
-    // background
+    // Background
     sf::Texture& texture = m_textures.get(Textures::SpaceBackground);
     sf::IntRect textureRect(m_worldBounds);
     texture.setRepeated(true);
@@ -54,23 +53,28 @@ void World::buildScene()
     backgroundSprite->setPosition(m_worldBounds.left, m_worldBounds.top);
     m_sceneLayers[Background]->attachChild(std::move(backgroundSprite));
 
-    // platforms
+    // Plateform
     std::unique_ptr<Platform> platform(new Platform(m_physicWorld));
     platform->setPosition(100.f, 500.f);
     m_sceneLayers[Space]->attachChild(std::move(platform));
 
-    //Asteroid
-    std::unique_ptr<Asteroid> asteroid_1(new Asteroid(m_textures,m_physicWorld));
+    // Asteroid_1
+    std::unique_ptr<Asteroid> asteroid_1(new Asteroid(m_textures, m_physicWorld));
     asteroid_1->setPosition(-200.f, -100.f);
     m_sceneLayers[Space]->attachChild(std::move(asteroid_1));
 
-    //Asteroid
-    std::unique_ptr<Asteroid> asteroid_2(new Asteroid(m_textures,m_physicWorld));
+    // Asteroid_2
+    std::unique_ptr<Asteroid> asteroid_2(new Asteroid(m_textures, m_physicWorld));
     asteroid_2->setPosition(800.f, 100.f);
     m_sceneLayers[Space]->attachChild(std::move(asteroid_2));
 
-    // hero
-    std::unique_ptr<Being> hero(new Being(Being::Hero, m_textures,m_physicWorld));
+    // Planet
+    std::unique_ptr<Planet> planet(new Planet(m_textures, m_physicWorld));
+    planet->setPosition(400.f, 200.f);
+    m_sceneLayers[Space]->attachChild(std::move(planet));
+
+    // Hero
+    std::unique_ptr<Being> hero(new Being(Being::Hero, m_textures, m_physicWorld));
     m_player = hero.get();
     hero->setPosition(m_spawnPosition);
     m_sceneLayers[Space]->attachChild(std::move(hero));

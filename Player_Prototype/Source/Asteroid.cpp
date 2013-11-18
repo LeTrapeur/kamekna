@@ -20,9 +20,9 @@ Asteroid::Asteroid(const TextureHolder& textures, b2World& world): Entity()
         j--;
     }
 
-    b2BodyDef GroundBodyDef;
-    GroundBodyDef.type = b2_staticBody;
-    m_body = world.CreateBody(&GroundBodyDef);
+    b2BodyDef AsteroidBodyDef;
+    AsteroidBodyDef.type = b2_staticBody;
+    m_body = world.CreateBody(&AsteroidBodyDef);
 
     b2FixtureDef AsteroidFixtureDef;
     b2PolygonShape AsteroidShape;

@@ -19,6 +19,7 @@
 #include "Being.h"
 #include "Platform.h"
 #include "Asteroid.h"
+#include "Planet.h"
 #include "CommandQueue.h"
 
 class World
