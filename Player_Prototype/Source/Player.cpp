@@ -20,8 +20,6 @@ struct BeingRightWalker
     void operator()(Being& being, sf::Time) const {being.walkRight();}
 };
 
-
-
 Player::Player()
 {}
 

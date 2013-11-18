@@ -70,7 +70,7 @@ void World::buildScene()
 
     // Planet
     std::unique_ptr<Planet> planet(new Planet(m_textures, m_physicWorld));
-    planet->setPosition(400.f, 200.f);
+    planet->setPosition(-200.f, -450.f);
     m_sceneLayers[Space]->attachChild(std::move(planet));
 
     // Hero

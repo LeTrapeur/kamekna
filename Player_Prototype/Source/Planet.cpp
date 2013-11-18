@@ -4,10 +4,12 @@ const float SCALE = 30.f; // Box2D works in a scale of 30 pixels = 1 meter
 
 Planet::Planet(const TextureHolder& textures, b2World& world)
 {
-    const float radius = 50;
+    const float radius = 300;
     setOrigin(radius, radius);
     m_shapePlanet.setRadius(radius);
     m_shapePlanet.setFillColor(sf::Color::White);
+
+    std::cout << getOrigin().x << " " << getOrigin().y << std::endl;
 
     b2BodyDef PlanetBodyDef;
     PlanetBodyDef.type = b2_staticBody;
@@ -20,9 +22,14 @@ Planet::Planet(const TextureHolder& textures, b2World& world)
     PlanetFixtureDef.density = 1.0f;
     m_body->CreateFixture(&PlanetFixtureDef);
 
-    m_shapeInfluence.setRadius((radius*10)/2.f);
-   // m_shapeInfluence.setOrigin(radius, radius);
+    m_shapeInfluence.setRadius(radius*3);
+    m_shapeInfluence.setOrigin(getOrigin().x*2.f, getOrigin().y*2.f);
     m_shapeInfluence.setFillColor(sf::Color(200,100,50,100));
+}
+
+void Planet::updateCurrent(sf::Time dt)
+{
+
 }
 
 void Planet::drawCurrent (sf::RenderTarget& target, sf::RenderStates states) const
