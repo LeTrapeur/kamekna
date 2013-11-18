@@ -10,6 +10,7 @@
 namespace sf
 {
     class Texture;
+    class Font;
 }
 
 namespace Textures
@@ -19,6 +20,14 @@ namespace Textures
         SpaceBackground,
         Hero,
         Asteroid,
+    };
+}
+
+namespace Fonts
+{
+    enum ID
+    {
+        Main,
     };
 }
 
@@ -42,6 +51,7 @@ class ResourceHolder
 };
 
 typedef ResourceHolder<sf::Texture, Textures::ID> TextureHolder;
+typedef ResourceHolder<sf::Font, Fonts::ID> FontHolder;
 
 #include "ResourceHolder.inl"
 #endif // RESOURCEHOLDER_H

@@ -52,6 +52,7 @@ class World
         sf::View m_minimapView;
 
         TextureHolder m_textures;
+        FontHolder m_fonts;
 
         b2World m_physicWorld;
         MyContactListener m_contactListener;

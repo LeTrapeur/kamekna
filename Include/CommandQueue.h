@@ -9,7 +9,7 @@
 class CommandQueue
 {
     public:
-        CommandQueue();
+        explicit CommandQueue();
         void push(const Command& command);
         Command pop();
         bool isEmpty() const;

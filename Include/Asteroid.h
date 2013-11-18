@@ -11,7 +11,7 @@
 class Asteroid : public Entity
 {
     public:
-        Asteroid(const TextureHolder& textures,b2World& world);
+        explicit Asteroid(const TextureHolder& textures,b2World& world);
         friend void AsteroidGenerator::makeRandomAsteroid(Asteroid& asteroid);
 
     private:

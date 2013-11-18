@@ -9,7 +9,7 @@
 class Player
 {
     public:
-        Player();
+        explicit Player();
         void handleEvent(const sf::Event& event, CommandQueue& commands);
         void handleRealTimeInput(CommandQueue& commands);
 };

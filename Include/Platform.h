@@ -6,7 +6,7 @@
 class Platform : public Entity
 {
     public:
-        Platform(b2World& world);
+        explicit Platform(b2World& world);
 
     private:
         virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;

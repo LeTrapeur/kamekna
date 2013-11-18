@@ -10,11 +10,10 @@
 class Planet : public Entity
 {
     public:
-        Planet(const TextureHolder& textures,b2World& world);
+        explicit Planet(const TextureHolder& textures,b2World& world);
 
     private:
         virtual void drawCurrent (sf::RenderTarget& target, sf::RenderStates states) const;
-        virtual void updateCurrent(sf::Time dt);
 
     private:
         sf::CircleShape m_shapePlanet;

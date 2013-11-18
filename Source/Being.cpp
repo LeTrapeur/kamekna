@@ -15,7 +15,7 @@ Textures::ID toTextureID(Being::Type type)
     return Textures::Hero;
 }
 
-Being::Being(Type type, const TextureHolder& textures, b2World& world):
+Being::Being(Type type, const TextureHolder& textures, const FontHolder& fonts, b2World& world):
     Entity(),
     m_sprite(textures.get(toTextureID(type))),
     m_type(type),
@@ -26,18 +26,18 @@ Being::Being(Type type, const TextureHolder& textures, b2World& world):
 
     setOrigin(sf::Vector2f(spriteBounds.width/2,spriteBounds.height/2));
 
-    b2BodyDef PlayerBodyDef;
-    PlayerBodyDef.type = b2_dynamicBody;
-    PlayerBodyDef.fixedRotation = true;
-    m_body = world.CreateBody(&PlayerBodyDef);
+    b2BodyDef BeingBodyDef;
+    BeingBodyDef.type = b2_dynamicBody;
+    BeingBodyDef.fixedRotation = true;
+    m_body = world.CreateBody(&BeingBodyDef);
 
-    b2FixtureDef PlayerFixtureDef;
-    b2PolygonShape PlayerShape;
-    PlayerShape.SetAsBox((spriteBounds.width/2.0f)/SCALE, (spriteBounds.height/2.0f)/SCALE);
-    PlayerFixtureDef.shape = &PlayerShape;
-    PlayerFixtureDef.density = 1.0f;
-    PlayerFixtureDef.friction = 0.3f;
-    m_body->CreateFixture(&PlayerFixtureDef);
+    b2FixtureDef BeingBFixtureDef;
+    b2PolygonShape BeingShape;
+    BeingShape.SetAsBox((spriteBounds.width/2.0f)/SCALE, (spriteBounds.height/2.0f)/SCALE);
+    BeingBFixtureDef.shape = &BeingShape;
+    BeingBFixtureDef.density = 1.0f;
+    BeingBFixtureDef.friction = 0.3f;
+    m_body->CreateFixture(&BeingBFixtureDef);
 
     //add foot sensor fixture
     b2PolygonShape FootShape;
@@ -47,6 +47,10 @@ Being::Being(Type type, const TextureHolder& textures, b2World& world):
     footSensorFixture.isSensor = true;
     footSensorFixture.userData = this;
     m_body->CreateFixture(&footSensorFixture);
+
+    std::unique_ptr<TextNode> nameDisplay(new TextNode(fonts, "I am living"));
+    nameDisplay->setPosition(0.f, -25.f);
+    attachChild(std::move(nameDisplay));
 }
 
 void Being::jump()

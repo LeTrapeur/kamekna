@@ -4,6 +4,7 @@
 #include "Entity.h"
 #include "ResourceHolder.h"
 #include "Category.h"
+#include "TextNode.h"
 
 class Being : public Entity
 {
@@ -13,7 +14,7 @@ class Being : public Entity
             Hero,
         };
     public:
-        Being(Type type, const TextureHolder& textures, b2World& world);
+        explicit Being(Type type, const TextureHolder& textures, const FontHolder& fonts, b2World& world);
 
         void jump();
         void walkLeft();

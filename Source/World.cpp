@@ -33,6 +33,11 @@ void World::loadTextures()
     m_textures.load(Textures::SpaceBackground, "background.png");
     m_textures.load(Textures::Hero, "astronaut.png");
     m_textures.load(Textures::Asteroid, "asteroid.png");
+
+    // to be improved
+    m_fonts.load(Fonts::Main, "arial.ttf");
+
+
 }
 
 void World::buildScene()
@@ -74,7 +79,7 @@ void World::buildScene()
     m_sceneLayers[Space]->attachChild(std::move(planet));
 
     // Hero
-    std::unique_ptr<Being> hero(new Being(Being::Hero, m_textures, m_physicWorld));
+    std::unique_ptr<Being> hero(new Being(Being::Hero, m_textures, m_fonts, m_physicWorld));
     m_player = hero.get();
     hero->setPosition(m_spawnPosition);
     m_sceneLayers[Space]->attachChild(std::move(hero));
