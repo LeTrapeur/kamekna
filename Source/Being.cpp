@@ -73,7 +73,7 @@ void Being::walkRight()
 
 void Being::thrusterUp()
 {
-    if (m_body->GetLinearVelocity().y * SCALE < -300)
+    if (m_body->GetLinearVelocity().y * SCALE < 300)
         m_body->ApplyForce(b2Vec2(0, m_body->GetMass()*25), m_body->GetWorldCenter());
 }
 

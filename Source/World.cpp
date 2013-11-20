@@ -6,7 +6,7 @@ World::World(sf::RenderWindow& window):
     m_window(window),
     m_worldView(window.getDefaultView()),
     m_minimapView(window.getDefaultView()),
-    m_physicWorld(b2Vec2(0, 15.0f)),
+    m_physicWorld(b2Vec2(0, 0.0f)),
     m_worldBounds(
                   -m_worldView.getSize().x,
                   -m_worldView.getSize().y,
@@ -36,8 +36,6 @@ void World::loadTextures()
 
     // to be improved
     m_fonts.load(Fonts::Main, "arial.ttf");
-
-
 }
 
 void World::buildScene()
