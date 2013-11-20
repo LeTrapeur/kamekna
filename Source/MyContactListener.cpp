@@ -13,15 +13,15 @@ void MyContactListener::BeginContact(b2Contact* contact)
 {
     Entity* A = static_cast<Entity*>(contact->GetFixtureA()->GetUserData());
     Entity* B = static_cast<Entity*>(contact->GetFixtureB()->GetUserData());
-    Being* hero = dynamic_cast<Being*>(A);
-    if (hero)
+    Being* being = dynamic_cast<Being*>(A);
+    if (being)
     {
-        hero->addFootContact();
+        being->addFootContact();
     }
-    hero = dynamic_cast<Being*>(B);
-    if (hero)
+    being = dynamic_cast<Being*>(B);
+    if (being)
     {
-        hero->addFootContact();
+        being->addFootContact();
     }
 }
 
@@ -29,14 +29,14 @@ void MyContactListener::EndContact(b2Contact* contact)
 {
     Entity* A = static_cast<Entity*>(contact->GetFixtureA()->GetUserData());
     Entity* B = static_cast<Entity*>(contact->GetFixtureB()->GetUserData());
-    Being* hero = dynamic_cast<Being*>(A);
-    if (hero)
+    Being* being = dynamic_cast<Being*>(A);
+    if (being)
     {
-        hero->removeFootContact();
+        being->removeFootContact();
     }
-    hero = dynamic_cast<Being*>(B);
-    if (hero)
+    being = dynamic_cast<Being*>(B);
+    if (being)
     {
-        hero->removeFootContact();
+        being->removeFootContact();
     }
 }
