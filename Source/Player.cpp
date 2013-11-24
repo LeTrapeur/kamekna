@@ -2,84 +2,95 @@
 
 #include "Being.h"
 
-struct BeingJumper
-{
-    BeingJumper(){}
-    void operator()(Being& being, sf::Time) const {being.jump();}
-};
-
-struct BeingLeftWalker
-{
-    BeingLeftWalker(){}
-    void operator()(Being& being, sf::Time) const {being.walkLeft();}
-};
-
-struct BeingRightWalker
-{
-    BeingRightWalker(){}
-    void operator()(Being& being, sf::Time) const {being.walkRight();}
-};
-
 Player::Player()
-{}
+{
+        // Set initial key bindings
+        m_keyBinding[sf::Keyboard::Q] = MoveLeft;
+        m_keyBinding[sf::Keyboard::D] = MoveRight;
+        m_keyBinding[sf::Keyboard::Space] = Jump;
+        m_keyBinding[sf::Keyboard::Left] = ThursterLeft;
+        m_keyBinding[sf::Keyboard::Right] = ThursterRight;
+        m_keyBinding[sf::Keyboard::Up] = ThursterUp;
+        m_keyBinding[sf::Keyboard::Down] = ThursterDown;
+
+        // Set initial action bindings
+        initializeActions();
+
+        for (auto it = m_actionBinding.begin(); it!= m_actionBinding.end(); ++it)
+            (*it).second.category = Category::PlayerBeing;
+
+}
 
 void Player::handleEvent(const sf::Event& event, CommandQueue& commands)
 {
     if (event.type == sf::Event::KeyPressed)
     {
-        // Jumping
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
-        {
-            Command jump;
-            jump.category = Category::PlayerBeing;
-            jump.action = derivedAction<Being>(BeingJumper());
-            commands.push(jump);
-        }
+         auto found = m_keyBinding.find(event.key.code);
+            if (found != m_keyBinding.end() && !isRealtimeAction(found->second))
+                commands.push(m_actionBinding[found->second]);
     }
 }
 
 void Player::handleRealTimeInput(CommandQueue& commands)
 {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q))
+
+    // Traverse all assigned keys and check if they are pressed
+    for (auto it = m_keyBinding.begin(); it!= m_keyBinding.end(); ++it)
     {
-        Command walkLeft;
-        walkLeft.category = Category::PlayerBeing;
-        walkLeft.action = derivedAction<Being>(BeingLeftWalker());
-        commands.push(walkLeft);
+        // If key is pressed, lookup action and trigger corresponding command
+        if (sf::Keyboard::isKeyPressed((*it).first) && isRealtimeAction((*it).second))
+            commands.push(m_actionBinding[(*it).second]);
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
+}
+
+void Player::assignKey(Action action, sf::Keyboard::Key key)
+{
+    // Remove all keys that already map to action
+    for (auto it = m_keyBinding.begin(); it != m_keyBinding.end(); )
     {
-        Command walkRight;
-        walkRight.category = Category::PlayerBeing;
-        walkRight.action = derivedAction<Being>(BeingRightWalker());
-        commands.push(walkRight);
+        if (it->second == action)
+            m_keyBinding.erase(it++);
+        else
+            ++it;
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up))
+    // Insert new binding
+    m_keyBinding[key] = action;
+}
+
+sf::Keyboard::Key Player::getAssignedKey(Action action) const
+{
+    for (auto it = m_keyBinding.begin(); it != m_keyBinding.end(); ++it )
     {
-        Command thrustUp;
-        thrustUp.category = Category::PlayerBeing;
-        thrustUp.action = derivedAction<Being>([] (Being& being, sf::Time){being.thrusterUp();});
-        commands.push(thrustUp);
+        if ((*it).second == action)
+            return (*it).first;
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down))
-    {
-        Command thrustDown;
-        thrustDown.category = Category::PlayerBeing;
-        thrustDown.action = derivedAction<Being>([] (Being& being, sf::Time){being.thrusterDown();});
-        commands.push(thrustDown);
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left))
-    {
-        Command thrustLeft;
-        thrustLeft.category = Category::PlayerBeing;
-        thrustLeft.action = derivedAction<Being>([] (Being& being, sf::Time){being.thrusterLeft();});
-        commands.push(thrustLeft);
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right))
-    {
-        Command thrustRight;
-        thrustRight.category = Category::PlayerBeing;
-        thrustRight.action = derivedAction<Being>([] (Being& being, sf::Time){being.thrusterRight();});
-        commands.push(thrustRight);
-    }
+    return sf::Keyboard::Unknown;
+}
+
+void Player::initializeActions()
+{
+        m_actionBinding[MoveLeft].action  = derivedAction<Being>([] (Being& being, sf::Time){being.walkLeft();});
+        m_actionBinding[MoveRight].action = derivedAction<Being>([] (Being& being, sf::Time){being.walkRight();});
+        m_actionBinding[Jump].action = derivedAction<Being>([] (Being& being, sf::Time){being.jump();});
+        m_actionBinding[ThursterLeft].action = derivedAction<Being>([] (Being& being, sf::Time){being.thrusterLeft();});
+        m_actionBinding[ThursterRight].action = derivedAction<Being>([] (Being& being, sf::Time){being.thrusterRight();});
+        m_actionBinding[ThursterUp].action = derivedAction<Being>([] (Being& being, sf::Time){being.thrusterUp();});
+        m_actionBinding[ThursterDown].action = derivedAction<Being>([] (Being& being, sf::Time){being.thrusterDown();});
+}
+
+bool Player::isRealtimeAction(Action action)
+{
+        switch (action)
+        {
+                case MoveLeft:
+                case MoveRight:
+                case ThursterLeft:
+                case ThursterRight:
+                case ThursterUp:
+                case ThursterDown:
+                        return true;
+
+                default:
+                        return false;
+        }
 }
