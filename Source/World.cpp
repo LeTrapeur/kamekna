@@ -1,5 +1,11 @@
 #include "World.h"
 
+#include "Being.h"
+#include "SpriteNode.h"
+#include "Platform.h"
+#include "Asteroid.h"
+#include "Planet.h"
+
 const float SCALE = 30.f; // Box2D works in a scale of 30 pixels = 1 meter
 
 World::World(sf::RenderWindow& window, FontHolder& fonts):

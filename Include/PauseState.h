@@ -1,10 +1,10 @@
 #ifndef PAUSESTATE_H
 #define PAUSESTATE_H
 
-#include "State.h"
-
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Text.hpp>
+
+#include "State.h"
 
 
 class PauseState : public State

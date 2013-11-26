@@ -1,7 +1,6 @@
 #ifndef GAMESTATE_H
 #define GAMESTATE_H
 
-#include "State.h"
 #include "StateStack.h"
 #include "World.h"
 #include "Player.h"

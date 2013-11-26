@@ -1,4 +1,4 @@
-#include "application.h"
+#include "Application.h"
 #include "TitleState.h"
 #include "GameState.h"
 #include "MenuState.h"
@@ -15,11 +15,12 @@ Application::Application():
     m_stateStack(State::Context(m_window, m_textures, m_fonts, m_player))
 {
     m_fonts.load(Fonts::Main, "airstrip.ttf");
+    m_fonts.load(Fonts::Debug, "arial.ttf");
     m_textures.load(Textures::TitleScreen, "titlescreen.png");
 
-    m_statisticsText.setFont(m_fonts.get(Fonts::Main));
+    m_statisticsText.setFont(m_fonts.get(Fonts::Debug));
     m_statisticsText.setString("DEBUG");
-    m_statisticsText.setCharacterSize(20);
+    m_statisticsText.setCharacterSize(10);
     m_statisticsText.setColor(sf::Color::Blue);
 
     registerStates();

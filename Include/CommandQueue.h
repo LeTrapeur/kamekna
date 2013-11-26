@@ -5,7 +5,6 @@
 
 #include "Command.h"
 
-
 class CommandQueue
 {
     public:

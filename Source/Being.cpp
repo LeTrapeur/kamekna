@@ -1,6 +1,7 @@
 #include "Being.h"
 #include "ResourceHolder.h"
 #include "Utility.h"
+#include "TextNode.h"
 
 #include <string>
 

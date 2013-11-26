@@ -1,11 +1,10 @@
 #ifndef TITLESTATE_H
 #define TITLESTATE_H
 
-
-#include "State.h"
-
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Text.hpp>
+
+#include "State.h"
 
 
 class TitleState : public State

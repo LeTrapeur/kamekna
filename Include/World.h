@@ -13,14 +13,14 @@
 
 #include "MyContactListener.h"
 #include "ResourceHolder.h"
-#include "SceneNode.h"
-#include "SpriteNode.h"
-#include "Entity.h"
-#include "Being.h"
-#include "Platform.h"
-#include "Asteroid.h"
-#include "Planet.h"
+//#include "Platform.h"
+//#include "Asteroid.h"
+//#include "Planet.h"
 #include "CommandQueue.h"
+#include "SceneNode.h"
+
+
+class Being;
 
 class World
 {

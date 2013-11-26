@@ -6,7 +6,6 @@
 #include <Box2D/Box2D.h>
 
 #include "SceneNode.h"
-#include "DataTables.h"
 
 class Entity : public SceneNode
 {

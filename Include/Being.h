@@ -3,8 +3,6 @@
 
 #include "Entity.h"
 #include "ResourceHolder.h"
-#include "Category.h"
-#include "TextNode.h"
 
 class Being : public Entity
 {
