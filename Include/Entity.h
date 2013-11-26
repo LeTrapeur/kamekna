@@ -11,19 +11,19 @@
 class Entity : public SceneNode
 {
     public:
-        explicit Entity();
-        virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
+        explicit            Entity();
+        virtual void        drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
 
-        void setPosition(float x, float y);
-        void setPosition(const sf::Vector2f& pos);
-        void setRotation(float angle);
-        void resetForces();
+        void                setPosition(float x, float y);
+        void                setPosition(const sf::Vector2f& pos);
+        void                setRotation(float angle);
+        void                resetForces();
 
     protected:
-        b2Body* m_body;
+        b2Body*             m_body;
 
     private:
-        virtual void updateCurrent(sf::Time dt);
+        virtual void        updateCurrent(sf::Time dt);
 
 
 

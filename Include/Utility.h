@@ -15,6 +15,12 @@ namespace Utility
     std::vector< sf::Vector2f > ConvexHull(const std::vector< sf::Vector2f >& points);
 
     float randomFloatGenerator(float a, float b);
+
+    void centerOrigin(sf::Sprite& sprite);
+
+    void centerOrigin(sf::Text& text);
+
+
 }
 
 #endif // UTILITY_H

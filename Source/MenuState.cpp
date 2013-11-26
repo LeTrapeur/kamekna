@@ -1,37 +1,41 @@
 #include "MenuState.h"
 #include "ResourceHolder.h"
+#include "Utility.h"
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/View.hpp>
 
 
-MenuState::MenuState(StateStack& stack, Context context)
-: State(stack, context)
-, mOptions()
-, mOptionIndex(0)
+MenuState::MenuState(StateStack& stack, Context context):
+    State(stack, context),
+    m_options(),
+    m_optionIndex(0)
 {
         sf::Texture& texture = context.textures->get(Textures::TitleScreen);
         sf::Font& font = context.fonts->get(Fonts::Main);
 
-        mBackgroundSprite.setTexture(texture);
+        m_backgroundSprite.setTexture(texture);
 
         sf::Text playOption;
         playOption.setFont(font);
         playOption.setString("Play");
+        Utility::centerOrigin(playOption);
         playOption.setPosition(context.window->getView().getSize() / 2.f);
-        mOptions.push_back(playOption);
+        m_options.push_back(playOption);
 
         sf::Text optionsOption;
         optionsOption.setFont(font);
         optionsOption.setString("Options");
+        Utility::centerOrigin(optionsOption);
         optionsOption.setPosition(playOption.getPosition() + sf::Vector2f(0.f, 50.f));
-        mOptions.push_back(optionsOption);
+        m_options.push_back(optionsOption);
 
         sf::Text exitOption;
         exitOption.setFont(font);
         exitOption.setString("Exit");
+        Utility::centerOrigin(exitOption);
         exitOption.setPosition(optionsOption.getPosition() + sf::Vector2f(0.f, 50.f));
-        mOptions.push_back(exitOption);
+        m_options.push_back(exitOption);
 
         updateOptionText();
 }
@@ -41,9 +45,9 @@ void MenuState::draw()
     sf::RenderWindow& window = *getContext().window;
 
     window.setView(window.getDefaultView());
-    window.draw(mBackgroundSprite);
+    window.draw(m_backgroundSprite);
 
-    for(const sf::Text& text: mOptions)
+    for(const sf::Text& text: m_options)
             window.draw(text);
 }
 
@@ -60,12 +64,12 @@ bool MenuState::handleEvent(const sf::Event& event)
 
     if (event.key.code == sf::Keyboard::Return)
     {
-        if (mOptionIndex == Play)
+        if (m_optionIndex == Play)
         {
             requestStackPop();
             requestStackPush(States::Game);
         }
-        else if (mOptionIndex == Exit)
+        else if (m_optionIndex == Exit)
         {
             // The exit option was chosen, by removing itself, the stack will be empty, and the game will know it is time to close.
             requestStackPop();
@@ -75,10 +79,10 @@ bool MenuState::handleEvent(const sf::Event& event)
     else if (event.key.code == sf::Keyboard::Up)
     {
         // Decrement and wrap-around
-        if (mOptionIndex > 0)
-            mOptionIndex--;
+        if (m_optionIndex > 0)
+            m_optionIndex--;
         else
-            mOptionIndex = mOptions.size() - 1;
+            m_optionIndex = m_options.size() - 1;
 
         updateOptionText();
     }
@@ -86,10 +90,10 @@ bool MenuState::handleEvent(const sf::Event& event)
     else if (event.key.code == sf::Keyboard::Down)
     {
         // Increment and wrap-around
-        if (mOptionIndex < mOptions.size() - 1)
-            mOptionIndex++;
+        if (m_optionIndex < m_options.size() - 1)
+            m_optionIndex++;
         else
-            mOptionIndex = 0;
+            m_optionIndex = 0;
 
         updateOptionText();
     }
@@ -99,13 +103,13 @@ bool MenuState::handleEvent(const sf::Event& event)
 
 void MenuState::updateOptionText()
 {
-    if (mOptions.empty())
+    if (m_options.empty())
             return;
 
     // White all texts
-    for(sf::Text& text: mOptions)
+    for(sf::Text& text: m_options)
             text.setColor(sf::Color::White);
 
     // Red the selected text
-    mOptions[mOptionIndex].setColor(sf::Color::Red);
+    m_options[m_optionIndex].setColor(sf::Color::Red);
 }

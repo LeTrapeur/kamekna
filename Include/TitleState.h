@@ -18,11 +18,11 @@ class TitleState : public State
 
 
     private:
-            sf::Sprite                   mBackgroundSprite;
-            sf::Text                     mText;
+            sf::Sprite                   m_backgroundSprite;
+            sf::Text                     m_text;
 
-            bool                         mShowText;
-            sf::Time                     mTextEffectTime;
+            bool                         m_showText;
+            sf::Time                     m_textEffectTime;
 };
 
 

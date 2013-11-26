@@ -1,5 +1,9 @@
 #include "Being.h"
 #include "ResourceHolder.h"
+#include "Utility.h"
+
+#include <string>
+
 // Being => walk left.. etc jump
 // Astronaut => thrusters
 
@@ -48,7 +52,8 @@ Being::Being(Type type, const TextureHolder& textures, const FontHolder& fonts, 
     footSensorFixture.userData = this;
     m_body->CreateFixture(&footSensorFixture);
 
-    std::unique_ptr<TextNode> nameDisplay(new TextNode(fonts, "I am living"));
+    std::string textBeing("Being");
+    std::unique_ptr<TextNode> nameDisplay(new TextNode(fonts, textBeing));
     nameDisplay->setPosition(0.f, -25.f);
     attachChild(std::move(nameDisplay));
 }

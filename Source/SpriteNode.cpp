@@ -4,14 +4,14 @@
 
 
 SpriteNode::SpriteNode(const sf::Texture& texture):
-    mSprite(texture)
+    m_sprite(texture)
 {}
 
 SpriteNode::SpriteNode(const sf::Texture& texture, const sf::IntRect& textureRect):
-    mSprite(texture, textureRect)
+    m_sprite(texture, textureRect)
 {}
 
 void SpriteNode::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
 {
-    target.draw(mSprite, states);
+    target.draw(m_sprite, states);
 }

@@ -32,39 +32,39 @@ class World
             LayerCount
         };
     public:
-        explicit World(sf::RenderWindow& window, FontHolder& fonts);
+        explicit                                World(sf::RenderWindow& window, FontHolder& fonts);
 
-        void update(sf::Time dt);
-        void draw();
+        void                                    update(sf::Time dt);
+        void                                    draw();
 
-        CommandQueue& getCommandQueue();
-
-    private:
-        void loadTextures();
-        void buildScene();
-        void adaptPlayerPosition();
-        void adaptScrolling();
-
+        CommandQueue&                           getCommandQueue();
 
     private:
-        sf::RenderWindow& m_window;
-        sf::View m_worldView;
-        sf::View m_minimapView;
+        void                                    loadTextures();
+        void                                    buildScene();
+        void                                    adaptPlayerPosition();
+        void                                    adaptScrolling();
 
-        TextureHolder m_textures;
-        FontHolder& m_fonts;
 
-        b2World m_physicWorld;
-        MyContactListener m_contactListener;
-        sf::FloatRect m_worldBounds;
+    private:
+        sf::RenderWindow&                       m_window;
+        sf::View                                m_worldView;
+        sf::View                                m_minimapView;
+
+        TextureHolder                           m_textures;
+        FontHolder&                             m_fonts;
+
+        b2World                                 m_physicWorld;
+        MyContactListener                       m_contactListener;
+        sf::FloatRect                           m_worldBounds;
 
         SceneNode m_sceneGraph;
-        std::array<SceneNode*, LayerCount> m_sceneLayers;
+        std::array<SceneNode*, LayerCount>      m_sceneLayers;
 
-        Being* m_player;
-        sf::Vector2f m_spawnPosition;
+        Being*                                  m_player;
+        sf::Vector2f                            m_spawnPosition;
 
-        CommandQueue m_commandQueue;
+        CommandQueue                             m_commandQueue;
 
 };
 

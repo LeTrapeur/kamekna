@@ -11,15 +11,15 @@
 class TextNode : public SceneNode
 {
     public:
-        explicit TextNode(const FontHolder& fonts, const std::string& text);
+        explicit        TextNode(const FontHolder& fonts, const std::string& text);
 
-        void setString(const std::string& text);
-
-    private:
-        virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
+        void            setString(const std::string& text);
 
     private:
-        sf::Text m_text;
+        virtual void    drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
+
+    private:
+        sf::Text        m_text;
 };
 
 #endif // TEXTNODE_H

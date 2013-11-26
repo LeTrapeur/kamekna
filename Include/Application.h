@@ -17,14 +17,14 @@ class Application
 {
     public:
         Application();
-        void run();
-        void registerStates();
+        void                run();
+        void                registerStates();
 
     private:
-        void processInputs();
-        void update(sf::Time elapsedTime);
-        void updateStatistics(sf::Time elapsedTime);
-        void render();
+        void                processInputs();
+        void                update(sf::Time elapsedTime);
+        void                updateStatistics(sf::Time elapsedTime);
+        void                render();
 
     private:
         sf::RenderWindow    m_window;

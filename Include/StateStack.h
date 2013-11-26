@@ -60,20 +60,20 @@ class StateStack : private sf::NonCopyable
 		};
 
 	private:
-        std::vector<State::Ptr>								mStack;
-        std::vector<PendingChange>							mPendingList;
+        std::vector<State::Ptr>								m_stack;
+        std::vector<PendingChange>							m_pendingList;
 
-        State::Context										mContext;
-        std::map<States::ID, std::function<State::Ptr()>>	mFactories;
+        State::Context										m_context;
+        std::map<States::ID, std::function<State::Ptr()>>	m_factories;
 };
 
 
 template <typename T>
 void StateStack::registerState(States::ID stateID)
 {
-	mFactories[stateID] = [this] ()
+	m_factories[stateID] = [this] ()
 	{
-		return State::Ptr(new T(*this, mContext));
+		return State::Ptr(new T(*this, m_context));
 	};
 }
 

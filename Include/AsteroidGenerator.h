@@ -8,9 +8,9 @@ class Asteroid;
 
 namespace AsteroidGenerator
 {
-    void makeRandomAsteroid(Asteroid& asteroid);
+    void                        makeRandomAsteroid(Asteroid& asteroid);
 
-    std::vector<sf::Vector2f> getRandomPoints(int nbPoints);
+    std::vector<sf::Vector2f>   getRandomPoints(int nbPoints);
 }
 
 #endif // ASTEROIDGENERATOR_H

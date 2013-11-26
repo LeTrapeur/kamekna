@@ -1,52 +1,54 @@
 #include "TitleState.h"
 #include "ResourceHolder.h"
+#include "Utility.h"
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
 
-TitleState::TitleState(StateStack& stack, Context context)
-: State(stack, context)
-, mText()
-, mShowText(true)
-, mTextEffectTime(sf::Time::Zero)
+TitleState::TitleState(StateStack& stack, Context context):
+    State(stack, context),
+    m_text(),
+    m_showText(true),
+    m_textEffectTime(sf::Time::Zero)
 {
-        mBackgroundSprite.setTexture(context.textures->get(Textures::TitleScreen));
+    m_backgroundSprite.setTexture(context.textures->get(Textures::TitleScreen));
 
-        mText.setFont(context.fonts->get(Fonts::Main));
-        mText.setString("Press any key to start");
-        mText.setPosition(context.window->getView().getSize() / 2.f);
+    m_text.setFont(context.fonts->get(Fonts::Main));
+    m_text.setString("Press any key to start");
+    Utility::centerOrigin(m_text);
+    m_text.setPosition(context.window->getView().getSize() / 2.f);
 }
 
 void TitleState::draw()
 {
-        sf::RenderWindow& window = *getContext().window;
-        window.draw(mBackgroundSprite);
+    sf::RenderWindow& window = *getContext().window;
+    window.draw(m_backgroundSprite);
 
-        if (mShowText)
-                window.draw(mText);
+    if (m_showText)
+        window.draw(m_text);
 }
 
 bool TitleState::update(sf::Time dt)
 {
-        mTextEffectTime += dt;
+    m_textEffectTime += dt;
 
-        if (mTextEffectTime >= sf::seconds(0.5f))
-        {
-                mShowText = !mShowText;
-                mTextEffectTime = sf::Time::Zero;
-        }
+    if (m_textEffectTime >= sf::seconds(0.5f))
+    {
+        m_showText = !m_showText;
+        m_textEffectTime = sf::Time::Zero;
+    }
 
-        return true;
+    return true;
 }
 
 bool TitleState::handleEvent(const sf::Event& event)
 {
-        // If any key is pressed, trigger the next screen
-        if (event.type == sf::Event::KeyPressed)
-        {
-                requestStackPop();
-                requestStackPush(States::Menu);
-        }
+    // If any key is pressed, trigger the next screen
+    if (event.type == sf::Event::KeyPressed)
+    {
+        requestStackPop();
+        requestStackPush(States::Menu);
+    }
 
-        return true;
+    return true;
 }

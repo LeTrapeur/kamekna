@@ -11,11 +11,11 @@
 class Asteroid : public Entity
 {
     public:
-        explicit Asteroid(const TextureHolder& textures,b2World& world);
-        friend void AsteroidGenerator::makeRandomAsteroid(Asteroid& asteroid);
+        explicit        Asteroid(const TextureHolder& textures,b2World& world);
+        friend void     AsteroidGenerator::makeRandomAsteroid(Asteroid& asteroid);
 
     private:
-        virtual void drawCurrent (sf::RenderTarget& target, sf::RenderStates states) const;
+        virtual void    drawCurrent (sf::RenderTarget& target, sf::RenderStates states) const;
 
     private:
         sf::ConvexShape m_shape;

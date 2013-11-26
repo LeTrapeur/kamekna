@@ -54,15 +54,15 @@ class State
 
 
     protected:
-        void                     requestStackPush(States::ID stateID);
-        void                     requestStackPop();
-        void                     requestStateClear();
+        void                    requestStackPush(States::ID stateID);
+        void                    requestStackPop();
+        void                    requestStateClear();
 
-        Context                  getContext() const;
+        Context                 getContext() const;
 
     private:
-        StateStack*                        mStack;
-        Context                            mContext;
+        StateStack*             m_stack;
+        Context                 m_context;
 };
 
 #endif // STATE_H

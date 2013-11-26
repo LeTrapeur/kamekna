@@ -13,29 +13,30 @@ class Being : public Entity
         {
             Hero,
         };
+
     public:
-        explicit Being(Type type, const TextureHolder& textures, const FontHolder& fonts, b2World& world);
+        explicit                Being(Type type, const TextureHolder& textures, const FontHolder& fonts, b2World& world);
 
-        void jump();
-        void walkLeft();
-        void walkRight();
+        void                    jump();
+        void                    walkLeft();
+        void                    walkRight();
         //to be improved
-        void thrusterUp();
-        void thrusterDown();
-        void thrusterLeft();
-        void thrusterRight();
+        void                    thrusterUp();
+        void                    thrusterDown();
+        void                    thrusterLeft();
+        void                    thrusterRight();
 
-        void addFootContact();
-        void removeFootContact();
+        void                    addFootContact();
+        void                    removeFootContact();
 
-        virtual unsigned int getCategory() const;
-
-    private:
-        virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
+        virtual unsigned int    getCategory() const;
 
     private:
-        sf::Sprite m_sprite;
-        unsigned int m_numFootContacts;
+        virtual void            drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
+
+    private:
+        sf::Sprite              m_sprite;
+        unsigned int            m_numFootContacts;
 
         Type m_type;
 };

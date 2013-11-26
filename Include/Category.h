@@ -11,5 +11,4 @@ namespace Category
     };
 }
 
-
 #endif // CATEGORY_H_INCLUDED
