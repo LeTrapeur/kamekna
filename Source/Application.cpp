@@ -8,7 +8,7 @@
 const sf::Time TIME_PER_FRAME = sf::seconds(1.f/60.f);
 
 Application::Application():
-    m_window(sf::VideoMode(1280, 720), "Prototype player"),
+    m_window(sf::VideoMode(1280, 720), "Kamekna project"),
     m_textures(),
     m_fonts(),
     m_player(),
@@ -46,7 +46,8 @@ void Application::update(sf::Time elapsedTime)
 
 void Application::render()
 {
-    m_window.clear(sf::Color::Yellow);
+    // TODO décalage de quelques pixels entre la fenêtre et le sprite background
+    m_window.clear(sf::Color::Black);
     m_stateStack.draw();
 
     m_window.setView(m_window.getDefaultView());
