@@ -20,6 +20,7 @@ namespace Textures
         SpaceBackground,
         Hero,
         Asteroid,
+        TitleScreen,
     };
 }
 

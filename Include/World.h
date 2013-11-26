@@ -32,7 +32,7 @@ class World
             LayerCount
         };
     public:
-        explicit World(sf::RenderWindow& window);
+        explicit World(sf::RenderWindow& window, FontHolder& fonts);
 
         void update(sf::Time dt);
         void draw();
@@ -52,7 +52,7 @@ class World
         sf::View m_minimapView;
 
         TextureHolder m_textures;
-        FontHolder m_fonts;
+        FontHolder& m_fonts;
 
         b2World m_physicWorld;
         MyContactListener m_contactListener;

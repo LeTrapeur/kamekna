@@ -1,8 +1,8 @@
-#include "Game.h"
+#include "Application.h"
 
 
 int main()
 {
-    Game mygame;
-    mygame.run();
+    Application myApp;
+    myApp.run();
 }

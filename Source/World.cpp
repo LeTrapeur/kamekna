@@ -2,8 +2,9 @@
 
 const float SCALE = 30.f; // Box2D works in a scale of 30 pixels = 1 meter
 
-World::World(sf::RenderWindow& window):
+World::World(sf::RenderWindow& window, FontHolder& fonts):
     m_window(window),
+    m_fonts(fonts),
     m_worldView(window.getDefaultView()),
     m_minimapView(window.getDefaultView()),
     m_physicWorld(b2Vec2(0, 0.0f)),
@@ -33,9 +34,6 @@ void World::loadTextures()
     m_textures.load(Textures::SpaceBackground, "background.png");
     m_textures.load(Textures::Hero, "astronaut.png");
     m_textures.load(Textures::Asteroid, "asteroid.png");
-
-    // to be improved
-    m_fonts.load(Fonts::Main, "arial.ttf");
 }
 
 void World::buildScene()
