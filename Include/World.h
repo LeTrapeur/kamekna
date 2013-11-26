@@ -13,12 +13,8 @@
 
 #include "MyContactListener.h"
 #include "ResourceHolder.h"
-//#include "Platform.h"
-//#include "Asteroid.h"
-//#include "Planet.h"
 #include "CommandQueue.h"
 #include "SceneNode.h"
-
 
 class Being;
 

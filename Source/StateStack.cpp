@@ -76,16 +76,16 @@ void StateStack::applyPendingChanges()
         switch (change.action)
         {
             case Push:
-                    m_stack.push_back(createState(change.stateID));
-                    break;
+                m_stack.push_back(createState(change.stateID));
+                break;
 
             case Pop:
-                    m_stack.pop_back();
-                    break;
+                m_stack.pop_back();
+                break;
 
             case Clear:
-                    m_stack.clear();
-                    break;
+                m_stack.clear();
+                break;
             }
     }
 
