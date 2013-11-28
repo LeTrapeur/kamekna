@@ -24,7 +24,8 @@ Being::Being(Type type, const TextureHolder& textures, const FontHolder& fonts, 
     Entity(),
     m_sprite(textures.get(toTextureID(type))),
     m_type(type),
-    m_numFootContacts(0)
+    m_numFootContacts(0),
+    m_life(100)
 {
     // Player
     sf::Rect<float> spriteBounds = m_sprite.getGlobalBounds();
@@ -53,7 +54,9 @@ Being::Being(Type type, const TextureHolder& textures, const FontHolder& fonts, 
     footSensorFixture.userData = this;
     m_body->CreateFixture(&footSensorFixture);
 
-    std::string textBeing("Being");
+
+    std::string textBeing(std::to_string(m_life) + " HP");
+
     std::unique_ptr<TextNode> nameDisplay(new TextNode(fonts, textBeing));
     nameDisplay->setPosition(0.f, -25.f);
     attachChild(std::move(nameDisplay));
@@ -75,31 +78,6 @@ void Being::walkRight()
 {
     if (m_numFootContacts >= 1 && m_body->GetLinearVelocity().x * SCALE < 150)
         m_body->ApplyForce(b2Vec2(m_body->GetMass()*8,0), m_body->GetWorldCenter());
-}
-
-void Being::thrusterUp()
-{
-    if (m_body->GetLinearVelocity().y * SCALE < 300)
-        m_body->ApplyForce(b2Vec2(0, m_body->GetMass()*25), m_body->GetWorldCenter());
-}
-
-void Being::thrusterDown()
-{
-    if (m_body->GetLinearVelocity().y * SCALE > -300)
-        m_body->ApplyForce(b2Vec2(0, -m_body->GetMass()*25), m_body->GetWorldCenter());
-}
-
-void Being::thrusterLeft()
-{
-    if (m_body->GetLinearVelocity().x * SCALE < 300)
-        m_body->ApplyForce(b2Vec2(m_body->GetMass()*10, 0), m_body->GetWorldCenter());
-}
-
-void Being::thrusterRight()
-{
-
-    if (m_body->GetLinearVelocity().x * SCALE > -300)
-        m_body->ApplyForce(b2Vec2(-m_body->GetMass()*10, 0), m_body->GetWorldCenter());
 }
 
 void Being::addFootContact()

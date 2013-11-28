@@ -10,6 +10,7 @@ class Being : public Entity
         enum Type
         {
             Hero,
+            Monster,
         };
 
     public:
@@ -18,11 +19,6 @@ class Being : public Entity
         void                    jump();
         void                    walkLeft();
         void                    walkRight();
-        //to be improved
-        void                    thrusterUp();
-        void                    thrusterDown();
-        void                    thrusterLeft();
-        void                    thrusterRight();
 
         void                    addFootContact();
         void                    removeFootContact();
@@ -37,6 +33,8 @@ class Being : public Entity
         unsigned int            m_numFootContacts;
 
         Type m_type;
+
+        unsigned int            m_life;
 };
 
 #endif // HERO_H

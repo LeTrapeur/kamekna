@@ -1,6 +1,6 @@
 #include "Player.h"
 
-#include "Being.h"
+#include "Astronaut.h"
 
 Player::Player()
 {
@@ -69,13 +69,13 @@ sf::Keyboard::Key Player::getAssignedKey(Action action) const
 
 void Player::initializeActions()
 {
-        m_actionBinding[MoveLeft].action  = derivedAction<Being>([] (Being& being, sf::Time){being.walkLeft();});
-        m_actionBinding[MoveRight].action = derivedAction<Being>([] (Being& being, sf::Time){being.walkRight();});
-        m_actionBinding[Jump].action = derivedAction<Being>([] (Being& being, sf::Time){being.jump();});
-        m_actionBinding[ThursterLeft].action = derivedAction<Being>([] (Being& being, sf::Time){being.thrusterLeft();});
-        m_actionBinding[ThursterRight].action = derivedAction<Being>([] (Being& being, sf::Time){being.thrusterRight();});
-        m_actionBinding[ThursterUp].action = derivedAction<Being>([] (Being& being, sf::Time){being.thrusterUp();});
-        m_actionBinding[ThursterDown].action = derivedAction<Being>([] (Being& being, sf::Time){being.thrusterDown();});
+        m_actionBinding[MoveLeft].action  = derivedAction<Astronaut>([] (Astronaut& astronaut, sf::Time){astronaut.walkLeft();});
+        m_actionBinding[MoveRight].action = derivedAction<Astronaut>([] (Astronaut& astronaut, sf::Time){astronaut.walkRight();});
+        m_actionBinding[Jump].action = derivedAction<Astronaut>([] (Astronaut& astronaut, sf::Time){astronaut.jump();});
+        m_actionBinding[ThursterLeft].action = derivedAction<Astronaut>([] (Astronaut& astronaut, sf::Time){astronaut.thrusterLeft();});
+        m_actionBinding[ThursterRight].action = derivedAction<Astronaut>([] (Astronaut& astronaut, sf::Time){astronaut.thrusterRight();});
+        m_actionBinding[ThursterUp].action = derivedAction<Astronaut>([] (Astronaut& astronaut, sf::Time){astronaut.thrusterUp();});
+        m_actionBinding[ThursterDown].action = derivedAction<Astronaut>([] (Astronaut& astronaut, sf::Time){astronaut.thrusterDown();});
 }
 
 bool Player::isRealtimeAction(Action action)

@@ -1,6 +1,7 @@
 #include "World.h"
 
 #include "Being.h"
+#include "Astronaut.h"
 #include "SpriteNode.h"
 #include "Platform.h"
 #include "Asteroid.h"
@@ -13,7 +14,7 @@ World::World(sf::RenderWindow& window, FontHolder& fonts):
     m_fonts(fonts),
     m_worldView(window.getDefaultView()),
     m_minimapView(window.getDefaultView()),
-    m_physicWorld(b2Vec2(0, 0.0f)),
+    m_physicWorld(b2Vec2(0, 3.0f)),
     m_worldBounds(
                   -m_worldView.getSize().x,
                   -m_worldView.getSize().y,
@@ -76,12 +77,12 @@ void World::buildScene()
     m_sceneLayers[Space]->attachChild(std::move(asteroid_2));
 
     // Planet
-    std::unique_ptr<Planet> planet(new Planet(m_textures, m_physicWorld));
-    planet->setPosition(-200.f, -450.f);
-    m_sceneLayers[Space]->attachChild(std::move(planet));
+//    std::unique_ptr<Planet> planet(new Planet(m_textures, m_physicWorld));
+//    planet->setPosition(-200.f, -450.f);
+//    m_sceneLayers[Space]->attachChild(std::move(planet));
 
     // Hero
-    std::unique_ptr<Being> hero(new Being(Being::Hero, m_textures, m_fonts, m_physicWorld));
+    std::unique_ptr<Astronaut> hero(new Astronaut(Being::Hero, m_textures, m_fonts, m_physicWorld));
     m_player = hero.get();
     hero->setPosition(m_spawnPosition);
     m_sceneLayers[Space]->attachChild(std::move(hero));
