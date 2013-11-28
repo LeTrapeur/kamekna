@@ -45,7 +45,7 @@ class State
         };
 
     public:
-    State(StateStack& stack, Context context);
+                                State(StateStack& stack, Context context);
     virtual                     ~State();
 
     virtual void                draw() = 0;

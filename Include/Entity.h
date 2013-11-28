@@ -21,8 +21,10 @@ class Entity : public SceneNode
         b2Body*             m_body;
 
     private:
-        virtual void        updateCurrent(sf::Time dt);
         virtual void        drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
+
+    protected:
+        virtual void        updateCurrent(sf::Time dt);
 
 
 

@@ -3,6 +3,8 @@
 
 #include "Being.h"
 
+class TextNode;
+
 class Astronaut : public Being
 {
     public:
@@ -14,6 +16,15 @@ class Astronaut : public Being
         void                    thrusterRight();
 
     private:
+        virtual void            updateCurrent(sf::Time dt);
+        void                    checkThrusters();
+
+    private:
+        int                     m_power;
+        bool                    m_isThrusting;
+        sf::Clock               m_powerRecovery;
+        sf::Time                m_powerRecoveryTime;
+        TextNode*               m_powerDisplay;
 
 };
 

@@ -56,7 +56,6 @@ Being::Being(Type type, const TextureHolder& textures, const FontHolder& fonts, 
 
 
     std::string textBeing(std::to_string(m_life) + " HP");
-
     std::unique_ptr<TextNode> nameDisplay(new TextNode(fonts, textBeing));
     nameDisplay->setPosition(0.f, -25.f);
     attachChild(std::move(nameDisplay));
