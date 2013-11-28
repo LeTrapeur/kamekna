@@ -85,9 +85,7 @@ void Application::updateStatistics(sf::Time elapsedTime)
 
     if(m_statisticsUpdateTime >= sf::seconds(1.0f))
     {
-        std::string str = static_cast<std::ostringstream*>(&(std::ostringstream()
-        << "Fps: " << m_statisticsNumFrames << "\nTime/update: " << m_statisticsUpdateTime.asMicroseconds()/m_statisticsNumFrames << "us"))
-        ->str();
+        std::string str("Fps: " + std::to_string(m_statisticsNumFrames) + "\nTime/update: " + std::to_string(m_statisticsUpdateTime.asMicroseconds()/m_statisticsNumFrames) + "us");
         m_statisticsText.setString(str);
 
         m_statisticsUpdateTime -= sf::seconds(1.0f);
