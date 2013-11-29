@@ -12,14 +12,18 @@ const float SCALE = 30.f; // Box2D works in a scale of 30 pixels = 1 meter
 
 Astronaut::Astronaut(Type type, const TextureHolder& textures, const FontHolder& fonts, b2World& world):
     Being(type, textures, fonts, world),
-    m_power(100),
+    m_power(100.f),
     m_powerRecoveryTime(sf::seconds(3.f)),
-    m_isThrusting(false)
+    m_isThrusting(false),
+    m_powerDisplay(nullptr)
 {
-    std::unique_ptr<TextNode> powerDisplay(new TextNode(fonts, (std::to_string(m_power) + " PW")));
-    powerDisplay->setPosition(0.f, -50.f);
-    m_powerDisplay = powerDisplay.get();
-    attachChild(std::move(powerDisplay));
+    if(type != Being::Hero)
+    {
+        std::unique_ptr<TextNode> powerDisplay(new TextNode(fonts, (std::to_string(m_power) + " PW")));
+        powerDisplay->setPosition(0.f, -50.f);
+        m_powerDisplay = powerDisplay.get();
+        attachChild(std::move(powerDisplay));
+    }
 
     m_powerRecovery.restart();
 }
@@ -50,11 +54,15 @@ void Astronaut::thrusterLeft()
 
 void Astronaut::thrusterRight()
 {
-
     if (m_body->GetLinearVelocity().x * SCALE > -300 && m_power)
         m_body->ApplyForce(b2Vec2(-m_body->GetMass()*10, 0), m_body->GetWorldCenter());
 
     m_isThrusting = true;
+}
+
+float Astronaut::getPower() const
+{
+    return m_power;
 }
 
 void Astronaut::checkThrusters()
@@ -75,7 +83,9 @@ void Astronaut::checkThrusters()
         m_power = 100;
 
     m_isThrusting = false;
-    m_powerDisplay->setString(std::to_string(m_power) + " PW");
+
+    if(m_powerDisplay)
+        m_powerDisplay->setString(std::to_string(m_power) + " PW");
 }
 
 void Astronaut::updateCurrent(sf::Time dt)
@@ -83,4 +93,3 @@ void Astronaut::updateCurrent(sf::Time dt)
     checkThrusters();
     Entity::updateCurrent(dt);
 }
-

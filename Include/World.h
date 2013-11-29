@@ -16,7 +16,7 @@
 #include "CommandQueue.h"
 #include "SceneNode.h"
 
-class Being;
+class Astronaut;
 
 class World
 {
@@ -34,6 +34,8 @@ class World
         void                                    draw();
 
         CommandQueue&                           getCommandQueue();
+        float                                   getPlayerLife() const;
+        float                                   getPlayerPower() const;
 
     private:
         void                                    loadTextures();
@@ -57,10 +59,10 @@ class World
         SceneNode m_sceneGraph;
         std::array<SceneNode*, LayerCount>      m_sceneLayers;
 
-        Being*                                  m_player;
+        Astronaut*                              m_player;
         sf::Vector2f                            m_spawnPosition;
 
-        CommandQueue                             m_commandQueue;
+        CommandQueue                            m_commandQueue;
 
 };
 

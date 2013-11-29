@@ -15,12 +15,14 @@ class Astronaut : public Being
         void                    thrusterLeft();
         void                    thrusterRight();
 
+        float                   getPower() const;
+
     private:
         virtual void            updateCurrent(sf::Time dt);
         void                    checkThrusters();
 
     private:
-        int                     m_power;
+        float                   m_power;
         bool                    m_isThrusting;
         sf::Clock               m_powerRecovery;
         sf::Time                m_powerRecoveryTime;

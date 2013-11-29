@@ -54,11 +54,13 @@ Being::Being(Type type, const TextureHolder& textures, const FontHolder& fonts, 
     footSensorFixture.userData = this;
     m_body->CreateFixture(&footSensorFixture);
 
-
-    std::string textBeing(std::to_string(m_life) + " HP");
-    std::unique_ptr<TextNode> nameDisplay(new TextNode(fonts, textBeing));
-    nameDisplay->setPosition(0.f, -25.f);
-    attachChild(std::move(nameDisplay));
+    if(type != Being::Hero)
+    {
+        std::string textBeing(std::to_string(m_life) + " HP");
+        std::unique_ptr<TextNode> nameDisplay(new TextNode(fonts, textBeing));
+        nameDisplay->setPosition(0.f, -25.f);
+        attachChild(std::move(nameDisplay));
+    }
 }
 
 void Being::jump()
@@ -92,6 +94,11 @@ void Being::removeFootContact()
 void Being::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
 {
     target.draw(m_sprite, states);
+}
+
+float Being::getLife() const
+{
+    return m_life;
 }
 
 unsigned int Being::getCategory() const

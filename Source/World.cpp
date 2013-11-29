@@ -14,7 +14,7 @@ World::World(sf::RenderWindow& window, FontHolder& fonts):
     m_fonts(fonts),
     m_worldView(window.getDefaultView()),
     m_minimapView(window.getDefaultView()),
-    m_physicWorld(b2Vec2(0, 3.0f)),
+    m_physicWorld(b2Vec2(0, 4.0f)),
     m_worldBounds(
                   -m_worldView.getSize().x,
                   -m_worldView.getSize().y,
@@ -61,10 +61,15 @@ void World::buildScene()
     backgroundSprite->setPosition(m_worldBounds.left, m_worldBounds.top);
     m_sceneLayers[Background]->attachChild(std::move(backgroundSprite));
 
-    // Plateform
-    std::unique_ptr<Platform> platform(new Platform(m_physicWorld));
-    platform->setPosition(100.f, 500.f);
-    m_sceneLayers[Space]->attachChild(std::move(platform));
+    // Plateform_1
+    std::unique_ptr<Platform> platform_1(new Platform(m_physicWorld));
+    platform_1->setPosition(100.f, 500.f);
+    m_sceneLayers[Space]->attachChild(std::move(platform_1));
+
+    // Plateform_2
+    std::unique_ptr<Platform> platform_2(new Platform(m_physicWorld));
+    platform_2->setPosition(-500.f, -300.f);
+    m_sceneLayers[Space]->attachChild(std::move(platform_2));
 
     // Asteroid_1
     std::unique_ptr<Asteroid> asteroid_1(new Asteroid(m_textures, m_physicWorld));
@@ -75,6 +80,11 @@ void World::buildScene()
     std::unique_ptr<Asteroid> asteroid_2(new Asteroid(m_textures, m_physicWorld));
     asteroid_2->setPosition(800.f, 100.f);
     m_sceneLayers[Space]->attachChild(std::move(asteroid_2));
+
+    // Asteroid_3
+    std::unique_ptr<Asteroid> asteroid_3(new Asteroid(m_textures, m_physicWorld));
+    asteroid_3->setPosition(300.f, -500.f);
+    m_sceneLayers[Space]->attachChild(std::move(asteroid_3));
 
     // Planet
 //    std::unique_ptr<Planet> planet(new Planet(m_textures, m_physicWorld));
@@ -132,4 +142,14 @@ void World::draw()
 CommandQueue& World::getCommandQueue()
 {
     return m_commandQueue;
+}
+
+float World::getPlayerLife() const
+{
+    return m_player->getLife();
+}
+
+float World::getPlayerPower() const
+{
+    return m_player->getPower();
 }

@@ -5,21 +5,31 @@ GameState::GameState(StateStack& stack, Context context)
 , m_world(*context.window, *context.fonts)
 , m_player(*context.player)
 {
+    m_lifeBar.setSize(sf::Vector2f(m_world.getPlayerLife() * 3, 25));
+    m_lifeBar.setPosition(10, 10);
+    m_lifeBar.setFillColor(sf::Color(55, 190, 255, 200));
+    m_powerBar.setSize(sf::Vector2f(m_world.getPlayerPower() * 3, 25));
+    m_powerBar.setPosition(10, 45);
+    m_powerBar.setFillColor(sf::Color(255, 128, 0, 200));
 }
 
 void GameState::draw()
 {
-        m_world.draw();
+    m_world.draw();
+    drawHud();
 }
 
 bool GameState::update(sf::Time dt)
 {
-        m_world.update(dt);
+    m_world.update(dt);
 
-        CommandQueue& commands = m_world.getCommandQueue();
-        m_player.handleRealTimeInput(commands);
+    CommandQueue& commands = m_world.getCommandQueue();
+    m_player.handleRealTimeInput(commands);
 
-        return true;
+    m_lifeBar.setSize(sf::Vector2f(m_world.getPlayerLife() * 3, 25));
+    m_powerBar.setSize(sf::Vector2f(m_world.getPlayerPower() * 3, 25));
+
+    return true;
 }
 
 bool GameState::handleEvent(const sf::Event& event)
@@ -34,4 +44,12 @@ bool GameState::handleEvent(const sf::Event& event)
         requestStackPush(States::Pause);
     }
     return true;
+}
+
+void GameState::drawHud()
+{
+    sf::RenderWindow& window = *getContext().window;
+    window.setView(window.getDefaultView());
+    window.draw(m_lifeBar);
+    window.draw(m_powerBar);
 }

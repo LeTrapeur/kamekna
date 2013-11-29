@@ -33,7 +33,6 @@ void Player::handleEvent(const sf::Event& event, CommandQueue& commands)
 
 void Player::handleRealTimeInput(CommandQueue& commands)
 {
-
     // Traverse all assigned keys and check if they are pressed
     for (auto it = m_keyBinding.begin(); it!= m_keyBinding.end(); ++it)
     {
@@ -80,17 +79,17 @@ void Player::initializeActions()
 
 bool Player::isRealtimeAction(Action action)
 {
-        switch (action)
-        {
-                case MoveLeft:
-                case MoveRight:
-                case ThursterLeft:
-                case ThursterRight:
-                case ThursterUp:
-                case ThursterDown:
-                        return true;
+    switch (action)
+    {
+            case MoveLeft:
+            case MoveRight:
+            case ThursterLeft:
+            case ThursterRight:
+            case ThursterUp:
+            case ThursterDown:
+                    return true;
 
-                default:
-                        return false;
-        }
+            default:
+                    return false;
+    }
 }

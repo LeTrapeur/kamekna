@@ -25,6 +25,8 @@ class Being : public Entity
 
         virtual unsigned int    getCategory() const;
 
+        float                   getLife() const;
+
     private:
         virtual void            drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
 
