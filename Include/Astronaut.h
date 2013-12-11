@@ -1,11 +1,11 @@
 #ifndef ASTRONAUT_H
 #define ASTRONAUT_H
 
-#include "Being.h"
+#include "Actor.h"
 
 class TextNode;
 
-class Astronaut : public Being
+class Astronaut : public Actor
 {
     public:
                                 Astronaut(Type type, const TextureHolder& textures, const FontHolder& fonts, b2World& world);

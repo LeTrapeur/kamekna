@@ -1,6 +1,6 @@
 #include "World.h"
 
-#include "Being.h"
+#include "Actor.h"
 #include "Astronaut.h"
 #include "SpriteNode.h"
 #include "Platform.h"
@@ -41,6 +41,7 @@ void World::loadTextures()
     m_textures.load(Textures::SpaceBackground, "background.png");
     m_textures.load(Textures::Hero, "astronaut.png");
     m_textures.load(Textures::Asteroid, "asteroid.png");
+    m_textures.load(Textures::Enemy, "enemy.png");
 }
 
 void World::buildScene()
@@ -92,10 +93,15 @@ void World::buildScene()
 //    m_sceneLayers[Space]->attachChild(std::move(planet));
 
     // Hero
-    std::unique_ptr<Astronaut> hero(new Astronaut(Being::Hero, m_textures, m_fonts, m_physicWorld));
+    std::unique_ptr<Astronaut> hero(new Astronaut(Actor::Hero, m_textures, m_fonts, m_physicWorld));
     m_player = hero.get();
     hero->setPosition(m_spawnPosition);
     m_sceneLayers[Space]->attachChild(std::move(hero));
+
+    // Enemy
+    std::unique_ptr<Actor> enemy(new Actor(Actor::Enemy, m_textures, m_fonts, m_physicWorld));
+    enemy->setPosition(200, 100);
+    m_sceneLayers[Space]->attachChild(std::move(enemy));
 }
 
 void World::update(sf::Time dt)

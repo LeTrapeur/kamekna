@@ -1,5 +1,5 @@
 #include "Astronaut.h"
-#include "Being.h"
+#include "Actor.h"
 #include "ResourceHolder.h"
 #include "Utility.h"
 #include "TextNode.h"
@@ -11,13 +11,13 @@
 const float SCALE = 30.f; // Box2D works in a scale of 30 pixels = 1 meter
 
 Astronaut::Astronaut(Type type, const TextureHolder& textures, const FontHolder& fonts, b2World& world):
-    Being(type, textures, fonts, world),
+    Actor(type, textures, fonts, world),
     m_power(100.f),
     m_powerRecoveryTime(sf::seconds(3.f)),
     m_isThrusting(false),
     m_powerDisplay(nullptr)
 {
-    if(type != Being::Hero)
+    if(type != Actor::Hero)
     {
         std::unique_ptr<TextNode> powerDisplay(new TextNode(fonts, (std::to_string(m_power) + " PW")));
         powerDisplay->setPosition(0.f, -50.f);

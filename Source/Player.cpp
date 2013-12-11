@@ -17,7 +17,7 @@ Player::Player()
         initializeActions();
 
         for (auto it = m_actionBinding.begin(); it!= m_actionBinding.end(); ++it)
-            (*it).second.category = Category::PlayerBeing;
+            (*it).second.category = Category::PlayerActor;
 
 }
 

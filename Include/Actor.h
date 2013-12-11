@@ -1,20 +1,20 @@
-#ifndef BEING_H
-#define BEING_H
+#ifndef ACTOR_H
+#define ACTOR_H
 
 #include "Entity.h"
 #include "ResourceHolder.h"
 
-class Being : public Entity
+class Actor : public Entity
 {
     public:
         enum Type
         {
             Hero,
-            Monster,
+            Enemy,
         };
 
     public:
-        explicit                Being(Type type, const TextureHolder& textures, const FontHolder& fonts, b2World& world);
+        explicit                Actor(Type type, const TextureHolder& textures, const FontHolder& fonts, b2World& world);
 
         void                    jump();
         void                    walkLeft();
@@ -34,9 +34,9 @@ class Being : public Entity
         sf::Sprite              m_sprite;
         unsigned int            m_numFootContacts;
 
-        Type m_type;
+        Type                    m_type;
 
         unsigned int            m_life;
 };
 
-#endif // HERO_H
+#endif // ACTOR_H

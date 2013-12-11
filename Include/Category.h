@@ -7,7 +7,8 @@ namespace Category
     {
         None = 0,
         Scene = 1 << 0,
-        PlayerBeing = 1 << 1,
+        PlayerActor = 1 << 1,
+        EnemyActor = 1 << 2,
     };
 }
 

@@ -1,7 +1,7 @@
 #include "MyContactListener.h"
 
 #include "Entity.h"
-#include "Being.h"
+#include "Actor.h"
 
 
 MyContactListener::MyContactListener()
@@ -13,15 +13,15 @@ void MyContactListener::BeginContact(b2Contact* contact)
 {
     Entity* A = static_cast<Entity*>(contact->GetFixtureA()->GetUserData());
     Entity* B = static_cast<Entity*>(contact->GetFixtureB()->GetUserData());
-    Being* being = dynamic_cast<Being*>(A);
-    if (being)
+    Actor* actor = dynamic_cast<Actor*>(A);
+    if (actor)
     {
-        being->addFootContact();
+        actor->addFootContact();
     }
-    being = dynamic_cast<Being*>(B);
-    if (being)
+    actor = dynamic_cast<Actor*>(B);
+    if (actor)
     {
-        being->addFootContact();
+        actor->addFootContact();
     }
 }
 
@@ -29,14 +29,14 @@ void MyContactListener::EndContact(b2Contact* contact)
 {
     Entity* A = static_cast<Entity*>(contact->GetFixtureA()->GetUserData());
     Entity* B = static_cast<Entity*>(contact->GetFixtureB()->GetUserData());
-    Being* being = dynamic_cast<Being*>(A);
-    if (being)
+    Actor* actor = dynamic_cast<Actor*>(A);
+    if (actor)
     {
-        being->removeFootContact();
+        actor->removeFootContact();
     }
-    being = dynamic_cast<Being*>(B);
-    if (being)
+    actor = dynamic_cast<Actor*>(B);
+    if (actor)
     {
-        being->removeFootContact();
+        actor->removeFootContact();
     }
 }
