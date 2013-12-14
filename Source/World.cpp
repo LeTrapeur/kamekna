@@ -89,11 +89,6 @@ void World::buildScene()
     asteroid_3->setPosition(300.f, -500.f);
     m_sceneLayers[Space]->attachChild(std::move(asteroid_3));
 
-    // Planet
-//    std::unique_ptr<Planet> planet(new Planet(m_textures, m_physicWorld));
-//    planet->setPosition(-200.f, -450.f);
-//    m_sceneLayers[Space]->attachChild(std::move(planet));
-
     // Hero
     std::unique_ptr<Astronaut> hero(new Astronaut(Actor::Hero, m_textures, m_fonts, m_physicWorld));
     m_player = hero.get();

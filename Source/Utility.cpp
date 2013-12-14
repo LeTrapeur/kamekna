@@ -1,5 +1,7 @@
 #include "Utility.h"
 
+#include <cassert>
+
 namespace Utility
 {
     float randomFloatGenerator(float a, float b)
@@ -68,5 +70,16 @@ namespace Utility
     {
         sf::FloatRect bounds = text.getLocalBounds();
         text.setOrigin(bounds.width / 2.f, bounds.height / 2.f);
+    }
+
+    float length(sf::Vector2f vector)
+    {
+        return std::sqrt(vector.x * vector.x + vector.y * vector.y);
+    }
+
+    sf::Vector2f unitVector(sf::Vector2f vector)
+    {
+        assert(vector != sf::Vector2f(0.f, 0.f));
+        return vector / length(vector);
     }
 }

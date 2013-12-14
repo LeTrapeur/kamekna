@@ -15,6 +15,7 @@ Projectile::Projectile(Type type, const TextureHolder& textures, b2World& world)
     b2BodyDef ProjectileBodyDef;
     ProjectileBodyDef.type = b2_dynamicBody;
     ProjectileBodyDef.fixedRotation = true;
+    ProjectileBodyDef.bullet = true;
     m_body = world.CreateBody(&ProjectileBodyDef);
 
     b2FixtureDef ProjectileFixtureDef;

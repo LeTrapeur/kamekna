@@ -20,7 +20,9 @@ namespace Utility
 
     void centerOrigin(sf::Text& text);
 
+    float length(sf::Vector2f vector);
 
+    sf::Vector2f unitVector(sf::Vector2f vector);
 }
 
 #endif // UTILITY_H

@@ -9,9 +9,6 @@ Asteroid::Asteroid(const TextureHolder& textures, b2World& world): Entity()
 
     int pointsCount = m_shape.getPointCount();
 
-    if(pointsCount > b2_maxPolygonVertices)
-        std::cout << "Asteroid constructor: too much vertices." << std::endl;
-
     b2Vec2 vertices[pointsCount];
     int j = pointsCount - 1;
     for(int i = 0; i < pointsCount; ++i) // CCW

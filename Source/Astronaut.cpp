@@ -119,17 +119,22 @@ void Astronaut::checkProjectileLaunch(sf::Time dt, CommandQueue& commands)
 void Astronaut::createBullets(SceneNode& node, const TextureHolder& textures, b2World& world) const
 {
     Projectile::Type type = Projectile::AlliedBullet;
-    createProjectile(node, type, 0.0f, 0.5f, textures, world);
+    createProjectile(node, type, 1.0f, 2.0f, textures, world);
 }
 
 void Astronaut::createProjectile(SceneNode& node, Projectile::Type type, float xOffset, float yOffset, const TextureHolder& textures, b2World& world) const
 {
     std::unique_ptr<Projectile> projectile(new Projectile(type, textures, world));
     sf::Vector2f offset(xOffset * m_sprite.getGlobalBounds().width, yOffset * m_sprite.getGlobalBounds().height);
-
     projectile->setPosition((this->m_body->GetWorldCenter().x * SCALE) + offset.x, (this->m_body->GetWorldCenter().y * SCALE) + offset.y);
-    std::cout << (this->m_body->GetWorldCenter().x * SCALE) + offset.x << " " << (this->m_body->GetWorldCenter().y * SCALE) + offset.y << std::endl;
-    projectile->m_body->ApplyForce(b2Vec2(-m_body->GetMass()*10, 0), m_body->GetWorldCenter());
+
+    sf::Vector2f mousePos(sf::Mouse::getPosition().x,sf::Mouse::getPosition().y);
+
+    sf::Vector2f astronautPos(this->m_body->GetWorldCenter().x * SCALE, this->m_body->GetWorldCenter().y * SCALE);
+    sf::Vector2f projectileDirection(mousePos - astronautPos);
+
+    std::cout << "x: " << Utility::unitVector(projectileDirection).x << " y: " << Utility::unitVector(projectileDirection).y << std::endl;
+    projectile->m_body->ApplyForce(b2Vec2(m_body->GetMass() * projectileDirection.x /10, m_body->GetMass() * projectileDirection.y /10), m_body->GetWorldCenter());
     node.attachChild(std::move(projectile));
 }
 

@@ -76,6 +76,7 @@ void Player::initializeActions()
         m_actionBinding[ThursterRight].action = derivedAction<Astronaut>([] (Astronaut& astronaut, sf::Time){astronaut.thrusterRight();});
         m_actionBinding[ThursterUp].action = derivedAction<Astronaut>([] (Astronaut& astronaut, sf::Time){astronaut.thrusterUp();});
         m_actionBinding[ThursterDown].action = derivedAction<Astronaut>([] (Astronaut& astronaut, sf::Time){astronaut.thrusterDown();});
+
         m_actionBinding[Fire].action = derivedAction<Astronaut>(std::bind(&Astronaut::fire, std::placeholders::_1));
 }
 
