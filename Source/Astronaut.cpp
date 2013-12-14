@@ -126,6 +126,8 @@ void Astronaut::createBullets(SceneNode& node, const TextureHolder& textures, b2
     createProjectile(node, type, 0.0f, 0.0f, textures, world);
 }
 
+
+// TODO à nettoyer
 void Astronaut::createProjectile(SceneNode& node, Projectile::Type type, float xOffset, float yOffset, const TextureHolder& textures, b2World& world) const
 {
     std::unique_ptr<Projectile> projectile(new Projectile(type, textures, world));

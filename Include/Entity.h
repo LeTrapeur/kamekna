@@ -21,7 +21,7 @@ class Entity : public SceneNode
         b2Body*             m_body;
 
     protected:
-        // b2body ?
+        // TODO b2body ?
 
     private:
         virtual void        drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
