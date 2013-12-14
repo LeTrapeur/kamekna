@@ -37,6 +37,8 @@ class World
         float                                   getPlayerLife() const;
         float                                   getPlayerPower() const;
 
+        sf::Vector2f                            getMouseWorldPosition();
+
     private:
         void                                    loadTextures();
         void                                    buildScene();

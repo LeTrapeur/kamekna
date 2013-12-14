@@ -99,9 +99,10 @@ void Astronaut::checkThrusters()
 // 1 prendre dans player la position de la souris avec Event (voir si c'est relatif à la fenetre )ensuite l'envoyer à fire et mettre a jour une targetDirection et calsuler la direction de la bullet
 // 2 passer window à player
 // limiter le radius de tir
-void Astronaut::fire()
+void Astronaut::fire(const sf::Vector2f& targetPos)
 {
     m_isFiring = true;
+    m_targetPos = targetPos;
 }
 
 void Astronaut::checkProjectileLaunch(sf::Time dt, CommandQueue& commands)
@@ -122,7 +123,7 @@ void Astronaut::checkProjectileLaunch(sf::Time dt, CommandQueue& commands)
 void Astronaut::createBullets(SceneNode& node, const TextureHolder& textures, b2World& world) const
 {
     Projectile::Type type = Projectile::AlliedBullet;
-    createProjectile(node, type, 1.0f, 2.0f, textures, world);
+    createProjectile(node, type, 0.0f, 0.0f, textures, world);
 }
 
 void Astronaut::createProjectile(SceneNode& node, Projectile::Type type, float xOffset, float yOffset, const TextureHolder& textures, b2World& world) const
@@ -131,10 +132,8 @@ void Astronaut::createProjectile(SceneNode& node, Projectile::Type type, float x
     sf::Vector2f offset(xOffset * m_sprite.getGlobalBounds().width, yOffset * m_sprite.getGlobalBounds().height);
     projectile->setPosition((this->m_body->GetWorldCenter().x * SCALE) + offset.x, (this->m_body->GetWorldCenter().y * SCALE) + offset.y);
 
-    sf::Vector2f mousePos(sf::Mouse::getPosition().x,sf::Mouse::getPosition().y);
-
     sf::Vector2f astronautPos(this->m_body->GetWorldCenter().x * SCALE, this->m_body->GetWorldCenter().y * SCALE);
-    sf::Vector2f projectileDirection(mousePos - astronautPos);
+    sf::Vector2f projectileDirection(m_targetPos - astronautPos);
 
     std::cout << "x: " << Utility::unitVector(projectileDirection).x << " y: " << Utility::unitVector(projectileDirection).y << std::endl;
     projectile->m_body->ApplyForce(b2Vec2(m_body->GetMass() * projectileDirection.x /10, m_body->GetMass() * projectileDirection.y /10), m_body->GetWorldCenter());

@@ -16,7 +16,7 @@ class Astronaut : public Actor
         void                    thrusterLeft();
         void                    thrusterRight();
 
-        void                    fire();
+        void                    fire(const sf::Vector2f& targetPos);
 
         float                   getPower() const;
 
@@ -37,6 +37,7 @@ class Astronaut : public Actor
         Command                 m_fireCommand;
         bool                    m_isFiring;
         sf::Time                m_fireCountdown;
+        sf::Vector2f            m_targetPos;
 
 };
 

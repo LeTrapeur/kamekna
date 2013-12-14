@@ -113,6 +113,14 @@ void World::update(sf::Time dt)
     adaptScrolling();
 }
 
+sf::Vector2f World::getMouseWorldPosition()
+{
+    sf::Vector2i pixelPos = sf::Mouse::getPosition(m_window);
+    sf::Vector2f worldPos = m_window.mapPixelToCoords(pixelPos, m_worldView);
+    std::cout << worldPos.x << " " << worldPos.y << std::endl;
+    return worldPos;
+}
+
 void World::adaptPlayerPosition()
 {
     if(!(m_player->getPosition().x > m_worldBounds.left && m_player->getPosition().x < m_worldBounds.width + m_worldBounds.left && m_player->getPosition().y > m_worldBounds.top && m_player->getPosition().y < m_worldBounds.height + m_worldBounds.top))

@@ -29,6 +29,7 @@ class Player
         explicit                                Player();
         void                                    handleEvent(const sf::Event& event, CommandQueue& commands);
         void                                    handleRealTimeInput(CommandQueue& commands);
+        void                                    updateMouseWorldPosition(const sf::Vector2f& pos);
 
         void                                    assignKey(Action action, sf::Keyboard::Key key);
         sf::Keyboard::Key                       getAssignedKey(Action action) const;
@@ -38,6 +39,7 @@ class Player
         static bool                             isRealtimeAction(Action action);
 
     private:
+        sf::Vector2f                            m_mouseWorldPos;
         std::map<sf::Keyboard::Key, Action>     m_keyBinding;
         std::map<Action, Command>               m_actionBinding;
 };

@@ -43,6 +43,11 @@ void Player::handleRealTimeInput(CommandQueue& commands)
     }
 }
 
+void Player::updateMouseWorldPosition(const sf::Vector2f& pos)
+{
+    m_mouseWorldPos = pos;
+}
+
 void Player::assignKey(Action action, sf::Keyboard::Key key)
 {
     // Remove all keys that already map to action
@@ -77,7 +82,7 @@ void Player::initializeActions()
         m_actionBinding[ThursterUp].action = derivedAction<Astronaut>([] (Astronaut& astronaut, sf::Time){astronaut.thrusterUp();});
         m_actionBinding[ThursterDown].action = derivedAction<Astronaut>([] (Astronaut& astronaut, sf::Time){astronaut.thrusterDown();});
 
-        m_actionBinding[Fire].action = derivedAction<Astronaut>(std::bind(&Astronaut::fire, std::placeholders::_1));
+        m_actionBinding[Fire].action = derivedAction<Astronaut>([this] (Astronaut& astronaut, sf::Time){astronaut.fire(m_mouseWorldPos);});
 }
 
 bool Player::isRealtimeAction(Action action)

@@ -25,6 +25,7 @@ bool GameState::update(sf::Time dt)
 
     CommandQueue& commands = m_world.getCommandQueue();
     m_player.handleRealTimeInput(commands);
+    m_player.updateMouseWorldPosition(m_world.getMouseWorldPosition());
 
     m_lifeBar.setSize(sf::Vector2f(m_world.getPlayerLife() * 3, 25));
     m_powerBar.setSize(sf::Vector2f(m_world.getPlayerPower() * 3, 25));
@@ -48,6 +49,7 @@ bool GameState::handleEvent(const sf::Event& event)
 
 void GameState::drawHud()
 {
+
     sf::RenderWindow& window = *getContext().window;
     window.setView(window.getDefaultView());
     window.draw(m_lifeBar);
