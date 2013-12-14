@@ -9,6 +9,7 @@ namespace Category
         Scene = 1 << 0,
         PlayerActor = 1 << 1,
         EnemyActor = 1 << 2,
+        AlliedProjectile = 1 << 3,
     };
 }
 

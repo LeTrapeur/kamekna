@@ -17,14 +17,17 @@ class Entity : public SceneNode
         void                setRotation(float angle);
         void                resetForces();
 
-    protected:
+        // une entité est immuablement représentée par un body dont on peut mesurer les caractèristiques publiquement ?
         b2Body*             m_body;
+
+    protected:
+        // b2body ?
 
     private:
         virtual void        drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
 
     protected:
-        virtual void        updateCurrent(sf::Time dt);
+        virtual void        updateCurrent(sf::Time dt, CommandQueue& commands);
 
 
 

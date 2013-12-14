@@ -12,7 +12,7 @@ void Entity::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) cons
     states.transform *= getTransform();
 }
 
-void Entity::updateCurrent(sf::Time dt)
+void Entity::updateCurrent(sf::Time dt, CommandQueue& commands)
 {
     if(m_body->GetType() == b2_dynamicBody)
     {

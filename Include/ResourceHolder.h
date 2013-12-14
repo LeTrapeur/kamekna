@@ -19,9 +19,11 @@ namespace Textures
     {
         SpaceBackground,
         Hero,
+        Bullet,
         Enemy,
         Asteroid,
         TitleScreen,
+
     };
 }
 

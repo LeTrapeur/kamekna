@@ -8,6 +8,7 @@ Player::Player()
         m_keyBinding[sf::Keyboard::Q] = MoveLeft;
         m_keyBinding[sf::Keyboard::D] = MoveRight;
         m_keyBinding[sf::Keyboard::Space] = Jump;
+        m_keyBinding[sf::Keyboard::Key::F] = Fire;
         m_keyBinding[sf::Keyboard::Left] = ThursterLeft;
         m_keyBinding[sf::Keyboard::Right] = ThursterRight;
         m_keyBinding[sf::Keyboard::Up] = ThursterUp;
@@ -75,6 +76,7 @@ void Player::initializeActions()
         m_actionBinding[ThursterRight].action = derivedAction<Astronaut>([] (Astronaut& astronaut, sf::Time){astronaut.thrusterRight();});
         m_actionBinding[ThursterUp].action = derivedAction<Astronaut>([] (Astronaut& astronaut, sf::Time){astronaut.thrusterUp();});
         m_actionBinding[ThursterDown].action = derivedAction<Astronaut>([] (Astronaut& astronaut, sf::Time){astronaut.thrusterDown();});
+        m_actionBinding[Fire].action = derivedAction<Astronaut>(std::bind(&Astronaut::fire, std::placeholders::_1));
 }
 
 bool Player::isRealtimeAction(Action action)
@@ -87,6 +89,7 @@ bool Player::isRealtimeAction(Action action)
             case ThursterRight:
             case ThursterUp:
             case ThursterDown:
+            case Fire:
                     return true;
 
             default:

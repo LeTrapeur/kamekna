@@ -3,13 +3,14 @@
 
 #include<memory>
 #include <algorithm>
-#include<vector>
-#include<assert.h>
+#include <vector>
+#include <assert.h>
 
 #include <SFML/Graphics.hpp>
 
 #include "Command.h"
 #include "Category.h"
+#include "CommandQueue.h"
 
 class SceneNode : public sf::Transformable, public sf::Drawable, private sf::NonCopyable
 {
@@ -17,12 +18,12 @@ class SceneNode : public sf::Transformable, public sf::Drawable, private sf::Non
         typedef std::unique_ptr<SceneNode> Ptr;
 
     public:
-        explicit                    SceneNode();
+        explicit                    SceneNode(Category::Type category = Category::None);
 
         void                        attachChild(Ptr child);
         Ptr                         detachChild(const SceneNode& node);
 
-        void                        update(sf::Time dt);
+        void                        update(sf::Time dt, CommandQueue& commands);
 
         virtual unsigned int        getCategory() const;
         void                        onCommand(const Command& command, sf::Time dt);
@@ -31,12 +32,14 @@ class SceneNode : public sf::Transformable, public sf::Drawable, private sf::Non
         virtual void                draw(sf::RenderTarget& target, sf::RenderStates states) const final;
         virtual void                drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
 
-        virtual void                updateCurrent(sf::Time dt);
-        void                        updateChildren(sf::Time dt);
+        virtual void                updateCurrent(sf::Time dt, CommandQueue& commands);
+        void                        updateChildren(sf::Time dt, CommandQueue& commands);
 
     private:
         std::vector<Ptr>            m_children;
         SceneNode*                  m_parent;
+
+        Category::Type              m_defaultCategory;
 };
 
 #endif // SCENENODE_H

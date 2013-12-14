@@ -1,7 +1,8 @@
 #include "SceneNode.h"
 
-SceneNode::SceneNode():
-    m_parent(nullptr)
+SceneNode::SceneNode(Category::Type category):
+    m_parent(nullptr),
+    m_defaultCategory(category)
 {
     //ctor
 }
@@ -37,28 +38,28 @@ void SceneNode::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) c
     // nothing here
 }
 
-void SceneNode::update(sf::Time dt)
+void SceneNode::update(sf::Time dt, CommandQueue& commands)
 {
-    updateCurrent(dt);
-    updateChildren(dt);
+    updateCurrent(dt, commands);
+    updateChildren(dt, commands);
 }
 
-void SceneNode::updateCurrent(sf::Time dt)
+void SceneNode::updateCurrent(sf::Time dt, CommandQueue& commands)
 {
      // nothing here
 }
 
-void SceneNode::updateChildren(sf::Time dt)
+void SceneNode::updateChildren(sf::Time dt, CommandQueue& commands)
 {
     for(auto it = m_children.begin(); it != m_children.end(); ++it)
     {
-        (*it)->update(dt);
+        (*it)->update(dt, commands);
     }
 }
 
 unsigned int SceneNode::getCategory() const
 {
-    return Category::Scene;
+    return m_defaultCategory;
 }
 
 void SceneNode::onCommand(const Command& command, sf::Time dt)
@@ -69,8 +70,3 @@ void SceneNode::onCommand(const Command& command, sf::Time dt)
     for(auto it = m_children.begin(); it != m_children.end(); ++it)
         (*it)->onCommand(command, dt);
 }
-
-
-
-
-

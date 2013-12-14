@@ -17,6 +17,7 @@ class Player
             MoveLeft,
             MoveRight,
             Jump,
+            Fire,
             ThursterLeft,
             ThursterRight,
             ThursterUp,

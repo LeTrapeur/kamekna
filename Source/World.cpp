@@ -42,6 +42,7 @@ void World::loadTextures()
     m_textures.load(Textures::Hero, "astronaut.png");
     m_textures.load(Textures::Asteroid, "asteroid.png");
     m_textures.load(Textures::Enemy, "enemy.png");
+    m_textures.load(Textures::Bullet, "bullet.png");
 }
 
 void World::buildScene()
@@ -49,7 +50,8 @@ void World::buildScene()
     // Init layers
     for(std::size_t i = 0; i < LayerCount; ++i)
     {
-        SceneNode::Ptr layer(new SceneNode());
+        Category::Type category = (i == Space) ? Category::Scene : Category::None;
+        SceneNode::Ptr layer(new SceneNode(category));
         m_sceneLayers[i] = layer.get();
         m_sceneGraph.attachChild(std::move(layer));
     }
@@ -110,7 +112,7 @@ void World::update(sf::Time dt)
         m_sceneGraph.onCommand(m_commandQueue.pop(), dt);
 
     m_physicWorld.Step(dt.asSeconds(), 8, 4);
-    m_sceneGraph.update(dt);
+    m_sceneGraph.update(dt, m_commandQueue);
 
     adaptPlayerPosition();
     adaptScrolling();

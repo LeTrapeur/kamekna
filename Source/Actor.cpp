@@ -5,9 +5,6 @@
 
 #include <string>
 
-// Actor => walk left.. etc jump
-// Astronaut => thrusters
-
 const float SCALE = 30.f; // Box2D works in a scale of 30 pixels = 1 meter
 
 Textures::ID toTextureID(Actor::Type type)
@@ -31,7 +28,6 @@ Actor::Actor(Type type, const TextureHolder& textures, const FontHolder& fonts, 
 {
     // Player
     sf::Rect<float> spriteBounds = m_sprite.getGlobalBounds();
-
     setOrigin(sf::Vector2f(spriteBounds.width/2,spriteBounds.height/2));
 
     b2BodyDef ActorBodyDef;
