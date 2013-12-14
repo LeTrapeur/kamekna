@@ -117,7 +117,6 @@ sf::Vector2f World::getMouseWorldPosition()
 {
     sf::Vector2i pixelPos = sf::Mouse::getPosition(m_window);
     sf::Vector2f worldPos = m_window.mapPixelToCoords(pixelPos, m_worldView);
-    std::cout << worldPos.x << " " << worldPos.y << std::endl;
     return worldPos;
 }
 

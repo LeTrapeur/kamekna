@@ -16,7 +16,8 @@ Astronaut::Astronaut(Type type, const TextureHolder& textures, const FontHolder&
     m_powerRecoveryTime(sf::seconds(3.f)),
     m_isThrusting(false),
     m_powerDisplay(nullptr),
-    m_fireCommand()
+    m_fireCommand(),
+    m_targetPos()
 {
     if(type != Actor::Hero)
     {
@@ -119,26 +120,29 @@ void Astronaut::checkProjectileLaunch(sf::Time dt, CommandQueue& commands)
         m_isFiring = false;
     }
 }
-
+// TODO const correctness problème
 void Astronaut::createBullets(SceneNode& node, const TextureHolder& textures, b2World& world) const
 {
     Projectile::Type type = Projectile::AlliedBullet;
     createProjectile(node, type, 0.0f, 0.0f, textures, world);
 }
 
-
 // TODO à nettoyer
+// TODO const correctness problème
 void Astronaut::createProjectile(SceneNode& node, Projectile::Type type, float xOffset, float yOffset, const TextureHolder& textures, b2World& world) const
 {
     std::unique_ptr<Projectile> projectile(new Projectile(type, textures, world));
+
     sf::Vector2f offset(xOffset * m_sprite.getGlobalBounds().width, yOffset * m_sprite.getGlobalBounds().height);
     projectile->setPosition((this->m_body->GetWorldCenter().x * SCALE) + offset.x, (this->m_body->GetWorldCenter().y * SCALE) + offset.y);
 
     sf::Vector2f astronautPos(this->m_body->GetWorldCenter().x * SCALE, this->m_body->GetWorldCenter().y * SCALE);
-    sf::Vector2f projectileDirection(m_targetPos - astronautPos);
 
-    std::cout << "x: " << Utility::unitVector(projectileDirection).x << " y: " << Utility::unitVector(projectileDirection).y << std::endl;
-    projectile->m_body->ApplyForce(b2Vec2(m_body->GetMass() * projectileDirection.x /10, m_body->GetMass() * projectileDirection.y /10), m_body->GetWorldCenter());
+    sf::Vector2f projectileDirection(m_targetPos - astronautPos);
+    projectileDirection = Utility::unitVector(projectileDirection);
+
+    std::cout << "x: " << projectileDirection.x << " y: " << projectileDirection.y << std::endl;
+    projectile->m_body->ApplyForce(b2Vec2(m_body->GetMass() * projectileDirection.x *75, m_body->GetMass() * projectileDirection.y *75), m_body->GetWorldCenter());
     node.attachChild(std::move(projectile));
 }
 

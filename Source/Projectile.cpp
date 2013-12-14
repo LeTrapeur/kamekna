@@ -33,7 +33,9 @@ unsigned int Projectile::getCategory() const
 }
 
 void Projectile::updateCurrent(sf::Time dt, CommandQueue& commands)
-{Entity::updateCurrent(dt,commands);}
+{
+    Entity::updateCurrent(dt,commands);
+}
 
 void Projectile::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
 {
