@@ -96,6 +96,9 @@ void Astronaut::checkThrusters()
         m_powerDisplay->setString(std::to_string(m_power) + " PW");
 }
 
+// 1 prendre dans player la position de la souris avec Event (voir si c'est relatif à la fenetre )ensuite l'envoyer à fire et mettre a jour une targetDirection et calsuler la direction de la bullet
+// 2 passer window à player
+// limiter le radius de tir
 void Astronaut::fire()
 {
     m_isFiring = true;
