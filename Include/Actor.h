@@ -31,12 +31,24 @@ class Actor : public Entity
         virtual void            drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
 
     protected:
+        enum LookingOrientation
+        {
+            Left,
+            Right,
+            Up,
+            Down,
+            Count,
+        };
+
+    protected:
         sf::Sprite              m_sprite;
         unsigned int            m_numFootContacts;
 
         Type                    m_type;
 
         unsigned int            m_life;
+
+        LookingOrientation      m_lookingOrientation;
 };
 
 #endif // ACTOR_H

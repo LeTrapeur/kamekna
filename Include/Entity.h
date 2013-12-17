@@ -28,11 +28,6 @@ class Entity : public SceneNode
 
     protected:
         virtual void        updateCurrent(sf::Time dt, CommandQueue& commands);
-
-
-
 };
-
-constexpr float pi() { return std::atan(1)*4; }
 
 #endif // ENTITY_H

@@ -5,6 +5,7 @@
 #include "TextNode.h"
 
 #include <string>
+#include <cmath>
 
 // TODO Vitesse max
 
@@ -124,7 +125,12 @@ void Astronaut::checkProjectileLaunch(sf::Time dt, CommandQueue& commands)
 void Astronaut::createBullets(SceneNode& node, const TextureHolder& textures, b2World& world) const
 {
     Projectile::Type type = Projectile::AlliedBullet;
-    createProjectile(node, type, 0.0f, 0.0f, textures, world);
+
+    // Gun position
+    if(m_lookingOrientation == LookingOrientation::Right)
+        createProjectile(node, type, 0.30f, 0.0f, textures, world);
+    else if(m_lookingOrientation == LookingOrientation::Left)
+        createProjectile(node, type, -0.30f, 0.0f, textures, world);
 }
 
 // TODO à nettoyer
@@ -133,16 +139,31 @@ void Astronaut::createProjectile(SceneNode& node, Projectile::Type type, float x
 {
     std::unique_ptr<Projectile> projectile(new Projectile(type, textures, world));
 
-    sf::Vector2f offset(xOffset * m_sprite.getGlobalBounds().width, yOffset * m_sprite.getGlobalBounds().height);
+    sf::Vector2f offset(xOffset * m_sprite.getGlobalBounds().width, yOffset * m_sprite.getGlobalBounds().height); // offset
     projectile->setPosition((this->m_body->GetWorldCenter().x * SCALE) + offset.x, (this->m_body->GetWorldCenter().y * SCALE) + offset.y);
 
-    sf::Vector2f astronautPos(this->m_body->GetWorldCenter().x * SCALE, this->m_body->GetWorldCenter().y * SCALE);
+    sf::Vector2f astronautPos(this->m_body->GetWorldCenter().x * SCALE, this->m_body->GetWorldCenter().y * SCALE); // position de lasronaut
 
     sf::Vector2f projectileDirection(m_targetPos - astronautPos);
     projectileDirection = Utility::unitVector(projectileDirection);
 
-    std::cout << "x: " << projectileDirection.x << " y: " << projectileDirection.y << std::endl;
-    projectile->m_body->ApplyForce(b2Vec2(m_body->GetMass() * projectileDirection.x *75, m_body->GetMass() * projectileDirection.y *75), m_body->GetWorldCenter());
+    // 75 deg cone to shoot
+    if(projectileDirection.y > 0.75f)
+        projectileDirection.y = 0.75f;
+    if(projectileDirection.y < -0.75f)
+        projectileDirection.y = -0.75f;
+
+    projectileDirection *= 100.f; // Pour avoir un angle en deg
+
+    float vx;
+    if(m_lookingOrientation == LookingOrientation::Left)
+        vx = -20.f;
+    else
+        vx = 20.f;
+
+    float vy = 20.f * std::sin((projectileDirection.y*Utility::pi())/180.f); // sin(radians)
+
+    projectile->m_body->SetLinearVelocity(b2Vec2(vx, vy));
     node.attachChild(std::move(projectile));
 }
 

@@ -24,7 +24,8 @@ Actor::Actor(Type type, const TextureHolder& textures, const FontHolder& fonts, 
     m_sprite(textures.get(toTextureID(type))),
     m_type(type),
     m_numFootContacts(0),
-    m_life(100)
+    m_life(100),
+    m_lookingOrientation(LookingOrientation::Right)
 {
     // Player
     sf::Rect<float> spriteBounds = m_sprite.getGlobalBounds();
@@ -71,12 +72,16 @@ void Actor::walkLeft()
 {
     if (m_numFootContacts >= 1 && m_body->GetLinearVelocity().x * SCALE > -150)
         m_body->ApplyForce(b2Vec2(-m_body->GetMass()*8,0), m_body->GetWorldCenter());
+
+    m_lookingOrientation = LookingOrientation::Left;
 }
 
 void Actor::walkRight()
 {
     if (m_numFootContacts >= 1 && m_body->GetLinearVelocity().x * SCALE < 150)
         m_body->ApplyForce(b2Vec2(m_body->GetMass()*8,0), m_body->GetWorldCenter());
+
+    m_lookingOrientation = LookingOrientation::Right;
 }
 
 void Actor::addFootContact()

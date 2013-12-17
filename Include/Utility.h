@@ -23,6 +23,8 @@ namespace Utility
     float length(sf::Vector2f vector);
 
     sf::Vector2f unitVector(sf::Vector2f vector);
+
+    constexpr float pi() { return std::atan(1)*4; }
 }
 
 #endif // UTILITY_H
