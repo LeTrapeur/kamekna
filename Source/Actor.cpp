@@ -34,15 +34,17 @@ Actor::Actor(Type type, const TextureHolder& textures, const FontHolder& fonts, 
     b2BodyDef ActorBodyDef;
     ActorBodyDef.type = b2_dynamicBody;
     ActorBodyDef.fixedRotation = true;
+    ActorBodyDef.linearDamping = 0.2f;
     m_body = world.CreateBody(&ActorBodyDef);
 
-    b2FixtureDef ActorBFixtureDef;
+    b2FixtureDef ActorFixtureDef;
     b2PolygonShape ActorShape;
     ActorShape.SetAsBox((spriteBounds.width/2.0f)/SCALE, (spriteBounds.height/2.0f)/SCALE);
-    ActorBFixtureDef.shape = &ActorShape;
-    ActorBFixtureDef.density = 1.0f;
-    ActorBFixtureDef.friction = 0.3f;
-    m_body->CreateFixture(&ActorBFixtureDef);
+    ActorFixtureDef.shape = &ActorShape;
+    ActorFixtureDef.density = 1.0f;
+    ActorFixtureDef.friction = 0.3f;
+    ActorFixtureDef.userData = this;
+    m_body->CreateFixture(&ActorFixtureDef);
 
     //add foot sensor fixture
     b2PolygonShape FootShape;
@@ -58,6 +60,7 @@ Actor::Actor(Type type, const TextureHolder& textures, const FontHolder& fonts, 
         std::string textActor(std::to_string(m_life) + " HP");
         std::unique_ptr<TextNode> nameDisplay(new TextNode(fonts, textActor));
         nameDisplay->setPosition(0.f, -25.f);
+        m_infoDisplay = nameDisplay.get();
         attachChild(std::move(nameDisplay));
     }
 }
@@ -102,6 +105,25 @@ void Actor::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
 float Actor::getLife() const
 {
     return m_life;
+}
+
+void Actor::takeDamage(unsigned int damage)
+{
+    m_life -= damage;
+    if(m_life < 0)
+        m_life = 0;
+}
+
+void Actor::updateText()
+{
+    if(m_infoDisplay)
+        m_infoDisplay->setString(std::to_string(m_life) + " HP");
+}
+
+void Actor::updateCurrent(sf::Time dt, CommandQueue& commands)
+{
+    updateText();
+    Entity::updateCurrent(dt, commands);
 }
 
 unsigned int Actor::getCategory() const

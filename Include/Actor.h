@@ -3,6 +3,7 @@
 
 #include "Entity.h"
 #include "ResourceHolder.h"
+#include "TextNode.h"
 
 class Actor : public Entity
 {
@@ -26,9 +27,14 @@ class Actor : public Entity
         virtual unsigned int    getCategory() const;
 
         float                   getLife() const;
+        void                    takeDamage(unsigned int damage);
+        void                    updateText();
 
     private:
         virtual void            drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
+
+    protected:
+        virtual void            updateCurrent(sf::Time dt, CommandQueue& commands);
 
     protected:
         enum LookingOrientation
@@ -46,7 +52,9 @@ class Actor : public Entity
 
         Type                    m_type;
 
-        unsigned int            m_life;
+        int                     m_life;
+        TextNode*               m_infoDisplay;
+
 
         LookingOrientation      m_lookingOrientation;
 };

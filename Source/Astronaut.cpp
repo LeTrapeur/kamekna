@@ -171,5 +171,5 @@ void Astronaut::updateCurrent(sf::Time dt, CommandQueue& commands)
 {
     checkThrusters();
     checkProjectileLaunch(dt, commands);
-    Entity::updateCurrent(dt, commands);
+    Actor::updateCurrent(dt, commands);
 }

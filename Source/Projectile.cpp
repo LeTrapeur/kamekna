@@ -25,6 +25,7 @@ Projectile::Projectile(Type type, const TextureHolder& textures, b2World& world)
     ProjectileFixtureDef.density = 1.0f;
     ProjectileFixtureDef.restitution = 0.1f;
     ProjectileFixtureDef.friction = 0.0f;
+    ProjectileFixtureDef.userData = this;
     m_body->CreateFixture(&ProjectileFixtureDef);
 }
 
