@@ -6,26 +6,21 @@
 
 
 MyContactListener::MyContactListener()
-{
-    //ctor
-}
+{}
 
 void MyContactListener::BeginContact(b2Contact* contact)
 {
     Entity* A = static_cast<Entity*>(contact->GetFixtureA()->GetUserData());
     Entity* B = static_cast<Entity*>(contact->GetFixtureB()->GetUserData());
 
-    Actor* actor = dynamic_cast<Actor*>(A);
-    Projectile* projectile = dynamic_cast<Projectile*>(B);
-    if(actor && projectile)
-    {
-        if(actor->getCategory() == Category::EnemyActor && projectile->getCategory() == Category::AlliedProjectile)
+    std::cout << A->getCategory() << " " << B->getCategory() << std::endl;
+        if(A->getCategory() == Category::EnemyActor && B->getCategory() == Category::AlliedProjectile)
         {
-            actor->takeDamage(5);
+            Actor* actor = dynamic_cast<Actor*>(A);
+            Projectile* projectile = dynamic_cast<Projectile*>(B);
+            if(actor && projectile)
+                actor->takeDamage(5);
         }
-    }
-//    Actor* actor = dynamic_cast<Actor*>(A);
-//    if (actor)
 //    {
 //        actor->addFootContact();
 //        return;
@@ -41,16 +36,16 @@ void MyContactListener::BeginContact(b2Contact* contact)
 
 void MyContactListener::EndContact(b2Contact* contact)
 {
-    Entity* A = static_cast<Entity*>(contact->GetFixtureA()->GetUserData());
-    Entity* B = static_cast<Entity*>(contact->GetFixtureB()->GetUserData());
-    Actor* actor = dynamic_cast<Actor*>(A);
-    if (actor)
-    {
-        actor->removeFootContact();
-    }
-    actor = dynamic_cast<Actor*>(B);
-    if (actor)
-    {
-        actor->removeFootContact();
-    }
+//    Entity* A = static_cast<Entity*>(contact->GetFixtureA()->GetUserData());
+//    Entity* B = static_cast<Entity*>(contact->GetFixtureB()->GetUserData());
+//    Actor* actor = dynamic_cast<Actor*>(A);
+//    if (actor)
+//    {
+//        actor->removeFootContact();
+//    }
+//    actor = dynamic_cast<Actor*>(B);
+//    if (actor)
+//    {
+//        actor->removeFootContact();
+//    }
 }

@@ -26,6 +26,7 @@ Asteroid::Asteroid(const TextureHolder& textures, b2World& world): Entity()
     AsteroidShape.Set(vertices, pointsCount);
     AsteroidFixtureDef.shape = &AsteroidShape;
     AsteroidFixtureDef.density = 1.0f;
+    AsteroidFixtureDef.userData = this;
     m_body->CreateFixture(&AsteroidFixtureDef);
 
     m_shape.setOrigin(m_body->GetWorldCenter().x, m_body->GetWorldCenter().y);

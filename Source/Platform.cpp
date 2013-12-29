@@ -21,6 +21,7 @@ Platform::Platform(b2World& world): Entity()
     GroundShape.SetAsBox((FLOOR_WIDTH/2.0f)/SCALE, (FLOOR_HEIGHT/2.0f)/SCALE);
     GroundFixtureDef.shape = &GroundShape;
     GroundFixtureDef.density = 1.0f;
+    GroundFixtureDef.userData = this;
     m_body->CreateFixture(&GroundFixtureDef);
 }
 

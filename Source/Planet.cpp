@@ -18,6 +18,7 @@ Planet::Planet(const TextureHolder& textures, b2World& world)
     PlanetShape.m_radius = radius/SCALE;
     PlanetFixtureDef.shape = &PlanetShape;
     PlanetFixtureDef.density = 1.0f;
+    PlanetFixtureDef.userData = this;
     m_body->CreateFixture(&PlanetFixtureDef);
 
     m_shapeInfluence.setRadius(radius*3);
