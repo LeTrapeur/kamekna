@@ -30,7 +30,7 @@ Astronaut::Astronaut(Type type, const TextureHolder& textures, const FontHolder&
 
     m_powerRecovery.restart();
 
-    m_fireCommand.category = Category::Scene;
+    m_fireCommand.category = Category::UpperScene;
     m_fireCommand.action =
     [this, &textures, &world] (SceneNode& node, sf::Time)
     {
@@ -137,7 +137,7 @@ void Astronaut::createBullets(SceneNode& node, const TextureHolder& textures, b2
 // TODO const correctness problème
 void Astronaut::createProjectile(SceneNode& node, Projectile::Type type, float xOffset, float yOffset, const TextureHolder& textures, b2World& world) const
 {
-    std::unique_ptr<Projectile> projectile(new Projectile(type, textures, world));
+    std::unique_ptr<Projectile> projectile(new Projectile(type, textures, world, 5));
 
     sf::Vector2f offset(xOffset * m_sprite.getGlobalBounds().width, yOffset * m_sprite.getGlobalBounds().height); // offset
     projectile->setPosition((this->m_body->GetWorldCenter().x * SCALE) + offset.x, (this->m_body->GetWorldCenter().y * SCALE) + offset.y);

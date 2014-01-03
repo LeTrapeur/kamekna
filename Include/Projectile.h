@@ -15,18 +15,20 @@ class Projectile : public Entity
         };
 
     public:
-        Projectile(Type type, const TextureHolder& textures, b2World& world);
+                                        Projectile(Type type, const TextureHolder& textures, b2World& world, int damage);
 
-        virtual unsigned int getCategory() const;
-        int getMaxSpeed() const;
-
-    private:
-        virtual void updateCurrent(sf::Time dt, CommandQueue& commands);
-        virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
+        virtual unsigned int            getCategory() const;
+        int                             getMaxSpeed() const;
+        int                             getDamage() const;
 
     private:
-        Type m_type;
-        sf::Sprite m_sprite;
+        virtual void                    updateCurrent(sf::Time dt, CommandQueue& commands);
+        virtual void                    drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
+
+    private:
+        Type                            m_type;
+        sf::Sprite                      m_sprite;
+        int                             m_damage;
 
 };
 

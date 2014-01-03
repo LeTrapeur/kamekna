@@ -50,7 +50,7 @@ void World::buildScene()
     // Init layers
     for(std::size_t i = 0; i < LayerCount; ++i)
     {
-        Category::Type category = (i == Space) ? Category::Scene : Category::None;
+        Category::Type category = (i == Space) ? Category::UpperScene : Category::None;
         SceneNode::Ptr layer(new SceneNode(category));
         m_sceneLayers[i] = layer.get();
         m_sceneGraph.attachChild(std::move(layer));

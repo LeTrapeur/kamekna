@@ -5,9 +5,10 @@
 
 const float SCALE = 30.f; // Box2D works in a scale of 30 pixels = 1 meter
 
-Projectile::Projectile(Type type, const TextureHolder& textures, b2World& world): Entity(),
+Projectile::Projectile(Type type, const TextureHolder& textures, b2World& world, int damage): Entity(),
     m_type(type),
-    m_sprite(textures.get(Textures::Bullet))
+    m_sprite(textures.get(Textures::Bullet)),
+    m_damage(damage)
 {
     sf::Rect<float> spriteBounds = m_sprite.getGlobalBounds();
     setOrigin(sf::Vector2f(spriteBounds.width/2,spriteBounds.height/2));
@@ -31,6 +32,11 @@ Projectile::Projectile(Type type, const TextureHolder& textures, b2World& world)
 unsigned int Projectile::getCategory() const
 {
     return Category::AlliedProjectile;
+}
+
+int Projectile::getDamage() const
+{
+    return m_damage;
 }
 
 void Projectile::updateCurrent(sf::Time dt, CommandQueue& commands)

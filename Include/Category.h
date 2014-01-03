@@ -6,10 +6,12 @@ namespace Category
     enum Type
     {
         None = 0,
-        Scene = 1 << 0,
-        PlayerActor = 1 << 1,
-        EnemyActor = 1 << 2,
-        AlliedProjectile = 1 << 3,
+        LowerScene = 1 << 0,
+        UpperScene = 1 << 1,
+        PlayerActor = 1 << 2,
+        EnemyActor = 1 << 3,
+        AlliedProjectile = 1 << 4,
+
     };
 }
 
