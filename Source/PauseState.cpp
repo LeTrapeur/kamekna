@@ -1,5 +1,6 @@
 #include "PauseState.h"
 #include "ResourceHolder.h"
+#include "MusicPlayer.h"
 #include "Utility.h"
 
 #include <SFML/Graphics/RectangleShape.hpp>
@@ -26,6 +27,13 @@ PauseState::PauseState(StateStack& stack, Context context):
     m_instructionText.setString("(Press Backspace to return to the main menu)");
     Utility::centerOrigin(m_instructionText);
     m_instructionText.setPosition(0.5f * viewSize.x, 0.6f * viewSize.y);
+
+    getContext().music->setPaused(true);
+}
+
+PauseState::~PauseState()
+{
+    getContext().music->setPaused(false);
 }
 
 void PauseState::draw()

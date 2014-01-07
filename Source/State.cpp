@@ -2,11 +2,12 @@
 #include "StateStack.h"
 
 
-State::Context::Context(sf::RenderWindow& window, TextureHolder& textures, FontHolder& fonts, Player& player):
+State::Context::Context(sf::RenderWindow& window, TextureHolder& textures, FontHolder& fonts, Player& player, MusicPlayer& music):
     window(&window),
     textures(&textures),
     fonts(&fonts),
-    player(&player)
+    player(&player),
+    music(&music)
 {}
 
 State::State(StateStack& stack, Context context):

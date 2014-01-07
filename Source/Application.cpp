@@ -12,7 +12,8 @@ Application::Application():
     m_textures(),
     m_fonts(),
     m_player(),
-    m_stateStack(State::Context(m_window, m_textures, m_fonts, m_player))
+    m_music(),
+    m_stateStack(State::Context(m_window, m_textures, m_fonts, m_player, m_music))
 {
     m_fonts.load(Fonts::Main, "airstrip.ttf");
     m_fonts.load(Fonts::Debug, "arial.ttf");

@@ -1,4 +1,5 @@
 #include "GameState.h"
+#include "MusicPlayer.h"
 
 GameState::GameState(StateStack& stack, Context context)
 : State(stack, context)
@@ -11,6 +12,8 @@ GameState::GameState(StateStack& stack, Context context)
     m_powerBar.setSize(sf::Vector2f(m_world.getPlayerPower() * 3, 25));
     m_powerBar.setPosition(10, 45);
     m_powerBar.setFillColor(sf::Color(255, 128, 0, 200));
+
+    context.music->play(Music::GameTheme);
 }
 
 void GameState::draw()
