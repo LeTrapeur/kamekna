@@ -11,6 +11,7 @@ namespace Category
         PlayerActor = 1 << 2,
         EnemyActor = 1 << 3,
         AlliedProjectile = 1 << 4,
+        SoundEffect = 1 << 5,
 
     };
 }

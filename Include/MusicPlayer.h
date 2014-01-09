@@ -14,7 +14,7 @@ namespace Music
     };
 }
 
-class MusicPlayer
+class MusicPlayer : private sf::NonCopyable
 {
     public:
                     MusicPlayer();

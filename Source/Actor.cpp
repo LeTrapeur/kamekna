@@ -136,3 +136,4 @@ unsigned int Actor::getCategory() const
             return Category::EnemyActor;
     }
 }
+

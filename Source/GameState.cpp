@@ -3,7 +3,7 @@
 
 GameState::GameState(StateStack& stack, Context context)
 : State(stack, context)
-, m_world(*context.window, *context.fonts)
+, m_world(*context.window, *context.fonts, *context.sounds)
 , m_player(*context.player)
 {
     m_lifeBar.setSize(sf::Vector2f(m_world.getPlayerLife() * 3, 25));
@@ -13,6 +13,7 @@ GameState::GameState(StateStack& stack, Context context)
     m_powerBar.setPosition(10, 45);
     m_powerBar.setFillColor(sf::Color(255, 128, 0, 200));
 
+    context.music->setVolume(5.f);
     context.music->play(Music::GameTheme);
 }
 

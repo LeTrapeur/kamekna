@@ -11,6 +11,7 @@
 #include "ResourceHolder.h"
 #include "Player.h"
 #include "MusicPlayer.h"
+#include "SoundPlayer.h"
 #include "StateStack.h"
 
 
@@ -33,6 +34,7 @@ class Application
         TextureHolder       m_textures;
 	  	FontHolder	        m_fonts;
 	  	MusicPlayer         m_music;
+	  	SoundPlayer         m_sounds;
 
 		StateStack          m_stateStack;
 

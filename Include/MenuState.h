@@ -1,11 +1,11 @@
 #ifndef MENUSTATE_H
 #define MENUSTATE_H
 
-#include "State.h"
-
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Text.hpp>
 
+#include "State.h"
+#include "SoundPlayer.h"
 
 class MenuState : public State
 {
@@ -29,6 +29,8 @@ class MenuState : public State
             sf::Sprite                      m_backgroundSprite;
             std::vector<sf::Text>           m_options;
             std::size_t                     m_optionIndex;
+
+            SoundPlayer&                    m_sounds;
 };
 
 #endif // MENUSTATE_H

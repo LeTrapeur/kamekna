@@ -1,6 +1,7 @@
 #include "MusicPlayer.h"
 
 #include <stdexcept>
+#include <cassert>
 
 MusicPlayer::MusicPlayer():
     m_music(),
@@ -34,4 +35,10 @@ void MusicPlayer::setPaused(bool paused)
         m_music.pause();
     else
         m_music.play();
+}
+
+void MusicPlayer::setVolume(float volume)
+{
+    assert(volume > 0);
+    m_volume = volume;
 }

@@ -10,8 +10,11 @@
 
 #include "Command.h"
 #include "Category.h"
+#include "SoundPlayer.h"
 #include "CommandQueue.h"
 
+
+// todo getworldposition()
 class SceneNode : public sf::Transformable, public sf::Drawable, private sf::NonCopyable
 {
     public:
@@ -27,6 +30,7 @@ class SceneNode : public sf::Transformable, public sf::Drawable, private sf::Non
 
         virtual unsigned int        getCategory() const;
         void                        onCommand(const Command& command, sf::Time dt);
+        void                        playLocalSound(CommandQueue& commands, SoundEffect::ID effect);
 
     private:
         virtual void                draw(sf::RenderTarget& target, sf::RenderStates states) const final;

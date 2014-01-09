@@ -1,4 +1,5 @@
 #include "SceneNode.h"
+#include "SoundNode.h"
 
 SceneNode::SceneNode(Category::Type category):
     m_parent(nullptr),
@@ -69,4 +70,15 @@ void SceneNode::onCommand(const Command& command, sf::Time dt)
 
     for(auto it = m_children.begin(); it != m_children.end(); ++it)
         (*it)->onCommand(command, dt);
+}
+
+void SceneNode::playLocalSound(CommandQueue& commands, SoundEffect::ID effect)
+{
+    Command command;
+    command.category = Category::SoundEffect;
+    command.action = derivedAction<SoundNode>([effect](SoundNode& node, sf::Time dt)
+                                              {
+                                                  node.playSound(effect);
+                                              });
+    commands.push(command);
 }

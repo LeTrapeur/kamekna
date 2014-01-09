@@ -3,15 +3,17 @@
 #include "Actor.h"
 #include "Astronaut.h"
 #include "SpriteNode.h"
+#include "SoundNode.h"
 #include "Platform.h"
 #include "Asteroid.h"
 #include "Planet.h"
 
 const float SCALE = 30.f; // Box2D works in a scale of 30 pixels = 1 meter
 
-World::World(sf::RenderWindow& window, FontHolder& fonts):
+World::World(sf::RenderWindow& window, FontHolder& fonts, SoundPlayer& sounds):
     m_window(window),
     m_fonts(fonts),
+    m_sounds(sounds),
     m_worldView(window.getDefaultView()),
     m_minimapView(window.getDefaultView()),
     m_physicWorld(b2Vec2(0, 4.0f)),
@@ -55,6 +57,9 @@ void World::buildScene()
         m_sceneLayers[i] = layer.get();
         m_sceneGraph.attachChild(std::move(layer));
     }
+    // SoundNode
+    std::unique_ptr<SoundNode> soundNode(new SoundNode(m_sounds));
+    m_sceneGraph.attachChild(std::move(soundNode));
 
     // Background
     sf::Texture& texture = m_textures.get(Textures::SpaceBackground);
@@ -111,6 +116,8 @@ void World::update(sf::Time dt)
 
     adaptPlayerPosition();
     adaptScrolling();
+
+    updateSounds();
 }
 
 sf::Vector2f World::getMouseWorldPosition()
@@ -162,4 +169,9 @@ float World::getPlayerLife() const
 float World::getPlayerPower() const
 {
     return m_player->getPower();
+}
+
+void World::updateSounds()
+{
+   m_sounds.removeStoppedSounds();
 }

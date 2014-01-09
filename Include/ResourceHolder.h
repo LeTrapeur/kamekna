@@ -11,6 +11,7 @@ namespace sf
 {
     class Texture;
     class Font;
+    class SoundBuffer;
 }
 
 namespace Textures
@@ -36,6 +37,19 @@ namespace Fonts
     };
 }
 
+
+namespace SoundEffect
+{
+    enum ID
+    {
+        AlliedGunfire,
+        Impact,
+        Jump,
+        Regenerate,
+        Button,
+    };
+}
+
 template <typename Resource, typename Identifier>
 class ResourceHolder
 {
@@ -57,6 +71,7 @@ class ResourceHolder
 
 typedef ResourceHolder<sf::Texture, Textures::ID>           TextureHolder;
 typedef ResourceHolder<sf::Font, Fonts::ID>                 FontHolder;
+typedef ResourceHolder<sf::SoundBuffer, SoundEffect::ID>    SoundBufferHolder;
 
 #include "ResourceHolder.inl"
 #endif // RESOURCEHOLDER_H

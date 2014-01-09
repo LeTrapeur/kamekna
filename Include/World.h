@@ -15,6 +15,7 @@
 #include "ResourceHolder.h"
 #include "CommandQueue.h"
 #include "SceneNode.h"
+#include "SoundPlayer.h"
 
 class Astronaut;
 
@@ -28,7 +29,7 @@ class World
             LayerCount
         };
     public:
-        explicit                                World(sf::RenderWindow& window, FontHolder& fonts);
+        explicit                                World(sf::RenderWindow& window, FontHolder& fonts, SoundPlayer& sounds);
 
         void                                    update(sf::Time dt);
         void                                    draw();
@@ -44,7 +45,7 @@ class World
         void                                    buildScene();
         void                                    adaptPlayerPosition();
         void                                    adaptScrolling();
-
+        void                                    updateSounds();
 
     private:
         sf::RenderWindow&                       m_window;
@@ -53,6 +54,7 @@ class World
 
         TextureHolder                           m_textures;
         FontHolder&                             m_fonts;
+        SoundPlayer&                            m_sounds;
 
         b2World                                 m_physicWorld;
         MyContactListener                       m_contactListener;

@@ -111,6 +111,7 @@ void Astronaut::checkProjectileLaunch(sf::Time dt, CommandQueue& commands)
 {
     if(m_isFiring && m_fireCountdown <= sf::Time::Zero)
     {
+        playLocalSound(commands, SoundEffect::AlliedGunfire);
         commands.push(m_fireCommand);
         m_fireCountdown += sf::seconds(1.f/(4.f));
         m_isFiring = false;

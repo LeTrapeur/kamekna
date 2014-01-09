@@ -10,7 +10,8 @@
 MenuState::MenuState(StateStack& stack, Context context):
     State(stack, context),
     m_options(),
-    m_optionIndex(0)
+    m_optionIndex(0),
+    m_sounds(*context.sounds)
 {
         sf::Texture& texture = context.textures->get(Textures::TitleScreen);
         sf::Font& font = context.fonts->get(Fonts::Main);
@@ -40,6 +41,7 @@ MenuState::MenuState(StateStack& stack, Context context):
 
         updateOptionText();
 
+        context.music->setVolume(25.f);
         context.music->play(Music::MenuTheme);
 }
 
@@ -67,6 +69,7 @@ bool MenuState::handleEvent(const sf::Event& event)
 
     if (event.key.code == sf::Keyboard::Return)
     {
+        m_sounds.play(SoundEffect::Button);
         if (m_optionIndex == Play)
         {
             requestStackPop();
