@@ -5,7 +5,8 @@
 #include "Projectile.h"
 
 
-MyContactListener::MyContactListener()
+MyContactListener::MyContactListener(CommandQueue& commandQueue):
+    m_commandQueue(commandQueue)
 {}
 
 void MyContactListener::BeginContact(b2Contact* contact)
@@ -19,7 +20,7 @@ void MyContactListener::BeginContact(b2Contact* contact)
         auto& enemy = static_cast<Actor&>(*entities.first);
         auto& projectile = static_cast<Projectile&>(*entities.second);
         enemy.takeDamage(projectile.getDamage());
-
+        enemy.playLocalSound(m_commandQueue, SoundEffect::Impact);
         // TODO projectile.destroy();
     }
 

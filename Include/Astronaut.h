@@ -22,7 +22,7 @@ class Astronaut : public Actor
 
     private:
         virtual void            updateCurrent(sf::Time dt, CommandQueue& commands);
-        void                    checkThrusters();
+        void                    checkThrusters(sf::Time dt, CommandQueue& commands);
         void                    createBullets(SceneNode& node, const TextureHolder& textures, b2World& world) const;
         void                    createProjectile(SceneNode& node, Projectile::Type type, float xOffset, float yOffset, const TextureHolder& textures, b2World& world) const;
         void                    checkProjectileLaunch(sf::Time dt, CommandQueue& commands);

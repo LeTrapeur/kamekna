@@ -75,15 +75,23 @@ float Astronaut::getPower() const
     return m_power;
 }
 // TODO prendre en compte le dt pour enlever le clock
-void Astronaut::checkThrusters()
+// TODO à nettoyer
+void Astronaut::checkThrusters(sf::Time dt, CommandQueue& commands)
 {
+    static bool isPlayed = false;
     if(m_isThrusting)
     {
         m_powerRecovery.restart();
         m_power--;
+        isPlayed = false;
     }
     else if(m_powerRecovery.getElapsedTime() > m_powerRecoveryTime)
     {
+        if(!isPlayed)
+        {
+            playLocalSound(commands, SoundEffect::Regenerate);
+            isPlayed = true;
+        }
         m_power++;
     }
 
@@ -94,6 +102,7 @@ void Astronaut::checkThrusters()
 
     m_isThrusting = false;
 
+    // TODO update text
     if(m_powerDisplay)
         m_powerDisplay->setString(std::to_string(m_power) + " PW");
 }
@@ -170,7 +179,7 @@ void Astronaut::createProjectile(SceneNode& node, Projectile::Type type, float x
 
 void Astronaut::updateCurrent(sf::Time dt, CommandQueue& commands)
 {
-    checkThrusters();
+    checkThrusters(dt, commands);
     checkProjectileLaunch(dt, commands);
     Actor::updateCurrent(dt, commands);
 }

@@ -24,7 +24,9 @@ World::World(sf::RenderWindow& window, FontHolder& fonts, SoundPlayer& sounds):
                   2*m_worldView.getSize().y
                   ),
     m_player(nullptr),
-    m_spawnPosition(200.f,200.f)
+    m_spawnPosition(200.f,200.f),
+    m_commandQueue(),
+    m_contactListener(m_commandQueue)
 {
     loadTextures();
 
