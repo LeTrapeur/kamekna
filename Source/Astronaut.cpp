@@ -83,7 +83,10 @@ void Astronaut::checkThrusters(sf::Time dt, CommandQueue& commands)
     {
         m_powerRecovery.restart();
         m_power--;
+        m_isThrusting = false;
         isPlayed = false;
+        if(m_power < 0)
+            m_power = 0;
     }
     else if(m_powerRecovery.getElapsedTime() > m_powerRecoveryTime)
     {
@@ -93,18 +96,10 @@ void Astronaut::checkThrusters(sf::Time dt, CommandQueue& commands)
             isPlayed = true;
         }
         m_power++;
+
+        if(m_power > 100)
+            m_power = 100;
     }
-
-    if(m_power < 0)
-        m_power = 0;
-    if(m_power > 100)
-        m_power = 100;
-
-    m_isThrusting = false;
-
-    // TODO update text
-    if(m_powerDisplay)
-        m_powerDisplay->setString(std::to_string(m_power) + " PW");
 }
 
 // 1 prendre dans player la position de la souris avec Event (voir si c'est relatif à la fenetre )ensuite l'envoyer à fire et mettre a jour une targetDirection et calsuler la direction de la bullet
@@ -131,7 +126,6 @@ void Astronaut::checkProjectileLaunch(sf::Time dt, CommandQueue& commands)
         m_isFiring = false;
     }
 }
-// TODO const correctness problème
 void Astronaut::createBullets(SceneNode& node, const TextureHolder& textures, b2World& world) const
 {
     Projectile::Type type = Projectile::AlliedBullet;
@@ -144,7 +138,6 @@ void Astronaut::createBullets(SceneNode& node, const TextureHolder& textures, b2
 }
 
 // TODO à nettoyer
-// TODO const correctness problème
 void Astronaut::createProjectile(SceneNode& node, Projectile::Type type, float xOffset, float yOffset, const TextureHolder& textures, b2World& world) const
 {
     std::unique_ptr<Projectile> projectile(new Projectile(type, textures, world, 5));
@@ -182,4 +175,10 @@ void Astronaut::updateCurrent(sf::Time dt, CommandQueue& commands)
     checkThrusters(dt, commands);
     checkProjectileLaunch(dt, commands);
     Actor::updateCurrent(dt, commands);
+}
+
+void Astronaut::updateText()
+{
+    if(m_powerDisplay)
+        m_powerDisplay->setString(std::to_string(m_power) + " PW");
 }

@@ -26,6 +26,7 @@ class Astronaut : public Actor
         void                    createBullets(SceneNode& node, const TextureHolder& textures, b2World& world) const;
         void                    createProjectile(SceneNode& node, Projectile::Type type, float xOffset, float yOffset, const TextureHolder& textures, b2World& world) const;
         void                    checkProjectileLaunch(sf::Time dt, CommandQueue& commands);
+        void                    updateText();
 
     private:
         float                   m_power;
