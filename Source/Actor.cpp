@@ -116,7 +116,7 @@ void Actor::takeDamage(unsigned int damage)
 
 void Actor::updateText()
 {
-    if(m_infoDisplay)
+    if(m_infoDisplay != nullptr)
         m_infoDisplay->setString(std::to_string(m_life) + " HP");
 }
 
