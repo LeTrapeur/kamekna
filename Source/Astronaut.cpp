@@ -90,7 +90,7 @@ void Astronaut::checkThrusters(sf::Time dt, CommandQueue& commands)
     }
     else if(m_powerRecovery.getElapsedTime() > m_powerRecoveryTime)
     {
-        if(!isPlayed)
+        if(!isPlayed && m_power < 100.f)
         {
             playLocalSound(commands, SoundEffect::Regenerate);
             isPlayed = true;
