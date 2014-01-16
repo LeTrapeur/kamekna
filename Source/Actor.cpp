@@ -25,7 +25,8 @@ Actor::Actor(Type type, const TextureHolder& textures, const FontHolder& fonts, 
     m_type(type),
     m_numFootContacts(0),
     m_life(100),
-    m_lookingOrientation(LookingOrientation::Right)
+    m_lookingOrientation(LookingOrientation::Right),
+    m_infoDisplay()
 {
     // Player
     sf::Rect<float> spriteBounds = m_sprite.getGlobalBounds();
