@@ -32,6 +32,7 @@ class Actor : public Entity
 
     private:
         virtual void            drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
+        void                    checkActorJump(sf::Time dt, CommandQueue& commands);
 
     protected:
         virtual void            updateCurrent(sf::Time dt, CommandQueue& commands);
@@ -55,8 +56,9 @@ class Actor : public Entity
         int                     m_life;
         TextNode*               m_infoDisplay;
 
-
         LookingOrientation      m_lookingOrientation;
+
+        bool                    m_isJumping;
 };
 
 #endif // ACTOR_H

@@ -26,6 +26,7 @@ Actor::Actor(Type type, const TextureHolder& textures, const FontHolder& fonts, 
     m_numFootContacts(0),
     m_life(100),
     m_lookingOrientation(LookingOrientation::Right),
+    m_isJumping(false),
     m_infoDisplay()
 {
     // Player
@@ -68,9 +69,19 @@ Actor::Actor(Type type, const TextureHolder& textures, const FontHolder& fonts, 
 
 void Actor::jump()
 {
-    if (m_numFootContacts >= 1)
-        m_body->ApplyLinearImpulse(b2Vec2(0,-m_body->GetMass()*8), m_body->GetWorldCenter());
+    m_isJumping = true;
 }
+
+void Actor::checkActorJump(sf::Time dt, CommandQueue& commands)
+{
+    if(m_isJumping && m_numFootContacts >= 1)
+    {
+        playLocalSound(commands, SoundEffect::Jump);
+        m_body->ApplyLinearImpulse(b2Vec2(0,-m_body->GetMass()*8), m_body->GetWorldCenter());
+    }
+    m_isJumping = false;
+}
+
 
 void Actor::walkLeft()
 {
@@ -124,6 +135,7 @@ void Actor::updateText()
 void Actor::updateCurrent(sf::Time dt, CommandQueue& commands)
 {
     updateText();
+    checkActorJump(dt, commands);
     Entity::updateCurrent(dt, commands);
 }
 
