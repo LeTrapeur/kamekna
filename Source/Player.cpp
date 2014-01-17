@@ -5,8 +5,8 @@
 Player::Player()
 {
         // Set initial key bindings
-        m_keyBinding[sf::Keyboard::Q] = MoveLeft;
-        m_keyBinding[sf::Keyboard::D] = MoveRight;
+        m_keyBinding[sf::Keyboard::Q] = GoLeft;
+        m_keyBinding[sf::Keyboard::D] = GoRight;
         m_keyBinding[sf::Keyboard::Space] = Jump;
         m_keyBinding[sf::Keyboard::A] = ThursterLeft;
         m_keyBinding[sf::Keyboard::E] = ThursterRight;
@@ -102,7 +102,7 @@ sf::Keyboard::Key Player::getAssignedKey(Action action) const
     return sf::Keyboard::Unknown;
 }
 
-// TODO
+// TODO mouse settings
 //sf::Mouse::Button Player::getAssignedKey(Action action) const
 //{
 //    for (auto it = m_mouseBinding.begin(); it != m_mouseBinding.end(); ++it )
@@ -115,8 +115,8 @@ sf::Keyboard::Key Player::getAssignedKey(Action action) const
 
 void Player::initializeActions()
 {
-        m_actionBinding[MoveLeft].action  = derivedAction<Astronaut>([] (Astronaut& astronaut, sf::Time){astronaut.walkLeft();});
-        m_actionBinding[MoveRight].action = derivedAction<Astronaut>([] (Astronaut& astronaut, sf::Time){astronaut.walkRight();});
+        m_actionBinding[GoLeft].action  = derivedAction<Astronaut>([] (Astronaut& astronaut, sf::Time){astronaut.goLeft();});
+        m_actionBinding[GoRight].action = derivedAction<Astronaut>([] (Astronaut& astronaut, sf::Time){astronaut.goRight();});
         m_actionBinding[Jump].action = derivedAction<Astronaut>([] (Astronaut& astronaut, sf::Time){astronaut.jump();});
         m_actionBinding[ThursterLeft].action = derivedAction<Astronaut>([] (Astronaut& astronaut, sf::Time){astronaut.thrusterLeft();});
         m_actionBinding[ThursterRight].action = derivedAction<Astronaut>([] (Astronaut& astronaut, sf::Time){astronaut.thrusterRight();});
@@ -130,8 +130,8 @@ bool Player::isRealtimeAction(Action action)
 {
     switch (action)
     {
-            case MoveLeft:
-            case MoveRight:
+            case GoLeft:
+            case GoRight:
             case ThursterLeft:
             case ThursterRight:
             case ThursterUp:

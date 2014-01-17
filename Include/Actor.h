@@ -18,8 +18,12 @@ class Actor : public Entity
         explicit                Actor(Type type, const TextureHolder& textures, const FontHolder& fonts, b2World& world);
 
         void                    jump();
+        void                    goLeft();
         void                    walkLeft();
+        void                    glideLeft();
+        void                    goRight();
         void                    walkRight();
+        void                    glideRight();
 
         void                    addFootContact();
         void                    removeFootContact();
@@ -33,6 +37,7 @@ class Actor : public Entity
     private:
         virtual void            drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
         void                    checkActorJump(sf::Time dt, CommandQueue& commands);
+        void                    checkActorMove(sf::Time dt, CommandQueue& commands);
 
     protected:
         virtual void            updateCurrent(sf::Time dt, CommandQueue& commands);
@@ -59,6 +64,8 @@ class Actor : public Entity
         LookingOrientation      m_lookingOrientation;
 
         bool                    m_isJumping;
+        bool                    m_isGoingLeft;
+        bool                    m_isGoingRight;
 };
 
 #endif // ACTOR_H

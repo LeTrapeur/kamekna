@@ -71,7 +71,7 @@ void Actor::jump()
 {
     m_isJumping = true;
 }
-
+// TODO constantes magiques vitesses !
 void Actor::checkActorJump(sf::Time dt, CommandQueue& commands)
 {
     if(m_isJumping && m_numFootContacts >= 1)
@@ -82,21 +82,62 @@ void Actor::checkActorJump(sf::Time dt, CommandQueue& commands)
     m_isJumping = false;
 }
 
+void Actor::goLeft()
+{
+    m_isGoingLeft = true;
+}
 
 void Actor::walkLeft()
 {
-    if (m_numFootContacts >= 1 && m_body->GetLinearVelocity().x * SCALE > -150)
-        m_body->ApplyForce(b2Vec2(-m_body->GetMass()*8,0), m_body->GetWorldCenter());
-
+    m_body->ApplyForce(b2Vec2(-m_body->GetMass()*8,0), m_body->GetWorldCenter());
     m_lookingOrientation = LookingOrientation::Left;
+    m_isGoingLeft = false;
+}
+
+void Actor::glideLeft()
+{
+    m_body->ApplyForce(b2Vec2(-m_body->GetMass()*2,0), m_body->GetWorldCenter());
+    m_lookingOrientation = LookingOrientation::Left;
+    m_isGoingLeft = false;
+}
+
+void Actor::goRight()
+{
+    m_isGoingRight = true;
 }
 
 void Actor::walkRight()
 {
-    if (m_numFootContacts >= 1 && m_body->GetLinearVelocity().x * SCALE < 150)
-        m_body->ApplyForce(b2Vec2(m_body->GetMass()*8,0), m_body->GetWorldCenter());
-
+    m_body->ApplyForce(b2Vec2(m_body->GetMass()*8,0), m_body->GetWorldCenter());
     m_lookingOrientation = LookingOrientation::Right;
+    m_isGoingRight = false;
+}
+
+void Actor::glideRight()
+{
+    m_body->ApplyForce(b2Vec2(m_body->GetMass()*2,0), m_body->GetWorldCenter());
+    m_lookingOrientation = LookingOrientation::Right;
+    m_isGoingRight = false;
+}
+
+void Actor::checkActorMove(sf::Time dt, CommandQueue& commands)
+{
+    if(m_isGoingLeft && m_body->GetLinearVelocity().x * SCALE > -150)
+    {
+        if (m_numFootContacts >= 1)
+            walkLeft();
+        else
+            glideLeft();
+    }
+    else if(m_isGoingRight && m_body->GetLinearVelocity().x * SCALE < 150)
+    {
+        if (m_numFootContacts >= 1)
+            walkRight();
+        else
+            glideRight();
+    }
+    else
+        return;
 }
 
 void Actor::addFootContact()
@@ -136,6 +177,7 @@ void Actor::updateCurrent(sf::Time dt, CommandQueue& commands)
 {
     updateText();
     checkActorJump(dt, commands);
+    checkActorMove(dt, commands);
     Entity::updateCurrent(dt, commands);
 }
 

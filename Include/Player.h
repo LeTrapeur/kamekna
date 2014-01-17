@@ -14,8 +14,8 @@ class Player
     public:
         enum Action
         {
-            MoveLeft,
-            MoveRight,
+            GoLeft,
+            GoRight,
             Jump,
             Fire,
             ThursterLeft,
