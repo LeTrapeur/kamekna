@@ -20,6 +20,7 @@ class Projectile : public Entity
         virtual unsigned int            getCategory() const;
         int                             getMaxSpeed() const;
         int                             getDamage() const;
+        int                             getMinVelocityDamage() const;
 
     private:
         virtual void                    updateCurrent(sf::Time dt, CommandQueue& commands);

@@ -39,6 +39,12 @@ int Projectile::getDamage() const
     return m_damage;
 }
 
+//TODO cst magique
+int Projectile::getMinVelocityDamage() const
+{
+    return 400;
+}
+
 void Projectile::updateCurrent(sf::Time dt, CommandQueue& commands)
 {
     Entity::updateCurrent(dt,commands);

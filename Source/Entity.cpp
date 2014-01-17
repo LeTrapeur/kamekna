@@ -50,3 +50,8 @@ void Entity::resetForces()
     m_body->SetAngularVelocity(0);
     m_body->SetLinearVelocity(b2Vec2(0.f,0.f));
 }
+
+float Entity::getTotalVelocity() const
+{
+    return (std::sqrt(std::pow(m_body->GetLinearVelocity().x,2)+std::pow(m_body->GetLinearVelocity().y,2))) * SCALE;
+}

@@ -31,6 +31,8 @@ class SceneNode : public sf::Transformable, public sf::Drawable, private sf::Non
         virtual unsigned int        getCategory() const;
         void                        onCommand(const Command& command, sf::Time dt);
         void                        playLocalSound(CommandQueue& commands, SoundEffect::ID effect);
+        // TODO getWorld
+        sf::Vector2f                getWorldPosition() const;
 
     private:
         virtual void                draw(sf::RenderTarget& target, sf::RenderStates states) const final;

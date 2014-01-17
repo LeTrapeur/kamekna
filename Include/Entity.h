@@ -17,6 +17,7 @@ class Entity : public SceneNode
         void                    setPosition(const sf::Vector2f& pos);
         void                    setRotation(float angle);
         void                    resetForces();
+        float                   getTotalVelocity() const;
 
         // une entité est immuablement représentée par un body dont on peut mesurer les caractèristiques publiquement ?
         b2Body*                 m_body;

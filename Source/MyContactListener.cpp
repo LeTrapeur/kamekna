@@ -19,9 +19,12 @@ void MyContactListener::BeginContact(b2Contact* contact)
     {
         auto& enemy = static_cast<Actor&>(*entities.first);
         auto& projectile = static_cast<Projectile&>(*entities.second);
-        enemy.takeDamage(projectile.getDamage());
-        enemy.playLocalSound(m_commandQueue, SoundEffect::Impact);
-        // TODO projectile.destroy();
+        if(projectile.getTotalVelocity() > projectile.getMinVelocityDamage())
+        {
+            enemy.takeDamage(projectile.getDamage());
+            enemy.playLocalSound(m_commandQueue, SoundEffect::Impact);
+            // TODO projectile.destroy();
+        }
     }
 
     if(matchesCategory(entities, Category::PlayerActor, Category::LowerScene))
