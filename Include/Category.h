@@ -13,6 +13,8 @@ namespace Category
         AlliedProjectile = 1 << 4,
         SoundEffect = 1 << 5,
 
+        PhysicalObject = LowerScene | PlayerActor | EnemyActor | AlliedProjectile,
+
     };
 }
 

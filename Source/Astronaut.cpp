@@ -166,7 +166,7 @@ void Astronaut::createProjectile(SceneNode& node, Projectile::Type type, float x
 
     float vy = 20.f * std::sin((projectileDirection.y*Utility::pi())/180.f); // sin(radians)
 
-    projectile->m_body->SetLinearVelocity(b2Vec2(vx, vy));
+    projectile->getBody()->SetLinearVelocity(b2Vec2(vx, vy));
     node.attachChild(std::move(projectile));
 }
 

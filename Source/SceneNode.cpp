@@ -82,3 +82,18 @@ void SceneNode::playLocalSound(CommandQueue& commands, SoundEffect::ID effect)
                                               });
     commands.push(command);
 }
+
+sf::Vector2f SceneNode::getWorldPosition() const
+{
+        return getWorldTransform() * sf::Vector2f();
+}
+
+sf::Transform SceneNode::getWorldTransform() const
+{
+        sf::Transform transform = sf::Transform::Identity;
+
+        for (const SceneNode* node = this; node != nullptr; node = node->m_parent)
+                transform = node->getTransform() * transform;
+
+        return transform;
+}

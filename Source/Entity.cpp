@@ -8,6 +8,11 @@ Entity::Entity():
     m_body(nullptr)
 {}
 
+b2Body* Entity::getBody() const
+{
+    return m_body;
+}
+
 void Entity::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
 {
     states.transform *= getTransform();
@@ -55,3 +60,4 @@ float Entity::getTotalVelocity() const
 {
     return (std::sqrt(std::pow(m_body->GetLinearVelocity().x,2)+std::pow(m_body->GetLinearVelocity().y,2))) * SCALE;
 }
+
