@@ -5,7 +5,8 @@
 const float SCALE = 30.f; // Box2D works in a scale of 30 pixels = 1 meter
 
 Entity::Entity():
-    m_body(nullptr)
+    m_body(nullptr),
+    m_isDestroyed(false)
 {}
 
 b2Body* Entity::getBody() const
@@ -61,3 +62,16 @@ float Entity::getTotalVelocity() const
     return (std::sqrt(std::pow(m_body->GetLinearVelocity().x,2)+std::pow(m_body->GetLinearVelocity().y,2))) * SCALE;
 }
 
+// TODO on n peut pas supprimer un body pendant un step ou un callback
+
+void Entity::destroy()
+{
+    m_isDestroyed = true;
+    m_body->GetWorld()->DestroyBody(m_body);
+    //m_body = nullptr; // nullify ptr
+}
+
+bool Entity::isDestroyed() const
+{
+    return m_isDestroyed;
+}

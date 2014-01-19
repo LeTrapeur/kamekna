@@ -97,3 +97,22 @@ sf::Transform SceneNode::getWorldTransform() const
 
         return transform;
 }
+
+void SceneNode::removeWrecks()
+{
+        // Remove all children which request so
+        auto wreckfieldBegin = std::remove_if(m_children.begin(), m_children.end(), std::mem_fn(&SceneNode::isMarkedForRemoval));
+        m_children.erase(wreckfieldBegin, m_children.end());
+
+        // Call function recursively for all remaining children
+        std::for_each(m_children.begin(), m_children.end(), std::mem_fn(&SceneNode::removeWrecks));
+}
+
+bool SceneNode::isMarkedForRemoval() const
+{
+    return isDestroyed();
+}
+bool SceneNode::isDestroyed() const
+{
+    return false; // by default
+}

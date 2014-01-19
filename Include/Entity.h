@@ -20,6 +20,9 @@ class Entity : public SceneNode
         float                   getTotalVelocity() const;
         b2Body*                 getBody() const;
 
+        void                    destroy();
+        virtual bool            isDestroyed() const;
+
 
 
     protected:
@@ -27,6 +30,7 @@ class Entity : public SceneNode
 
     private:
         virtual void            drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
+        bool                    m_isDestroyed;
 
     protected:
         virtual void            updateCurrent(sf::Time dt, CommandQueue& commands);

@@ -23,7 +23,7 @@ void MyContactListener::BeginContact(b2Contact* contact)
         {
             enemy.takeDamage(projectile.getDamage());
             enemy.playLocalSound(m_commandQueue, SoundEffect::Impact);
-            // TODO projectile.destroy();
+            projectile.destroy();
         }
     }
 

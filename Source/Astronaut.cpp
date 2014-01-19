@@ -38,6 +38,7 @@ Astronaut::Astronaut(Type type, const TextureHolder& textures, const FontHolder&
     };
 }
 
+// TODO if in the check function
 void Astronaut::thrusterUp()
 {
     if (m_body->GetLinearVelocity().y * SCALE < 300 && m_power)

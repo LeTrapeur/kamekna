@@ -13,8 +13,6 @@
 #include "SoundPlayer.h"
 #include "CommandQueue.h"
 
-
-// todo getworldposition()
 class SceneNode : public sf::Transformable, public sf::Drawable, private sf::NonCopyable
 {
     public:
@@ -34,6 +32,8 @@ class SceneNode : public sf::Transformable, public sf::Drawable, private sf::Non
 
         sf::Vector2f                getWorldPosition() const;
         sf::Transform               getWorldTransform() const;
+
+        void                        removeWrecks();
 
         virtual bool                isMarkedForRemoval() const;
         virtual bool                isDestroyed() const;
