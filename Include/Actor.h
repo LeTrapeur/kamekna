@@ -34,6 +34,9 @@ class Actor : public Entity
         void                    takeDamage(unsigned int damage);
         void                    updateText();
 
+        void                    destroy();
+
+
     private:
         virtual void            drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
         void                    checkActorJump(sf::Time dt, CommandQueue& commands);

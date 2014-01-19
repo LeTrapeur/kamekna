@@ -11,6 +11,7 @@ class Entity : public SceneNode
 {
     public:
         explicit                Entity();
+                                ~Entity();
         virtual unsigned int    getCategory() const;
 
         void                    setPosition(float x, float y);

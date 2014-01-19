@@ -26,12 +26,16 @@ void MyContactListener::BeginContact(b2Contact* contact)
             projectile.destroy();
         }
     }
-
     if(matchesCategory(entities, Category::PlayerActor, Category::LowerScene))
     {
         auto& player = static_cast<Actor&>(*entities.first);
         player.addFootContact();
     }
+     if(matchesCategory(entities, Category::AlliedProjectile, Category::LowerScene))
+     {
+         auto& projectile = static_cast<Projectile&>(*entities.first);
+         projectile.destroy();
+     }
 }
 
 void MyContactListener::EndContact(b2Contact* contact)

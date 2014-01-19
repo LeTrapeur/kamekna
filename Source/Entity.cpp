@@ -9,6 +9,11 @@ Entity::Entity():
     m_isDestroyed(false)
 {}
 
+Entity::~Entity()
+{
+    m_body->GetWorld()->DestroyBody(m_body); // Delete the body in its world
+}
+
 b2Body* Entity::getBody() const
 {
     return m_body;
@@ -67,8 +72,6 @@ float Entity::getTotalVelocity() const
 void Entity::destroy()
 {
     m_isDestroyed = true;
-    m_body->GetWorld()->DestroyBody(m_body);
-    //m_body = nullptr; // nullify ptr
 }
 
 bool Entity::isDestroyed() const
