@@ -33,8 +33,9 @@ class Actor : public Entity
         float                   getLife() const;
         void                    takeDamage(unsigned int damage);
         void                    updateText();
+        // TODO delay with animation
+        virtual bool            isDestroyed() const;
 
-        void                    destroy();
 
 
     private:

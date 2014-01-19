@@ -181,6 +181,11 @@ void Actor::updateCurrent(sf::Time dt, CommandQueue& commands)
     Entity::updateCurrent(dt, commands);
 }
 
+bool Actor::isDestroyed() const
+{
+    return m_life <= 0;
+}
+
 unsigned int Actor::getCategory() const
 {
     switch(m_type)
