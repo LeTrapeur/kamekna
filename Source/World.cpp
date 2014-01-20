@@ -47,6 +47,7 @@ void World::loadTextures()
     m_textures.load(Textures::Asteroid, "asteroid.png");
     m_textures.load(Textures::Enemy, "enemy.png");
     m_textures.load(Textures::Bullet, "bullet.png");
+    m_textures.load(Textures::Metal, "metal.png");
 }
 
 void World::buildScene()
@@ -72,7 +73,7 @@ void World::buildScene()
     m_sceneLayers[Background]->attachChild(std::move(backgroundSprite));
 
     // Plateform_1
-    std::unique_ptr<Platform> platform_1(new Platform(m_physicWorld));
+    std::unique_ptr<Platform> platform_1(new Platform(Platform::Metal, 1024, 32, m_textures, m_physicWorld));
     platform_1->setPosition(100.f, 500.f);
     m_sceneLayers[Space]->attachChild(std::move(platform_1));
 

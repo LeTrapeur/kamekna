@@ -6,12 +6,20 @@
 class Platform : public Entity
 {
     public:
-        explicit            Platform(b2World& world);
+        enum Type
+        {
+            Metal,
+        };
+    public:
+        explicit            Platform(Type type, int width, int height, TextureHolder& textures, b2World& world);
 
     private:
         virtual void        drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
+
     private:
         sf::RectangleShape  m_shape;
+        // TODO bof la gestion des ressource
+        Type                m_type;
 };
 
 #endif // PLATFORM_H

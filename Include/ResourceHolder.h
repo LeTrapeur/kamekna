@@ -23,6 +23,7 @@ namespace Textures
         Bullet,
         Enemy,
         Asteroid,
+        Metal,
         TitleScreen,
 
     };
