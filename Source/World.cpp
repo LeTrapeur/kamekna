@@ -78,7 +78,7 @@ void World::buildScene()
     m_sceneLayers[Space]->attachChild(std::move(platform_1));
 
     // Plateform_2
-    std::unique_ptr<Platform> platform_2(new Platform(m_physicWorld));
+    std::unique_ptr<Platform> platform_2(new Platform(Platform::Metal, 1024, 32, m_textures, m_physicWorld));
     platform_2->setPosition(-500.f, -300.f);
     m_sceneLayers[Space]->attachChild(std::move(platform_2));
 

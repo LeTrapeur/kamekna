@@ -34,9 +34,11 @@ Platform::Platform(Type type, int width, int height, TextureHolder& textures, b2
     GroundFixtureDef.userData = this;
     m_body->CreateFixture(&GroundFixtureDef);
 
-    sf::Texture& texture = textures.get(Textures::Metal);
-    texture.setRepeated(true);
+    // TODO Voir la destruction du pointeur
+    sf::Texture* texture = new sf::Texture(textures.get(Textures::Metal));
+    texture->setRepeated(true);
     m_shape.setTexture(texture);
+    m_shape.setTextureRect(sf::IntRect(0, 0, m_shape.getSize().x, m_shape.getSize().y)); // Proportionel
 }
 
 void Platform::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const

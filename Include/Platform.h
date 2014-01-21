@@ -18,7 +18,6 @@ class Platform : public Entity
 
     private:
         sf::RectangleShape  m_shape;
-        // TODO bof la gestion des ressource
         Type                m_type;
 };
 
