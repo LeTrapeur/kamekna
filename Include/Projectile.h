@@ -25,6 +25,7 @@ class Projectile : public Entity
     private:
         virtual void                    updateCurrent(sf::Time dt, CommandQueue& commands);
         virtual void                    drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
+        static b2Body*                  createBody(b2World& world);
 
     private:
         Type                            m_type;

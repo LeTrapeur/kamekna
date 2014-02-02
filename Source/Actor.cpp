@@ -20,7 +20,7 @@ Textures::ID toTextureID(Actor::Type type)
 }
 
 Actor::Actor(Type type, const TextureHolder& textures, const FontHolder& fonts, b2World& world):
-    Entity(),
+    Entity(createBody(world)),
     m_sprite(textures.get(toTextureID(type))),
     m_type(type),
     m_numFootContacts(0),
@@ -32,12 +32,6 @@ Actor::Actor(Type type, const TextureHolder& textures, const FontHolder& fonts, 
     // Player
     sf::Rect<float> spriteBounds = m_sprite.getGlobalBounds();
     setOrigin(sf::Vector2f(spriteBounds.width/2,spriteBounds.height/2));
-
-    b2BodyDef ActorBodyDef;
-    ActorBodyDef.type = b2_dynamicBody;
-    ActorBodyDef.fixedRotation = true;
-    ActorBodyDef.linearDamping = 0.2f;
-    m_body = world.CreateBody(&ActorBodyDef);
 
     b2FixtureDef ActorFixtureDef;
     b2PolygonShape ActorShape;
@@ -195,5 +189,15 @@ unsigned int Actor::getCategory() const
         case Enemy:
             return Category::EnemyActor;
     }
+}
+b2Body* Actor::createBody(b2World& world)
+{
+    b2BodyDef ActorBodyDef;
+    ActorBodyDef.type = b2_dynamicBody;
+    ActorBodyDef.fixedRotation = true;
+    ActorBodyDef.linearDamping = 0.2f;
+    b2Body* body = world.CreateBody(&ActorBodyDef);
+
+    return body;
 }
 

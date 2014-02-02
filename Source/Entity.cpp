@@ -4,8 +4,8 @@
 
 const float SCALE = 30.f; // Box2D works in a scale of 30 pixels = 1 meter
 
-Entity::Entity():
-    m_body(nullptr),
+Entity::Entity(b2Body* body):
+    m_body(body),
     m_isDestroyed(false)
 {}
 

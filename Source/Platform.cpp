@@ -15,16 +15,11 @@ Textures::ID toTextureID(Platform::Type type)
 
 // TODO on doit enlever le const car on récupère un pointuer sur la ressource
 Platform::Platform(Type type, int width, int height, TextureHolder& textures, b2World& world):
-    Entity(),
+    Entity(createBody(world)),
     m_type(type),
     m_shape(sf::Vector2f(width, height))
 {
     setOrigin(sf::Vector2f(width/2,height/2));
-
-    b2BodyDef GroundBodyDef;
-    GroundBodyDef.position = b2Vec2((1280/2)/SCALE, (720-(height/2))/SCALE);
-    GroundBodyDef.type = b2_staticBody;
-    m_body = world.CreateBody(&GroundBodyDef);
 
     b2FixtureDef GroundFixtureDef;
     b2PolygonShape GroundShape;
@@ -44,4 +39,13 @@ Platform::Platform(Type type, int width, int height, TextureHolder& textures, b2
 void Platform::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
 {
     target.draw(m_shape, states);
+}
+
+b2Body* Platform::createBody(b2World& world)
+{
+    b2BodyDef GroundBodyDef;
+    GroundBodyDef.type = b2_staticBody;
+    b2Body* body = world.CreateBody(&GroundBodyDef);
+
+    return body;
 }

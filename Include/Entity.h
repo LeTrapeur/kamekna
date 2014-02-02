@@ -10,7 +10,7 @@
 class Entity : public SceneNode
 {
     public:
-        explicit                Entity();
+        explicit                Entity(b2Body* body);
                                 ~Entity();
         virtual unsigned int    getCategory() const;
 
@@ -25,7 +25,7 @@ class Entity : public SceneNode
         virtual bool            isDestroyed() const;
 
 
-
+        // TODO Warper pour passer body en private ?
     protected:
         b2Body*                 m_body;
 

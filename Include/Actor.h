@@ -43,6 +43,8 @@ class Actor : public Entity
         void                    checkActorJump(sf::Time dt, CommandQueue& commands);
         void                    checkActorMove(sf::Time dt, CommandQueue& commands);
 
+        static b2Body*          createBody(b2World& world);
+
     protected:
         virtual void            updateCurrent(sf::Time dt, CommandQueue& commands);
 

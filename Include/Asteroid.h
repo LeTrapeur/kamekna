@@ -16,6 +16,7 @@ class Asteroid : public Entity
 
     private:
         virtual void    drawCurrent (sf::RenderTarget& target, sf::RenderStates states) const;
+        static b2Body*  createBody(b2World& world);
 
     private:
         sf::ConvexShape m_shape;
