@@ -22,14 +22,15 @@ void IA::updateIA(sf::Time dt, CommandQueue& commands)
     std::cout << m_player->getPosition().x << std::endl;
     std::cout << m_enemy->getPosition().x << std::endl;
 
-    if(m_player->getPosition().x > m_enemy->getPosition().x)
+    if(m_player->getPosition().x > m_enemy->getPosition().x && abs(m_player->getPosition().x - m_enemy->getPosition().x) > 100)
     {
         m_enemy->goRight();
         m_enemy->fire(m_player->getPosition());
     }
-    else if(m_player->getPosition().x < m_enemy->getPosition().x)
+    else if(m_player->getPosition().x < m_enemy->getPosition().x && abs(m_player->getPosition().x - m_enemy->getPosition().x) > 100)
     {
-        m_enemy->goLeft();
         m_enemy->fire(m_player->getPosition());
+        m_enemy->goLeft();
+
     }
 }

@@ -10,6 +10,8 @@
 
 const float SCALE = 30.f; // Box2D works in a scale of 30 pixels = 1 meter
 
+// TODO LEVEL
+// TODO bug quand joueur meurt
 World::World(sf::RenderWindow& window, FontHolder& fonts, SoundPlayer& sounds):
     m_window(window),
     m_fonts(fonts),
