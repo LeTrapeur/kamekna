@@ -60,7 +60,7 @@ class Actor : public Entity
 
     protected:
         sf::Sprite              m_sprite;
-        unsigned int            m_numFootContacts;
+        int                     m_numFootContacts;
 
         Type                    m_type;
 

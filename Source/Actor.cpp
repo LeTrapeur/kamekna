@@ -63,12 +63,13 @@ Actor::Actor(Type type, const TextureHolder& textures, const FontHolder& fonts, 
 
 void Actor::jump()
 {
+    std::cout << m_numFootContacts << std::endl;
     m_isJumping = true;
 }
 // TODO constantes magiques vitesses !
 void Actor::checkActorJump(sf::Time dt, CommandQueue& commands)
 {
-    if(m_isJumping && m_numFootContacts > 1)
+    if(m_isJumping && m_numFootContacts >= 1)
     {
         playLocalSound(commands, SoundEffect::Jump);
         m_body->ApplyLinearImpulse(b2Vec2(0,-m_body->GetMass()*8), m_body->GetWorldCenter());
@@ -83,7 +84,7 @@ void Actor::goLeft()
 
 void Actor::walkLeft()
 {
-    m_body->ApplyForce(b2Vec2(-m_body->GetMass()*8,0), m_body->GetWorldCenter());
+    m_body->ApplyForce(b2Vec2(-m_body->GetMass()*10,0), m_body->GetWorldCenter());
     m_lookingOrientation = LookingOrientation::Left;
     m_isGoingLeft = false;
 }
@@ -102,7 +103,7 @@ void Actor::goRight()
 
 void Actor::walkRight()
 {
-    m_body->ApplyForce(b2Vec2(m_body->GetMass()*8,0), m_body->GetWorldCenter());
+    m_body->ApplyForce(b2Vec2(m_body->GetMass()*10,0), m_body->GetWorldCenter());
     m_lookingOrientation = LookingOrientation::Right;
     m_isGoingRight = false;
 }
@@ -116,14 +117,14 @@ void Actor::glideRight()
 
 void Actor::checkActorMove(sf::Time dt, CommandQueue& commands)
 {
-    if(m_isGoingLeft && m_body->GetLinearVelocity().x * SCALE > -150)
+    if(m_isGoingLeft && m_body->GetLinearVelocity().x * SCALE > -200)
     {
         if (m_numFootContacts >= 1)
             walkLeft();
         else
             glideLeft();
     }
-    else if(m_isGoingRight && m_body->GetLinearVelocity().x * SCALE < 150)
+    else if(m_isGoingRight && m_body->GetLinearVelocity().x * SCALE < 200)
     {
         if (m_numFootContacts >= 1)
             walkRight();
@@ -142,6 +143,8 @@ void Actor::addFootContact()
 void Actor::removeFootContact()
 {
     m_numFootContacts--;
+    if(m_numFootContacts <= 0)
+        m_numFootContacts = 0;
 }
 
 void Actor::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
