@@ -63,7 +63,6 @@ Actor::Actor(Type type, const TextureHolder& textures, const FontHolder& fonts, 
 
 void Actor::jump()
 {
-    std::cout << m_numFootContacts << std::endl;
     m_isJumping = true;
 }
 // TODO constantes magiques vitesses !

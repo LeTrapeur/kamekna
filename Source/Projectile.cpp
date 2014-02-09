@@ -27,7 +27,10 @@ Projectile::Projectile(Type type, const TextureHolder& textures, b2World& world,
 
 unsigned int Projectile::getCategory() const
 {
-    return Category::AlliedProjectile;
+    if (m_type == EnemyBullet)
+		return Category::EnemyProjectile;
+	else
+		return Category::AlliedProjectile;
 }
 
 int Projectile::getDamage() const

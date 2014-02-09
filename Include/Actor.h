@@ -12,6 +12,7 @@ class Actor : public Entity
         {
             Hero,
             Enemy,
+            Allied,
         };
 
     public:

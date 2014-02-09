@@ -26,12 +26,25 @@ void MyContactListener::BeginContact(b2Contact* contact)
             projectile.destroy();
         }
     }
-    if(matchesCategory(entities, Category::PlayerActor, Category::LowerScene))
+
+    if(matchesCategory(entities, Category::PlayerActor, Category::EnemyProjectile))
     {
         auto& player = static_cast<Actor&>(*entities.first);
-        player.addFootContact();
+        auto& projectile = static_cast<Projectile&>(*entities.second);
+        if(projectile.getTotalVelocity() > projectile.getMinVelocityDamage())
+        {
+            player.takeDamage(projectile.getDamage());
+            player.playLocalSound(m_commandQueue, SoundEffect::Impact);
+            projectile.destroy();
+        }
     }
-     if(matchesCategory(entities, Category::AlliedProjectile, Category::LowerScene))
+
+    if(matchesCategory(entities, Category::Actor, Category::LowerScene))
+    {
+        auto& actor = static_cast<Actor&>(*entities.first);
+        actor.addFootContact();
+    }
+     if(matchesCategory(entities, Category::Projectile, Category::LowerScene))
      {
          auto& projectile = static_cast<Projectile&>(*entities.first);
          projectile.destroy();
@@ -44,10 +57,10 @@ void MyContactListener::EndContact(b2Contact* contact)
     Entity* B = static_cast<Entity*>(contact->GetFixtureB()->GetUserData());
     std::pair<Entity*, Entity*> entities = std::make_pair(A,B);
 
-    if(matchesCategory(entities, Category::PlayerActor, Category::LowerScene))
+    if(matchesCategory(entities, Category::Actor, Category::LowerScene))
     {
-        auto& player = static_cast<Actor&>(*entities.first);
-        player.removeFootContact();
+        auto& actor = static_cast<Actor&>(*entities.first);
+        actor.removeFootContact();
     }
 }
 

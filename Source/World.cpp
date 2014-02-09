@@ -26,7 +26,8 @@ World::World(sf::RenderWindow& window, FontHolder& fonts, SoundPlayer& sounds):
     m_player(nullptr),
     m_spawnPosition(200.f,200.f),
     m_commandQueue(),
-    m_contactListener(m_commandQueue)
+    m_contactListener(m_commandQueue),
+    m_ia()
 {
     loadTextures();
 
@@ -101,18 +102,24 @@ void World::buildScene()
     std::unique_ptr<Astronaut> hero(new Astronaut(Actor::Hero, m_textures, m_fonts, m_physicWorld));
     m_player = hero.get();
     hero->setPosition(m_spawnPosition);
+    m_ia.addPlayer(hero.get()); // ajout de la connaissance joueur à l'ia
     m_sceneLayers[Space]->attachChild(std::move(hero));
 
+
     // Enemy
-    std::unique_ptr<Actor> enemy(new Actor(Actor::Enemy, m_textures, m_fonts, m_physicWorld));
-    enemy->setPosition(200, 100);
+    std::unique_ptr<Astronaut> enemy(new Astronaut(Actor::Enemy, m_textures, m_fonts, m_physicWorld));
+    enemy->setPosition(250, 100);
+    m_ia.addEnemy(enemy.get());
     m_sceneLayers[Space]->attachChild(std::move(enemy));
+
 }
 
 void World::update(sf::Time dt)
 {
     while(!m_commandQueue.isEmpty())
         m_sceneGraph.onCommand(m_commandQueue.pop(), dt);
+
+    m_ia.updateIA(dt, m_commandQueue);
 
     m_physicWorld.Step(dt.asSeconds(), 8, 4);
     m_sceneGraph.update(dt, m_commandQueue);
