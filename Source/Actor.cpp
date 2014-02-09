@@ -68,7 +68,7 @@ void Actor::jump()
 // TODO constantes magiques vitesses !
 void Actor::checkActorJump(sf::Time dt, CommandQueue& commands)
 {
-    if(m_isJumping && m_numFootContacts >= 1)
+    if(m_isJumping && m_numFootContacts > 1)
     {
         playLocalSound(commands, SoundEffect::Jump);
         m_body->ApplyLinearImpulse(b2Vec2(0,-m_body->GetMass()*8), m_body->GetWorldCenter());

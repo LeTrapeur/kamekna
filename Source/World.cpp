@@ -16,7 +16,7 @@ World::World(sf::RenderWindow& window, FontHolder& fonts, SoundPlayer& sounds):
     m_sounds(sounds),
     m_worldView(window.getDefaultView()),
     m_minimapView(window.getDefaultView()),
-    m_physicWorld(b2Vec2(0, 4.0f)),
+    m_physicWorld(b2Vec2(0, 10.0f)),
     m_worldBounds(
                   -m_worldView.getSize().x,
                   -m_worldView.getSize().y,
