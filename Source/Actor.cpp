@@ -44,7 +44,7 @@ Actor::Actor(Type type, const TextureHolder& textures, const FontHolder& fonts, 
 
     //add foot sensor fixture
     b2PolygonShape FootShape;
-    FootShape.SetAsBox(((spriteBounds.width-10)/2.0f)/SCALE, 5/SCALE, b2Vec2(0,(spriteBounds.height/2.0f)/SCALE), 0);
+    FootShape.SetAsBox(((spriteBounds.width - 10.f)/2.0f)/SCALE, 5.f/SCALE, b2Vec2(0,(spriteBounds.height/2.0f)/SCALE), 0);
     b2FixtureDef footSensorFixture;
     footSensorFixture.shape = &FootShape;
     footSensorFixture.isSensor = true;

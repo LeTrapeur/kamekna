@@ -49,3 +49,8 @@ b2Body* Platform::createBody(b2World& world)
 
     return body;
 }
+
+unsigned int Platform::getCategory() const
+{
+    return Category::LowerScene;
+}

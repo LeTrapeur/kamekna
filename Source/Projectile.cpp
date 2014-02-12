@@ -20,7 +20,7 @@ Projectile::Projectile(Type type, const TextureHolder& textures, b2World& world,
     ProjectileShape.SetAsBox((spriteBounds.width/2.0f)/SCALE, (spriteBounds.height/2.0f)/SCALE);
     ProjectileFixtureDef.shape = &ProjectileShape;
     ProjectileFixtureDef.density = 1.0f;
-    ProjectileFixtureDef.restitution = 0.1f;
+    ProjectileFixtureDef.restitution = 0.0f;
     ProjectileFixtureDef.friction = 0.0f;
     ProjectileFixtureDef.userData = this;
     m_body->CreateFixture(&ProjectileFixtureDef);

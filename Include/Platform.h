@@ -11,15 +11,16 @@ class Platform : public Entity
             Metal,
         };
     public:
-        explicit            Platform(Type type, int width, int height, TextureHolder& textures, b2World& world);
+        explicit                Platform(Type type, int width, int height, TextureHolder& textures, b2World& world);
+        virtual unsigned int    getCategory() const;
 
     private:
-        virtual void        drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
-        static b2Body*      createBody(b2World& world);
+        virtual void            drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
+        static b2Body*          createBody(b2World& world);
 
     private:
-        sf::RectangleShape  m_shape;
-        Type                m_type;
+        sf::RectangleShape      m_shape;
+        Type                    m_type;
 };
 
 #endif // PLATFORM_H

@@ -31,3 +31,8 @@ const float SCALE = 30.f; // Box2D works in a scale of 30 pixels = 1 meter
 //    target.draw(m_shapePlanet, states);
 //    target.draw(m_shapeInfluence, states);
 //}
+
+//unsigned int Entity::getCategory() const
+//{
+//    return Category::LowerScene;
+//}

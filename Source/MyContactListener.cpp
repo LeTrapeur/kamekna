@@ -60,7 +60,10 @@ void MyContactListener::EndContact(b2Contact* contact)
 
     if(matchesCategory(entities, Category::Actor, Category::LowerScene))
     {
+
         std::cout << "remove" << std::endl;
+        assert(dynamic_cast<Actor*>(entities.first) != nullptr);
+        assert(dynamic_cast<Entity*>(entities.second) != nullptr);
         auto& actor = static_cast<Actor&>(*entities.first);
         actor.removeFootContact();
     }

@@ -41,3 +41,8 @@ b2Body* Asteroid::createBody(b2World& world)
     b2Body* body = world.CreateBody(&AsteroidBodyDef);
     return body;
 }
+
+unsigned int Asteroid::getCategory() const
+{
+    return Category::LowerScene;
+}
