@@ -39,7 +39,7 @@ void MyContactListener::BeginContact(b2Contact* contact)
         }
     }
 
-    if(matchesCategory(entities, Category::Actor, Category::LowerScene))
+    if(matchesCategory(entities, Category::Actor, Category::PhysicalObject))
     {
         std::cout << "add" << std::endl;
         auto& actor = static_cast<Actor&>(*entities.first);
@@ -58,7 +58,7 @@ void MyContactListener::EndContact(b2Contact* contact)
     Entity* B = static_cast<Entity*>(contact->GetFixtureB()->GetUserData());
     std::pair<Entity*, Entity*> entities = std::make_pair(A,B);
 
-    if(matchesCategory(entities, Category::Actor, Category::LowerScene))
+    if(matchesCategory(entities, Category::Actor, Category::PhysicalObject))
     {
 
         std::cout << "remove" << std::endl;

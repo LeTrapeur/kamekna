@@ -16,7 +16,7 @@ namespace Category
 
         Projectile = AlliedProjectile | EnemyProjectile,
         Actor = PlayerActor | EnemyActor,
-        PhysicalObject = LowerScene,
+        PhysicalObject = LowerScene | Actor
     };
 }
 
