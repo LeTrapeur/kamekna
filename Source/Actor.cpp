@@ -22,6 +22,7 @@ Textures::ID toTextureID(Actor::Type type)
 Actor::Actor(Type type, const TextureHolder& textures, const FontHolder& fonts, b2World& world):
     Entity(createBody(world)),
     m_sprite(textures.get(toTextureID(type))),
+    m_sprite_glow(textures.get(Textures::Hero_Glow)),
     m_type(type),
     m_numFootContacts(0),
     m_life(100),
@@ -59,6 +60,19 @@ Actor::Actor(Type type, const TextureHolder& textures, const FontHolder& fonts, 
         m_infoDisplay = nameDisplay.get();
         attachChild(std::move(nameDisplay));
     }
+
+        switch(m_type)
+    {
+        case Hero:
+            m_sprite_glow.setColor(sf::Color(255, 255, 255, 100));
+            break;
+        case Enemy:
+            m_sprite_glow.setColor(sf::Color(255, 0, 0, 100));
+            break;
+    }
+
+
+
 }
 
 void Actor::jump()
@@ -149,6 +163,9 @@ void Actor::removeFootContact()
 void Actor::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
 {
     target.draw(m_sprite, states);
+
+    states.blendMode = sf::BlendAdd;
+    target.draw(m_sprite_glow, states);
 }
 
 float Actor::getLife() const
