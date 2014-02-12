@@ -41,7 +41,6 @@ void MyContactListener::BeginContact(b2Contact* contact)
 
     if(matchesCategory(entities, Category::Actor, Category::PhysicalObject))
     {
-        std::cout << "add" << std::endl;
         auto& actor = static_cast<Actor&>(*entities.first);
         actor.addFootContact();
     }
@@ -60,8 +59,6 @@ void MyContactListener::EndContact(b2Contact* contact)
 
     if(matchesCategory(entities, Category::Actor, Category::PhysicalObject))
     {
-
-        std::cout << "remove" << std::endl;
         assert(dynamic_cast<Actor*>(entities.first) != nullptr);
         assert(dynamic_cast<Entity*>(entities.second) != nullptr);
         auto& actor = static_cast<Actor&>(*entities.first);
