@@ -21,6 +21,8 @@ class Projectile : public Entity
         int                             getMaxSpeed() const;
         int                             getDamage() const;
         int                             getMinVelocityDamage() const;
+        
+        virtual bool                    isDestroyed() const;
 
     private:
         virtual void                    updateCurrent(sf::Time dt, CommandQueue& commands);
@@ -31,6 +33,7 @@ class Projectile : public Entity
         Type                            m_type;
         sf::Sprite                      m_sprite;
         int                             m_damage;
+        sf:: Time                       m_timeToLive;
 
 };
 
