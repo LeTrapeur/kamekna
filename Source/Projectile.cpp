@@ -10,7 +10,7 @@ Projectile::Projectile(Type type, const TextureHolder& textures, b2World& world,
     m_type(type),
     m_sprite(textures.get(Textures::Bullet)),
     m_damage(damage),
-    m_timeToLive(sf::seconds(30))
+    m_timeToLive(sf::seconds(0.5f))
 {
     sf::Rect<float> spriteBounds = m_sprite.getGlobalBounds();
     setOrigin(sf::Vector2f(spriteBounds.width/2,spriteBounds.height/2));
@@ -58,7 +58,7 @@ void Projectile::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) 
 
 bool Projectile::isDestroyed() const
 {
-    return m_timeToLive <= 0;
+    return m_timeToLive <= sf::seconds(0) || Entity::isDestroyed();
 }
 
 b2Body* Projectile::createBody(b2World& world)
