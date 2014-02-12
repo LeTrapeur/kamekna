@@ -59,6 +59,7 @@ b2Body* Projectile::createBody(b2World& world)
     b2BodyDef ProjectileBodyDef;
     ProjectileBodyDef.type = b2_dynamicBody;
     ProjectileBodyDef.bullet = true;
+    ProjectileBodyDef.gravityScale = 0.0f;
     b2Body* body = world.CreateBody(&ProjectileBodyDef);
 
     return body;
