@@ -159,7 +159,7 @@ float Actor::getLife() const
 void Actor::takeDamage(unsigned int damage)
 {
     m_life -= damage;
-    if(m_life < 0)
+    if(m_life <= 0)
         m_life = 0;
 }
 

@@ -10,7 +10,7 @@ Projectile::Projectile(Type type, const TextureHolder& textures, b2World& world,
     m_type(type),
     m_sprite(textures.get(Textures::Bullet)),
     m_damage(damage),
-    m_timeToLive(sf::seconds(0.5f))
+    m_timeToLive(sf::seconds(10.f))
 {
     sf::Rect<float> spriteBounds = m_sprite.getGlobalBounds();
     setOrigin(sf::Vector2f(spriteBounds.width/2,spriteBounds.height/2));

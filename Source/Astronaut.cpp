@@ -136,9 +136,9 @@ void Astronaut::createBullets(SceneNode& node, const TextureHolder& textures, b2
         type = Projectile::EnemyBullet;
     // Gun position
     if(m_lookingOrientation == LookingOrientation::Right)
-        createProjectile(node, type, 0.30f, 0.0f, textures, world);
+        createProjectile(node, type, 0.70f, 0.0f, textures, world);
     else if(m_lookingOrientation == LookingOrientation::Left)
-        createProjectile(node, type, -0.30f, 0.0f, textures, world);
+        createProjectile(node, type, -0.70f, 0.0f, textures, world);
 }
 
 // TODO à nettoyer

@@ -19,9 +19,6 @@ void IA::addEnemy(Astronaut* enemy)
 
 void IA::updateIA(sf::Time dt, CommandQueue& commands)
 {
-    std::cout << m_player->getPosition().x << std::endl;
-    std::cout << m_enemy->getPosition().x << std::endl;
-
     if(m_player->getPosition().x > m_enemy->getPosition().x && abs(m_player->getPosition().x - m_enemy->getPosition().x) > 100)
     {
         m_enemy->goRight();

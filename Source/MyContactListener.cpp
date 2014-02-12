@@ -41,10 +41,11 @@ void MyContactListener::BeginContact(b2Contact* contact)
 
     if(matchesCategory(entities, Category::Actor, Category::LowerScene))
     {
+        std::cout << "add" << std::endl;
         auto& actor = static_cast<Actor&>(*entities.first);
         actor.addFootContact();
     }
-     if(matchesCategory(entities, Category::Projectile, Category::LowerScene))
+     if(matchesCategory(entities, Category::Projectile, Category::PhysicalObject))
      {
          auto& projectile = static_cast<Projectile&>(*entities.first);
          projectile.destroy();
@@ -59,6 +60,7 @@ void MyContactListener::EndContact(b2Contact* contact)
 
     if(matchesCategory(entities, Category::Actor, Category::LowerScene))
     {
+        std::cout << "remove" << std::endl;
         auto& actor = static_cast<Actor&>(*entities.first);
         actor.removeFootContact();
     }
