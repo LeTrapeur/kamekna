@@ -16,6 +16,7 @@
 #include "CommandQueue.h"
 #include "SceneNode.h"
 #include "SoundPlayer.h"
+#include "IA.h"
 
 class Astronaut;
 
@@ -67,6 +68,8 @@ class World
         sf::Vector2f                            m_spawnPosition;
 
         CommandQueue                            m_commandQueue;
+
+        IA                                      m_ia;
 
 };
 

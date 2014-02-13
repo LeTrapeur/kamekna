@@ -129,13 +129,16 @@ void Astronaut::checkProjectileLaunch(sf::Time dt, CommandQueue& commands)
 }
 void Astronaut::createBullets(SceneNode& node, const TextureHolder& textures, b2World& world) const
 {
-    Projectile::Type type = Projectile::AlliedBullet;
-
+    Projectile::Type type;
+    if(m_type == Actor::Type::Hero || m_type == Actor::Type::Allied)
+        type = Projectile::AlliedBullet;
+    else
+        type = Projectile::EnemyBullet;
     // Gun position
     if(m_lookingOrientation == LookingOrientation::Right)
-        createProjectile(node, type, 0.30f, 0.0f, textures, world);
+        createProjectile(node, type, 0.70f, 0.0f, textures, world);
     else if(m_lookingOrientation == LookingOrientation::Left)
-        createProjectile(node, type, -0.30f, 0.0f, textures, world);
+        createProjectile(node, type, -0.70f, 0.0f, textures, world);
 }
 
 // TODO à nettoyer

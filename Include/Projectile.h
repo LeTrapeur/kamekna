@@ -24,6 +24,8 @@ class Projectile : public Entity
         
         virtual bool                    isDestroyed() const;
 
+        virtual bool                    isDestroyed() const;
+
     private:
         virtual void                    updateCurrent(sf::Time dt, CommandQueue& commands);
         virtual void                    drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
@@ -34,6 +36,8 @@ class Projectile : public Entity
         sf::Sprite                      m_sprite;
         int                             m_damage;
         sf:: Time                       m_timeToLive;
+
+        sf::Time                        m_timeToLive;
 
 };
 

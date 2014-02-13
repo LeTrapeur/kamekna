@@ -12,6 +12,7 @@ class Actor : public Entity
         {
             Hero,
             Enemy,
+            Allied,
         };
 
     public:
@@ -60,6 +61,7 @@ class Actor : public Entity
 
     protected:
         sf::Sprite              m_sprite;
+        sf::Sprite              m_sprite_glow;
         int                     m_numFootContacts;
 
         Type                    m_type;

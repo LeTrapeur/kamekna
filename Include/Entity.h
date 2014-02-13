@@ -12,7 +12,6 @@ class Entity : public SceneNode
     public:
         explicit                Entity(b2Body* body);
                                 ~Entity();
-        virtual unsigned int    getCategory() const;
 
         void                    setPosition(float x, float y);
         void                    setPosition(const sf::Vector2f& pos);

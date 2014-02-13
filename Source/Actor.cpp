@@ -22,6 +22,7 @@ Textures::ID toTextureID(Actor::Type type)
 Actor::Actor(Type type, const TextureHolder& textures, const FontHolder& fonts, b2World& world):
     Entity(createBody(world)),
     m_sprite(textures.get(toTextureID(type))),
+    m_sprite_glow(textures.get(Textures::Hero_Glow)),
     m_type(type),
     m_numFootContacts(0),
     m_life(100),
@@ -44,7 +45,7 @@ Actor::Actor(Type type, const TextureHolder& textures, const FontHolder& fonts, 
 
     //add foot sensor fixture
     b2PolygonShape FootShape;
-    FootShape.SetAsBox(((spriteBounds.width-10)/2.0f)/SCALE, 5/SCALE, b2Vec2(0,(spriteBounds.height/2.0f)/SCALE), 0);
+    FootShape.SetAsBox(((spriteBounds.width - 10.f)/2.0f)/SCALE, 5.f/SCALE, b2Vec2(0,(spriteBounds.height/2.0f)/SCALE), 0);
     b2FixtureDef footSensorFixture;
     footSensorFixture.shape = &FootShape;
     footSensorFixture.isSensor = true;
@@ -59,11 +60,23 @@ Actor::Actor(Type type, const TextureHolder& textures, const FontHolder& fonts, 
         m_infoDisplay = nameDisplay.get();
         attachChild(std::move(nameDisplay));
     }
+
+        switch(m_type)
+    {
+        case Hero:
+            m_sprite_glow.setColor(sf::Color(255, 255, 255, 100));
+            break;
+        case Enemy:
+            m_sprite_glow.setColor(sf::Color(255, 0, 0, 100));
+            break;
+    }
+
+
+
 }
 
 void Actor::jump()
 {
-    std::cout << m_numFootContacts << std::endl;
     m_isJumping = true;
 }
 // TODO constantes magiques vitesses !
@@ -150,6 +163,9 @@ void Actor::removeFootContact()
 void Actor::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
 {
     target.draw(m_sprite, states);
+
+    states.blendMode = sf::BlendAdd;
+    target.draw(m_sprite_glow, states);
 }
 
 float Actor::getLife() const
@@ -160,7 +176,7 @@ float Actor::getLife() const
 void Actor::takeDamage(unsigned int damage)
 {
     m_life -= damage;
-    if(m_life < 0)
+    if(m_life <= 0)
         m_life = 0;
 }
 

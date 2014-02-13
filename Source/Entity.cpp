@@ -33,11 +33,6 @@ void Entity::updateCurrent(sf::Time dt, CommandQueue& commands)
     }
 }
 
-unsigned int Entity::getCategory() const
-{
-    return Category::LowerScene;
-}
-
 void Entity::setPosition(float x, float y)
 {
     sf::Transformable::setPosition(x,y);
