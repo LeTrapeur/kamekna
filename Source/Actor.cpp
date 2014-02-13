@@ -22,7 +22,7 @@ Textures::ID toTextureID(Actor::Type type)
 Actor::Actor(Type type, const TextureHolder& textures, const FontHolder& fonts, b2World& world):
     Entity(createBody(world)),
     m_sprite(textures.get(toTextureID(type))),
-    m_sprite_glow(textures.get(Textures::Hero_Glow)),
+    m_walkAnim(textures.get(Textures::HeroAnim)),
     m_type(type),
     m_numFootContacts(0),
     m_life(100),
@@ -30,9 +30,15 @@ Actor::Actor(Type type, const TextureHolder& textures, const FontHolder& fonts, 
     m_isJumping(false),
     m_infoDisplay()
 {
+    m_walkAnim.setFrameSize(sf::Vector2i(29, 37));
+	m_walkAnim.setNumFrames(3);
+	m_walkAnim.setDuration(sf::seconds(0.3f));
+	m_walkAnim.setRepeating(true);
+
     // Player
-    sf::Rect<float> spriteBounds = m_sprite.getGlobalBounds();
+    sf::Rect<float> spriteBounds(0,0,29,37);// = m_sprite.getGlobalBounds();
     setOrigin(sf::Vector2f(spriteBounds.width/2,spriteBounds.height/2));
+
 
     b2FixtureDef ActorFixtureDef;
     b2PolygonShape ActorShape;
@@ -61,18 +67,6 @@ Actor::Actor(Type type, const TextureHolder& textures, const FontHolder& fonts, 
         attachChild(std::move(nameDisplay));
     }
 
-        switch(m_type)
-    {
-        case Hero:
-            m_sprite_glow.setColor(sf::Color(255, 255, 255, 100));
-            break;
-        case Enemy:
-            m_sprite_glow.setColor(sf::Color(255, 0, 0, 100));
-            break;
-    }
-
-
-
 }
 
 void Actor::jump()
@@ -98,14 +92,20 @@ void Actor::goLeft()
 void Actor::walkLeft()
 {
     m_body->ApplyForce(b2Vec2(-m_body->GetMass()*10,0), m_body->GetWorldCenter());
-    m_lookingOrientation = LookingOrientation::Left;
+
+    if(m_lookingOrientation == LookingOrientation::Right)
+    {
+        std::cout << "flip to left" << std::endl;
+        this->setScale(-1.f, 1.f);
+        m_lookingOrientation = LookingOrientation::Left;
+    }
     m_isGoingLeft = false;
 }
 
 void Actor::glideLeft()
 {
     m_body->ApplyForce(b2Vec2(-m_body->GetMass()*2,0), m_body->GetWorldCenter());
-    m_lookingOrientation = LookingOrientation::Left;
+    //m_lookingOrientation = LookingOrientation::Left;
     m_isGoingLeft = false;
 }
 
@@ -117,14 +117,19 @@ void Actor::goRight()
 void Actor::walkRight()
 {
     m_body->ApplyForce(b2Vec2(m_body->GetMass()*10,0), m_body->GetWorldCenter());
-    m_lookingOrientation = LookingOrientation::Right;
+    if(m_lookingOrientation == LookingOrientation::Left)
+    {
+        std::cout << "flip to right" << std::endl;
+        this->setScale(1.f, 1.f);
+        m_lookingOrientation = LookingOrientation::Right;
+    }
     m_isGoingRight = false;
 }
 
 void Actor::glideRight()
 {
     m_body->ApplyForce(b2Vec2(m_body->GetMass()*2,0), m_body->GetWorldCenter());
-    m_lookingOrientation = LookingOrientation::Right;
+    //m_lookingOrientation = LookingOrientation::Right;
     m_isGoingRight = false;
 }
 
@@ -162,10 +167,7 @@ void Actor::removeFootContact()
 
 void Actor::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
 {
-    target.draw(m_sprite, states);
-
-    states.blendMode = sf::BlendAdd;
-    target.draw(m_sprite_glow, states);
+    target.draw(m_walkAnim, states);
 }
 
 float Actor::getLife() const
@@ -191,7 +193,9 @@ void Actor::updateCurrent(sf::Time dt, CommandQueue& commands)
     updateText();
     checkActorJump(dt, commands);
     checkActorMove(dt, commands);
+
     Entity::updateCurrent(dt, commands);
+    m_walkAnim.update(dt);
 }
 
 bool Actor::isDestroyed() const

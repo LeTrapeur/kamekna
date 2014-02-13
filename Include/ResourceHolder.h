@@ -20,7 +20,7 @@ namespace Textures
     {
         SpaceBackground,
         Hero,
-        Hero_Glow,
+        HeroAnim,
         Bullet,
         Enemy,
         Asteroid,

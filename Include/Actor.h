@@ -4,6 +4,7 @@
 #include "Entity.h"
 #include "ResourceHolder.h"
 #include "TextNode.h"
+#include "Animation.h"
 
 class Actor : public Entity
 {
@@ -61,7 +62,8 @@ class Actor : public Entity
 
     protected:
         sf::Sprite              m_sprite;
-        sf::Sprite              m_sprite_glow;
+        Animation               m_walkAnim;
+
         int                     m_numFootContacts;
 
         Type                    m_type;

@@ -47,7 +47,7 @@ void World::loadTextures()
 {
     m_textures.load(Textures::SpaceBackground, "background.png");
     m_textures.load(Textures::Hero, "astronaut.png");
-    m_textures.load(Textures::Hero_Glow, "astronaut.glow.png");
+    m_textures.load(Textures::HeroAnim, "astronaut.anim.png");
     m_textures.load(Textures::Asteroid, "asteroid.png");
     m_textures.load(Textures::Enemy, "enemy.png");
     m_textures.load(Textures::Bullet, "bullet.png");
