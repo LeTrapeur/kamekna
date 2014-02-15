@@ -11,6 +11,9 @@
 #include <SFML/Graphics.hpp>
 #include <Box2D/Box2D.h>
 
+#include <tmx/MapLoader.h>
+#include <tmx/tmx2box2d.h>
+
 #include "MyContactListener.h"
 #include "ResourceHolder.h"
 #include "CommandQueue.h"
@@ -52,6 +55,7 @@ class World
         sf::RenderWindow&                       m_window;
         sf::View                                m_worldView;
         sf::View                                m_minimapView;
+        tmx::MapLoader                          ml;
 
         TextureHolder                           m_textures;
         FontHolder&                             m_fonts;

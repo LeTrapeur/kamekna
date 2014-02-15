@@ -1,5 +1,8 @@
 #include "World.h"
 
+#include <tmx/MapLoader.h>
+#include <tmx/tmx2box2d.h>
+
 #include "Actor.h"
 #include "Astronaut.h"
 #include "SpriteNode.h"
@@ -20,16 +23,17 @@ World::World(sf::RenderWindow& window, FontHolder& fonts, SoundPlayer& sounds):
     m_minimapView(window.getDefaultView()),
     m_physicWorld(b2Vec2(0, 10.0f)),
     m_worldBounds(
-                  -m_worldView.getSize().x,
-                  -m_worldView.getSize().y,
-                  2*m_worldView.getSize().x,
-                  2*m_worldView.getSize().y
+                  0,
+                  0,
+                  3*1280,
+                  3*720
                   ),
     m_player(nullptr),
-    m_spawnPosition(200.f,200.f),
+    m_spawnPosition(100 ,500),
     m_commandQueue(),
     m_contactListener(m_commandQueue),
-    m_ia()
+    m_ia(),
+    ml("maps/")
 {
     loadTextures();
 
@@ -56,6 +60,7 @@ void World::loadTextures()
 
 void World::buildScene()
 {
+
     // Init layers
     for(std::size_t i = 0; i < LayerCount; ++i)
     {
@@ -68,38 +73,22 @@ void World::buildScene()
     std::unique_ptr<SoundNode> soundNode(new SoundNode(m_sounds));
     m_sceneGraph.attachChild(std::move(soundNode));
 
-    // Background
-    sf::Texture& texture = m_textures.get(Textures::SpaceBackground);
-    sf::IntRect textureRect(m_worldBounds);
-    texture.setRepeated(true);
-    std::unique_ptr<SpriteNode> backgroundSprite(new SpriteNode(texture, textureRect));
-    backgroundSprite->setPosition(m_worldBounds.left, m_worldBounds.top);
-    m_sceneLayers[Background]->attachChild(std::move(backgroundSprite));
 
-    // Plateform_1
-    std::unique_ptr<Platform> platform_1(new Platform(Platform::Metal, 1024, 32, m_textures, m_physicWorld));
-    platform_1->setPosition(100.f, 500.f);
-    m_sceneLayers[Space]->attachChild(std::move(platform_1));
-
-    // Plateform_2
-    std::unique_ptr<Platform> platform_2(new Platform(Platform::Metal, 1024, 32, m_textures, m_physicWorld));
-    platform_2->setPosition(-500.f, -300.f);
-    m_sceneLayers[Space]->attachChild(std::move(platform_2));
-
-    // Asteroid_1
-    std::unique_ptr<Asteroid> asteroid_1(new Asteroid(m_textures, m_physicWorld));
-    asteroid_1->setPosition(-200.f, -100.f);
-    m_sceneLayers[Space]->attachChild(std::move(asteroid_1));
-
-    // Asteroid_2
-    std::unique_ptr<Asteroid> asteroid_2(new Asteroid(m_textures, m_physicWorld));
-    asteroid_2->setPosition(800.f, 100.f);
-    m_sceneLayers[Space]->attachChild(std::move(asteroid_2));
-
-    // Asteroid_3
-    std::unique_ptr<Asteroid> asteroid_3(new Asteroid(m_textures, m_physicWorld));
-    asteroid_3->setPosition(300.f, -500.f);
-    m_sceneLayers[Space]->attachChild(std::move(asteroid_3));
+	ml.Load("map.tmx");
+	const std::vector<tmx::MapLayer>& layers = ml.GetLayers();
+    for (const auto& l : layers)
+	{
+		if (l.name == "Static") //static bodies which make up the map geometry
+		{
+			for (const auto& o : l.objects)
+			{
+				std::cout << o.GetName() << " at: " << o.GetPosition().x << " " << o.GetPosition().y << " size: " << o.GetAABB().width << " " << o.GetAABB().height << std::endl;
+                std::unique_ptr<Platform> platform(new Platform(o.GetAABB().width, o.GetAABB().height, tmx::BodyCreator::Add(o, m_physicWorld)));
+                platform->setPosition(o.GetPosition().x + (o.GetAABB().width/2.f), o.GetPosition().y + (o.GetAABB().height/2.f)); // TODO trouver origine
+                m_sceneLayers[Space]->attachChild(std::move(platform));
+			}
+		}
+	}
 
     // Hero
     std::unique_ptr<Astronaut> hero(new Astronaut(Actor::Hero, m_textures, m_fonts, m_physicWorld));
@@ -111,7 +100,7 @@ void World::buildScene()
 
     // Enemy
     std::unique_ptr<Astronaut> enemy(new Astronaut(Actor::Enemy, m_textures, m_fonts, m_physicWorld));
-    enemy->setPosition(250, 100);
+    enemy->setPosition(200, 500);
     m_ia.addEnemy(enemy.get());
     m_sceneLayers[Space]->attachChild(std::move(enemy));
 
@@ -153,21 +142,21 @@ void World::adaptPlayerPosition()
 
 void World::adaptScrolling()
 {
+    // TODO limiter scrolling
     sf::Vector2f myscroll(m_player->getPosition());
-    if(myscroll.x < m_worldBounds.left/2)  myscroll.x = m_worldBounds.left/2;
-    if(myscroll.x > (m_worldBounds.width + m_worldBounds.left)/2)  myscroll.x = (m_worldBounds.width + m_worldBounds.left)/2;
-    if(myscroll.y < m_worldBounds.top/2)  myscroll.y = m_worldBounds.top/2;
-    if(myscroll.y > (m_worldBounds.height + m_worldBounds.top)/2)  myscroll.y = (m_worldBounds.height + m_worldBounds.top)/2;
     m_worldView.setCenter(myscroll);
     m_minimapView.setCenter(myscroll);
 }
 
 void World::draw()
 {
+
     m_window.setView(m_worldView);
+    m_window.draw(ml);
     m_window.draw(m_sceneGraph);
 
     m_window.setView(m_minimapView);
+    m_window.draw(ml);
     m_window.draw(m_sceneGraph);
 }
 
