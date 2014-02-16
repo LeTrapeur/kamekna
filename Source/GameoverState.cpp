@@ -42,7 +42,7 @@ void GameoverState::draw()
     window.setView(window.getDefaultView());
 
     sf::RectangleShape backgroundShape;
-    backgroundShape.setFillColor(sf::Color(0, 0, 0, 0));
+    backgroundShape.setFillColor(sf::Color(0, 0, 0, 150));
     backgroundShape.setSize(window.getView().getSize());
 
     window.draw(backgroundShape);

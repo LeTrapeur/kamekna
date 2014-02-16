@@ -44,6 +44,7 @@ class World
 
         sf::Vector2f                            getMouseWorldPosition();
 
+
     private:
         void                                    loadTextures();
         void                                    buildScene();

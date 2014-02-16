@@ -27,7 +27,11 @@ bool GameState::update(sf::Time dt)
 {
     m_world.update(dt);
 
+    if(m_world.getPlayerLife() <= 0.0f)
+        requestStackPush(States::Gameover);
+
     CommandQueue& commands = m_world.getCommandQueue();
+
     m_player.handleRealTimeInput(commands);
     m_player.updateMouseWorldPosition(m_world.getMouseWorldPosition());
 
