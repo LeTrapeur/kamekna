@@ -84,7 +84,7 @@ void World::buildScene()
 			{
 				std::cout << o.GetName() << " at: " << o.GetPosition().x << " " << o.GetPosition().y << " size: " << o.GetAABB().width << " " << o.GetAABB().height << std::endl;
                 std::unique_ptr<Platform> platform(new Platform(o.GetAABB().width, o.GetAABB().height, tmx::BodyCreator::Add(o, m_physicWorld)));
-                platform->setPosition(o.GetPosition().x + (o.GetAABB().width/2.f), o.GetPosition().y + (o.GetAABB().height/2.f)); // TODO trouver origine
+                platform->setPosition(o.GetCentre().x, o.GetCentre().y); // TODO trouver origine
                 m_sceneLayers[Space]->attachChild(std::move(platform));
 			}
 		}
