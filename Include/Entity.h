@@ -20,6 +20,9 @@ class Entity : public SceneNode
         float                   getTotalVelocity() const;
         b2Body*                 getBody() const;
 
+        void                    setGravityActivated(bool activated);
+        bool                    getGravityAcvtivated();
+
         void                    destroy();
         virtual bool            isDestroyed() const;
 

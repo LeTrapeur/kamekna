@@ -62,6 +62,18 @@ float Entity::getTotalVelocity() const
     return (std::sqrt(std::pow(m_body->GetLinearVelocity().x,2)+std::pow(m_body->GetLinearVelocity().y,2))) * SCALE;
 }
 
+void Entity::setGravityActivated(bool activated)
+{
+    if(activated)
+        m_body->SetGravityScale(1.f);
+    else
+        m_body->SetGravityScale(0.f);
+}
+bool Entity::getGravityAcvtivated()
+{
+    return m_body->GetGravityScale() != 0;
+}
+
 void Entity::destroy()
 {
     m_isDestroyed = true;

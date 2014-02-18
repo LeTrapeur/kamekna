@@ -3,6 +3,7 @@
 #include "Entity.h"
 #include "Actor.h"
 #include "Projectile.h"
+#include "GravityZone.h"
 
 
 MyContactListener::MyContactListener(CommandQueue& commandQueue):
@@ -44,11 +45,22 @@ void MyContactListener::BeginContact(b2Contact* contact)
         auto& actor = static_cast<Actor&>(*entities.first);
         actor.addFootContact();
     }
-     if(matchesCategory(entities, Category::Projectile, Category::PhysicalObject))
-     {
-         auto& projectile = static_cast<Projectile&>(*entities.first);
-         projectile.destroy();
-     }
+
+    if(matchesCategory(entities, Category::Projectile, Category::PhysicalObject))
+    {
+        auto& projectile = static_cast<Projectile&>(*entities.first);
+        projectile.destroy();
+    }
+
+    if(matchesCategory(entities, Category::Actor, Category::GravityZone))
+    {
+        std::cout << "Entering zone !" << std::endl;
+        auto& actor = static_cast<Actor&>(*entities.first);
+        auto& zone = static_cast<GravityZone&>(*entities.second);
+
+        actor.setGravityActivated(false);
+        zone.addActorInside();
+    }
 }
 
 void MyContactListener::EndContact(b2Contact* contact)
@@ -59,10 +71,18 @@ void MyContactListener::EndContact(b2Contact* contact)
 
     if(matchesCategory(entities, Category::Actor, Category::PhysicalObject))
     {
-        assert(dynamic_cast<Actor*>(entities.first) != nullptr);
-        assert(dynamic_cast<Entity*>(entities.second) != nullptr);
         auto& actor = static_cast<Actor&>(*entities.first);
         actor.removeFootContact();
+    }
+
+    if(matchesCategory(entities, Category::Actor, Category::GravityZone))
+    {
+        std::cout << "Leaving zone !" << std::endl;
+        auto& actor = static_cast<Actor&>(*entities.first);
+        auto& zone = static_cast<GravityZone&>(*entities.second);
+
+        actor.setGravityActivated(true);
+        zone.removeActorInside();
     }
 }
 

@@ -10,6 +10,7 @@
 #include "Platform.h"
 #include "Asteroid.h"
 #include "Planet.h"
+#include "GravityZone.h"
 
 const float SCALE = 30.f; // Box2D works in a scale of 30 pixels = 1 meter
 
@@ -26,7 +27,7 @@ World::World(sf::RenderWindow& window, FontHolder& fonts, SoundPlayer& sounds):
                   0,
                   0,
                   1024,
-                  400
+                  700
                   ),
     m_player(nullptr),
     m_spawnPosition(0 ,0),
@@ -110,6 +111,16 @@ void World::buildScene()
                     m_ia.addEnemy(enemy.get());
                     m_sceneLayers[Space]->attachChild(std::move(enemy));
                 }
+			}
+		}
+		else if(l.name == "GravityZone")
+		{
+		    for (const auto& o : l.objects)
+			{
+                std::cout << o.GetName() << " at: " << o.GetPosition().x << " " << o.GetPosition().y << " size: " << o.GetAABB().width << " " << o.GetAABB().height << std::endl;
+                std::unique_ptr<GravityZone> zone(new GravityZone(o.GetAABB().width, o.GetAABB().height, tmx::BodyCreator::Add(o, m_physicWorld)));
+                zone->setPosition(o.GetCentre());
+                m_sceneLayers[Space]->attachChild(std::move(zone));
 			}
 		}
 	}
