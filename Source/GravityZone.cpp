@@ -13,9 +13,6 @@ GravityZone::GravityZone(int width, int height, b2Body* body):
     m_body->GetFixtureList()->SetUserData(this);
     m_body->GetFixtureList()->SetSensor(true);
 
-
-
-
 }
 
 void GravityZone::setActivated(bool activated)

@@ -21,7 +21,6 @@ Textures::ID toTextureID(Actor::Type type)
 
 Actor::Actor(Type type, const TextureHolder& textures, const FontHolder& fonts, b2World& world):
     Entity(createBody(world)),
-    m_sprite(textures.get(toTextureID(type))),
     m_walkAnim(textures.get(Textures::HeroAnim)),
     m_type(type),
     m_numFootContacts(0),
@@ -37,7 +36,7 @@ Actor::Actor(Type type, const TextureHolder& textures, const FontHolder& fonts, 
 
     // Player
     sf::Rect<float> spriteBounds(0,0,29,37);// = m_sprite.getGlobalBounds();
-    setOrigin(sf::Vector2f(spriteBounds.width/2,spriteBounds.height/2));
+    Transformable::setOrigin(sf::Vector2f(spriteBounds.width/2,spriteBounds.height/2));
 
 
     b2FixtureDef ActorFixtureDef;

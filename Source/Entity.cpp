@@ -29,7 +29,7 @@ void Entity::updateCurrent(sf::Time dt, CommandQueue& commands)
 {
     if(m_body->GetType() == b2_dynamicBody)
     {
-        setPosition(m_body->GetPosition().x * SCALE, m_body->GetPosition().y * SCALE);
+        setPosition(m_body->GetWorldCenter().x * SCALE, m_body->GetWorldCenter().y * SCALE);
         setRotation(m_body->GetAngle()*Utility::pi()/180);
     }
 }

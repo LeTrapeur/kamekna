@@ -63,7 +63,6 @@ class Actor : public Entity
         };
 
     protected:
-        sf::Sprite              m_sprite;
         Animation               m_walkAnim;
 
         int                     m_numFootContacts;

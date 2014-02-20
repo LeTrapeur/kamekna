@@ -16,6 +16,7 @@ Astronaut::Astronaut(Type type, const TextureHolder& textures, const FontHolder&
     m_power(100.f),
     m_powerRecoveryTime(sf::seconds(3.f)),
     m_isThrusting(false),
+    m_isFiring(false),
     m_powerDisplay(nullptr),
     m_fireCommand(),
     m_targetPos()
@@ -107,13 +108,12 @@ void Astronaut::checkThrusters(sf::Time dt, CommandQueue& commands)
 // 2 passer window à player
 // limiter le radius de tir
 //TODO Nettoyer
-// TODO check looking direction
 void Astronaut::fire(const sf::Vector2f& targetPos)
 {
     m_isFiring = true;
     m_targetPos = targetPos;
 
-    sf::Vector2f relativeUnitPos =Utility::unitVector((targetPos - getWorldPosition()));
+    sf::Vector2f relativeUnitPos = Utility::unitVector((targetPos - getWorldPosition()));
 
     if(relativeUnitPos.x < 0)
         lookLeft();
@@ -145,9 +145,9 @@ void Astronaut::createBullets(SceneNode& node, const TextureHolder& textures, b2
         type = Projectile::EnemyBullet;
     // Gun position
     if(m_lookingOrientation == LookingOrientation::Right)
-        createProjectile(node, type, 0.70f, 0.0f, textures, world);
+        createProjectile(node, type, 1.2f, 0.5f, textures, world);
     else if(m_lookingOrientation == LookingOrientation::Left)
-        createProjectile(node, type, -0.70f, 0.0f, textures, world);
+        createProjectile(node, type, -1.2f, 0.5f, textures, world);
 }
 
 // TODO à nettoyer
@@ -155,10 +155,10 @@ void Astronaut::createProjectile(SceneNode& node, Projectile::Type type, float x
 {
     std::unique_ptr<Projectile> projectile(new Projectile(type, textures, world, 5));
 
-    sf::Vector2f offset(xOffset * m_sprite.getGlobalBounds().width, yOffset * m_sprite.getGlobalBounds().height); // offset
-    projectile->setPosition((this->m_body->GetWorldCenter().x * SCALE) + offset.x, (this->m_body->GetWorldCenter().y * SCALE) + offset.y);
-
-    sf::Vector2f astronautPos(this->m_body->GetWorldCenter().x * SCALE, this->m_body->GetWorldCenter().y * SCALE); // position de lasronaut
+    sf::Vector2f astronautPos(getWorldPosition()); // position de lasronaut
+    sf::Vector2f offset(xOffset * m_walkAnim.getGlobalBounds().width, yOffset * m_walkAnim.getGlobalBounds().height); // offset
+    // TODO à voir bug origin et offset douteux
+    projectile->setPosition(getWorldPosition() + offset);
 
     sf::Vector2f projectileDirection(m_targetPos - astronautPos);
     projectileDirection = Utility::unitVector(projectileDirection);
