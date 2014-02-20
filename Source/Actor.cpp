@@ -74,7 +74,7 @@ void Actor::jump()
     m_isJumping = true;
 }
 // TODO constantes magiques vitesses !
-void Actor::checkActorJump(sf::Time dt, CommandQueue& commands)
+void Actor::checkJump(sf::Time dt, CommandQueue& commands)
 {
     if(m_isJumping && m_numFootContacts >= 1)
     {
@@ -91,21 +91,15 @@ void Actor::goLeft()
 
 void Actor::walkLeft()
 {
+    lookLeft();
     m_body->ApplyForce(b2Vec2(-m_body->GetMass()*10,0), m_body->GetWorldCenter());
-
-    if(m_lookingOrientation == LookingOrientation::Right)
-    {
-        std::cout << "flip to left" << std::endl;
-        this->setScale(-1.f, 1.f);
-        m_lookingOrientation = LookingOrientation::Left;
-    }
     m_isGoingLeft = false;
 }
 
 void Actor::glideLeft()
 {
+    lookLeft();
     m_body->ApplyForce(b2Vec2(-m_body->GetMass()*2,0), m_body->GetWorldCenter());
-    //m_lookingOrientation = LookingOrientation::Left;
     m_isGoingLeft = false;
 }
 
@@ -116,24 +110,37 @@ void Actor::goRight()
 
 void Actor::walkRight()
 {
+    lookRight();
     m_body->ApplyForce(b2Vec2(m_body->GetMass()*10,0), m_body->GetWorldCenter());
-    if(m_lookingOrientation == LookingOrientation::Left)
-    {
-        std::cout << "flip to right" << std::endl;
-        this->setScale(1.f, 1.f);
-        m_lookingOrientation = LookingOrientation::Right;
-    }
     m_isGoingRight = false;
 }
 
 void Actor::glideRight()
 {
+    lookRight();
     m_body->ApplyForce(b2Vec2(m_body->GetMass()*2,0), m_body->GetWorldCenter());
-    //m_lookingOrientation = LookingOrientation::Right;
     m_isGoingRight = false;
 }
 
-void Actor::checkActorMove(sf::Time dt, CommandQueue& commands)
+void Actor::lookLeft()
+{
+    m_lookingOrientation = LookingOrientation::Left;
+}
+
+void Actor::lookRight()
+{
+    m_lookingOrientation = LookingOrientation::Right;
+}
+void Actor::updateLookingDirection()
+{
+    if(m_lookingOrientation == LookingOrientation::Right)
+        this->setScale(1.f, 1.f);
+    else if(m_lookingOrientation == LookingOrientation::Left)
+        this->setScale(-1.f, 1.f);
+}
+
+
+void Actor::checkMove(sf::Time dt, CommandQueue& commands)
 {
     if(m_isGoingLeft && m_body->GetLinearVelocity().x * SCALE > -200)
     {
@@ -191,11 +198,12 @@ void Actor::updateText()
 void Actor::updateCurrent(sf::Time dt, CommandQueue& commands)
 {
     updateText();
-    checkActorJump(dt, commands);
-    checkActorMove(dt, commands);
-
-    Entity::updateCurrent(dt, commands);
+    checkJump(dt, commands);
+    checkMove(dt, commands);
+    updateLookingDirection();
     m_walkAnim.update(dt);
+    Entity::updateCurrent(dt, commands);
+
 }
 
 bool Actor::isDestroyed() const

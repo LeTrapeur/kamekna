@@ -26,6 +26,8 @@ class Actor : public Entity
         void                    goRight();
         void                    walkRight();
         void                    glideRight();
+        void                    lookLeft();
+        void                    lookRight();
 
         void                    addFootContact();
         void                    removeFootContact();
@@ -39,11 +41,11 @@ class Actor : public Entity
         virtual bool            isDestroyed() const;
 
 
-
     private:
         virtual void            drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
-        void                    checkActorJump(sf::Time dt, CommandQueue& commands);
-        void                    checkActorMove(sf::Time dt, CommandQueue& commands);
+        void                    checkJump(sf::Time dt, CommandQueue& commands);
+        void                    checkMove(sf::Time dt, CommandQueue& commands);
+        void                    updateLookingDirection();
 
         static b2Body*          createBody(b2World& world);
 

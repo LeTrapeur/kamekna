@@ -106,10 +106,19 @@ void Astronaut::checkThrusters(sf::Time dt, CommandQueue& commands)
 // 1 prendre dans player la position de la souris avec Event (voir si c'est relatif à la fenetre )ensuite l'envoyer à fire et mettre a jour une targetDirection et calsuler la direction de la bullet
 // 2 passer window à player
 // limiter le radius de tir
+//TODO Nettoyer
+// TODO check looking direction
 void Astronaut::fire(const sf::Vector2f& targetPos)
 {
     m_isFiring = true;
     m_targetPos = targetPos;
+
+    sf::Vector2f relativeUnitPos =Utility::unitVector((targetPos - getWorldPosition()));
+
+    if(relativeUnitPos.x < 0)
+        lookLeft();
+    else if(relativeUnitPos.x > 0)
+        lookRight();
 }
 
 void Astronaut::checkProjectileLaunch(sf::Time dt, CommandQueue& commands)
