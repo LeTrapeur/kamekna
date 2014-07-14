@@ -101,6 +101,7 @@ void World::buildScene()
                     hero->setPosition(o.GetCentre());
                     m_ia.addPlayer(hero.get()); // ajout de la connaissance joueur à l'ia
                     m_sceneLayers[Space]->attachChild(std::move(hero));
+
                 }
                 if(o.GetName() == "enemy")
                 {
