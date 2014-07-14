@@ -20,7 +20,6 @@ class MyContactListener : public b2ContactListener
 
     private:
         CommandQueue&    m_commandQueue;
-        bool             SENSOR_FLAG;
   };
 
 #endif // MYCONTACTLISTENER_H

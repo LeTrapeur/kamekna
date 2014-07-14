@@ -5,6 +5,7 @@
 const float SCALE = 30.f; // Box2D works in a scale of 30 pixels = 1 meter
 
 Entity::Entity(b2Body* body):
+    SceneNode(),
     m_body(body),
     m_isDestroyed(false)
 {}
@@ -29,7 +30,7 @@ void Entity::updateCurrent(sf::Time dt, CommandQueue& commands)
     if(m_body->GetType() == b2_dynamicBody)
     {
         setPosition(m_body->GetWorldCenter().x * SCALE, m_body->GetWorldCenter().y * SCALE);
-        setRotation(m_body->GetAngle() * Utility::pi()/180);
+        setRotation(m_body->GetAngle()*Utility::pi()/180);
     }
 }
 
@@ -41,7 +42,7 @@ void Entity::setPosition(float x, float y)
 void Entity::setPosition(const sf::Vector2f& pos)
 {
     sf::Transformable::setPosition(pos);
-    m_body->SetTransform(b2Vec2(getWorldPosition().x / SCALE, getWorldPosition().y / SCALE), m_body->GetAngle());
+    m_body->SetTransform(b2Vec2(sf::Transformable::getPosition().x/SCALE, sf::Transformable::getPosition().y/SCALE), m_body->GetAngle());
 }
 
 void Entity::setRotation(float angle)

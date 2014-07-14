@@ -35,9 +35,9 @@ Actor::Actor(Type type, const TextureHolder& textures, const FontHolder& fonts, 
 	m_walkAnim.setRepeating(true);
 
     // Player
-    // TODO rendre adaptable taille anim (frame)
     sf::Rect<float> spriteBounds(0,0,29,37);// = m_sprite.getGlobalBounds();
     Transformable::setOrigin(sf::Vector2f(spriteBounds.width/2,spriteBounds.height/2));
+
 
     b2FixtureDef ActorFixtureDef;
     b2PolygonShape ActorShape;
@@ -48,7 +48,7 @@ Actor::Actor(Type type, const TextureHolder& textures, const FontHolder& fonts, 
     ActorFixtureDef.userData = this;
     m_body->CreateFixture(&ActorFixtureDef);
 
-        //add foot sensor fixture
+    //add foot sensor fixture
     b2PolygonShape FootShape;
     FootShape.SetAsBox(((spriteBounds.width - 10.f)/2.0f)/SCALE, 5.f/SCALE, b2Vec2(0,(spriteBounds.height/2.0f)/SCALE), 0);
     b2FixtureDef footSensorFixture;
@@ -201,7 +201,6 @@ void Actor::updateCurrent(sf::Time dt, CommandQueue& commands)
     checkMove(dt, commands);
     updateLookingDirection();
     m_walkAnim.update(dt);
-
     Entity::updateCurrent(dt, commands);
 
 }

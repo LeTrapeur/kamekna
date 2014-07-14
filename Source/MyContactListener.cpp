@@ -7,18 +7,13 @@
 
 
 MyContactListener::MyContactListener(CommandQueue& commandQueue):
-    m_commandQueue(commandQueue),
-    SENSOR_FLAG(false)
+    m_commandQueue(commandQueue)
 {}
 
 void MyContactListener::BeginContact(b2Contact* contact)
 {
     Entity* A = static_cast<Entity*>(contact->GetFixtureA()->GetUserData());
     Entity* B = static_cast<Entity*>(contact->GetFixtureB()->GetUserData());
-    SENSOR_FLAG = false;
-    if(contact->GetFixtureA()->IsSensor() || contact->GetFixtureB()->IsSensor())
-        SENSOR_FLAG = true;
-
     std::pair<Entity*, Entity*> entities = std::make_pair(A,B);
 
     if(matchesCategory(entities, Category::EnemyActor, Category::AlliedProjectile))
@@ -48,8 +43,7 @@ void MyContactListener::BeginContact(b2Contact* contact)
     if(matchesCategory(entities, Category::Actor, Category::PhysicalObject))
     {
         auto& actor = static_cast<Actor&>(*entities.first);
-        if(SENSOR_FLAG)
-            actor.addFootContact();
+        actor.addFootContact();
     }
 
     if(matchesCategory(entities, Category::Projectile, Category::PhysicalObject))
@@ -73,18 +67,12 @@ void MyContactListener::EndContact(b2Contact* contact)
 {
     Entity* A = static_cast<Entity*>(contact->GetFixtureA()->GetUserData());
     Entity* B = static_cast<Entity*>(contact->GetFixtureB()->GetUserData());
-
-    SENSOR_FLAG = false;
-    if(contact->GetFixtureA()->IsSensor() || contact->GetFixtureB()->IsSensor())
-        SENSOR_FLAG = true;
-
     std::pair<Entity*, Entity*> entities = std::make_pair(A,B);
 
     if(matchesCategory(entities, Category::Actor, Category::PhysicalObject))
     {
         auto& actor = static_cast<Actor&>(*entities.first);
-        if(SENSOR_FLAG)
-            actor.removeFootContact();
+        actor.removeFootContact();
     }
 
     if(matchesCategory(entities, Category::Actor, Category::GravityZone))

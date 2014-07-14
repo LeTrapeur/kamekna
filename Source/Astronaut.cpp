@@ -84,7 +84,7 @@ void Astronaut::checkThrusters(sf::Time dt, CommandQueue& commands)
     if(m_isThrusting)
     {
         m_powerRecovery.restart();
-        //TODO DEBUG m_power--;
+        m_power--;
         m_isThrusting = false;
         isPlayed = false;
         if(m_power < 0)
