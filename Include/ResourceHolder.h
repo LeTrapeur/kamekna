@@ -18,15 +18,7 @@ namespace Textures
 {
     enum ID
     {
-        SpaceBackground,
-        Hero,
-        HeroAnim,
-        Bullet,
-        Enemy,
-        Asteroid,
-        Metal,
         TitleScreen,
-
     };
 }
 
@@ -44,11 +36,7 @@ namespace SoundEffect
 {
     enum ID
     {
-        AlliedGunfire,
-        Impact,
-        Jump,
-        Regenerate,
-        Button,
+      
     };
 }
 

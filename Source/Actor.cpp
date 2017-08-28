@@ -9,19 +9,19 @@ const float SCALE = 30.f; // Box2D works in a scale of 30 pixels = 1 meter
 
 Textures::ID toTextureID(Actor::Type type)
 {
-    switch (type)
+  /*switch (type)
     {
         case Actor::Hero:
             return Textures::Hero;
         case Actor::Enemy:
             return Textures::Enemy;
     }
-    return Textures::Hero;
+    return Textures::Hero;*/
 }
 
 Actor::Actor(Type type, const TextureHolder& textures, const FontHolder& fonts, b2World& world):
     Entity(createBody(world)),
-    m_walkAnim(textures.get(Textures::HeroAnim)),
+    //m_walkAnim(textures.get(Textures::HeroAnim)),
     m_type(type),
     m_numFootContacts(0),
     m_life(100),
@@ -29,7 +29,7 @@ Actor::Actor(Type type, const TextureHolder& textures, const FontHolder& fonts, 
     m_isJumping(false),
     m_infoDisplay()
 {
-    m_walkAnim.setFrameSize(sf::Vector2i(29, 37));
+  /*m_walkAnim.setFrameSize(sf::Vector2i(29, 37));
 	m_walkAnim.setNumFrames(3);
 	m_walkAnim.setDuration(sf::seconds(0.3f));
 	m_walkAnim.setRepeating(true);
@@ -64,7 +64,7 @@ Actor::Actor(Type type, const TextureHolder& textures, const FontHolder& fonts, 
         nameDisplay->setPosition(0.f, -25.f);
         m_infoDisplay = nameDisplay.get();
         attachChild(std::move(nameDisplay));
-    }
+	}*/
 
 }
 
@@ -75,12 +75,12 @@ void Actor::jump()
 // TODO constantes magiques vitesses !
 void Actor::checkJump(sf::Time dt, CommandQueue& commands)
 {
-    if(m_isJumping && m_numFootContacts >= 1)
+  /*if(m_isJumping && m_numFootContacts >= 1)
     {
         playLocalSound(commands, SoundEffect::Jump);
-        m_body->ApplyLinearImpulse(b2Vec2(0,-m_body->GetMass()*8), m_body->GetWorldCenter());
-    }
-    m_isJumping = false;
+        m_body->ApplyLinearImpulse(b2Vec2(0,-m_body->GetMass()*8), m_body->GetWorldCenter(), true);
+	}*/
+    m_isJumping = true;
 }
 
 void Actor::goLeft()
@@ -91,14 +91,14 @@ void Actor::goLeft()
 void Actor::walkLeft()
 {
     lookLeft();
-    m_body->ApplyForce(b2Vec2(-m_body->GetMass()*10,0), m_body->GetWorldCenter());
+    m_body->ApplyForce(b2Vec2(-m_body->GetMass()*10,0), m_body->GetWorldCenter(), true);
     m_isGoingLeft = false;
 }
 
 void Actor::glideLeft()
 {
     lookLeft();
-    m_body->ApplyForce(b2Vec2(-m_body->GetMass()*2,0), m_body->GetWorldCenter());
+    m_body->ApplyForce(b2Vec2(-m_body->GetMass()*2,0), m_body->GetWorldCenter(), true);
     m_isGoingLeft = false;
 }
 
@@ -110,14 +110,14 @@ void Actor::goRight()
 void Actor::walkRight()
 {
     lookRight();
-    m_body->ApplyForce(b2Vec2(m_body->GetMass()*10,0), m_body->GetWorldCenter());
+    m_body->ApplyForce(b2Vec2(m_body->GetMass()*10,0), m_body->GetWorldCenter(), true);
     m_isGoingRight = false;
 }
 
 void Actor::glideRight()
 {
     lookRight();
-    m_body->ApplyForce(b2Vec2(m_body->GetMass()*2,0), m_body->GetWorldCenter());
+    m_body->ApplyForce(b2Vec2(m_body->GetMass()*2,0), m_body->GetWorldCenter(), true);
     m_isGoingRight = false;
 }
 

@@ -6,8 +6,6 @@
 
 #include <iostream>
 
-
-
 TitleState::TitleState(StateStack& stack, Context context):
     State(stack, context),
     m_text(),

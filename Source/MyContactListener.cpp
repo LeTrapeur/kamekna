@@ -3,7 +3,6 @@
 #include "Entity.h"
 #include "Actor.h"
 #include "Projectile.h"
-#include "GravityZone.h"
 
 
 MyContactListener::MyContactListener(CommandQueue& commandQueue):
@@ -21,7 +20,7 @@ void MyContactListener::BeginContact(b2Contact* contact)
 
     std::pair<Entity*, Entity*> entities = std::make_pair(A,B);
 
-    if(matchesCategory(entities, Category::EnemyActor, Category::AlliedProjectile))
+    /*if(matchesCategory(entities, Category::EnemyActor, Category::AlliedProjectile))
     {
         auto& enemy = static_cast<Actor&>(*entities.first);
         auto& projectile = static_cast<Projectile&>(*entities.second);
@@ -66,7 +65,7 @@ void MyContactListener::BeginContact(b2Contact* contact)
 
         actor.setGravityActivated(false);
         zone.addActorInside();
-    }
+    }*/
 }
 
 void MyContactListener::EndContact(b2Contact* contact)
@@ -79,8 +78,8 @@ void MyContactListener::EndContact(b2Contact* contact)
         SENSOR_FLAG = true;
 
     std::pair<Entity*, Entity*> entities = std::make_pair(A,B);
-
-    if(matchesCategory(entities, Category::Actor, Category::PhysicalObject))
+    
+    /*if(matchesCategory(entities, Category::Actor, Category::PhysicalObject))
     {
         auto& actor = static_cast<Actor&>(*entities.first);
         if(SENSOR_FLAG)
@@ -95,7 +94,7 @@ void MyContactListener::EndContact(b2Contact* contact)
 
         actor.setGravityActivated(true);
         zone.removeActorInside();
-    }
+	}*/
 }
 
 bool MyContactListener::matchesCategory(std::pair<Entity*,Entity*>& entities, Category::Type type1, Category::Type type2)

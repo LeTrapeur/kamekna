@@ -6,37 +6,28 @@ GameState::GameState(StateStack& stack, Context context)
 , m_world(*context.window, *context.fonts, *context.sounds)
 , m_player(*context.player)
 {
-    m_lifeBar.setSize(sf::Vector2f(m_world.getPlayerLife() * 3, 25));
-    m_lifeBar.setPosition(10, 10);
-    m_lifeBar.setFillColor(sf::Color(55, 190, 255, 200));
-    m_powerBar.setSize(sf::Vector2f(m_world.getPlayerPower() * 3, 25));
-    m_powerBar.setPosition(10, 45);
-    m_powerBar.setFillColor(sf::Color(255, 128, 0, 200));
 
-    context.music->setVolume(5.f);
-    context.music->play(Music::GameTheme);
+    // TODO set default music theme
+    //context.music->setVolume(5.f);
+    //context.music->play(Music::GameTheme);
 }
 
 void GameState::draw()
 {
     m_world.draw();
-    drawHud();
 }
 
 bool GameState::update(sf::Time dt)
 {
     m_world.update(dt);
 
-    if(m_world.getPlayerLife() <= 0.0f)
+    if(false) // TODO condition de fin 
         requestStackPush(States::Gameover);
 
     CommandQueue& commands = m_world.getCommandQueue();
 
     m_player.handleRealTimeInput(commands);
     m_player.updateMouseWorldPosition(m_world.getMouseWorldPosition());
-
-    m_lifeBar.setSize(sf::Vector2f(m_world.getPlayerLife() * 3, 25));
-    m_powerBar.setSize(sf::Vector2f(m_world.getPlayerPower() * 3, 25));
 
     return true;
 }
@@ -57,9 +48,6 @@ bool GameState::handleEvent(const sf::Event& event)
 
 void GameState::drawHud()
 {
-
     sf::RenderWindow& window = *getContext().window;
     window.setView(window.getDefaultView());
-    window.draw(m_lifeBar);
-    window.draw(m_powerBar);
 }

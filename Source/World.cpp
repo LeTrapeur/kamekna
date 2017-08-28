@@ -1,16 +1,9 @@
 #include "World.h"
 
-#include <tmx/MapLoader.h>
-#include <tmx/tmx2box2d.h>
-
 #include "Actor.h"
-#include "Astronaut.h"
 #include "SpriteNode.h"
 #include "SoundNode.h"
 #include "Platform.h"
-#include "Asteroid.h"
-#include "Planet.h"
-#include "GravityZone.h"
 
 const float SCALE = 30.f; // Box2D works in a scale of 30 pixels = 1 meter
 
@@ -31,9 +24,8 @@ World::World(sf::RenderWindow& window, FontHolder& fonts, SoundPlayer& sounds):
     m_player(nullptr),
     m_spawnPosition(0 ,0),
     m_commandQueue(),
-    m_contactListener(m_commandQueue),
-    m_ia(),
-    ml("maps/")
+    m_contactListener(m_commandQueue)
+    //m_ia()
 {
     loadTextures();
 
@@ -49,20 +41,14 @@ World::World(sf::RenderWindow& window, FontHolder& fonts, SoundPlayer& sounds):
 
 void World::loadTextures()
 {
-    m_textures.load(Textures::SpaceBackground, "background.png");
-    m_textures.load(Textures::Hero, "astronaut.png");
-    m_textures.load(Textures::HeroAnim, "astronaut.anim.png");
-    m_textures.load(Textures::Asteroid, "asteroid.png");
-    m_textures.load(Textures::Enemy, "enemy.png");
-    m_textures.load(Textures::Bullet, "bullet.png");
-    m_textures.load(Textures::Metal, "metal.png");
+  
 }
 
 void World::buildScene()
 {
 
     // Init layers
-    for(std::size_t i = 0; i < LayerCount; ++i)
+    /*for(std::size_t i = 0; i < LayerCount; ++i)
     {
         Category::Type category = (i == Space) ? Category::UpperScene : Category::None;
         SceneNode::Ptr layer(new SceneNode(category));
@@ -72,58 +58,7 @@ void World::buildScene()
     // SoundNode
     std::unique_ptr<SoundNode> soundNode(new SoundNode(m_sounds));
     m_sceneGraph.attachChild(std::move(soundNode));
-
-
-	ml.Load("map.tmx");
-	const std::vector<tmx::MapLayer>& layers = ml.GetLayers();
-    for (const auto& l : layers)
-	{
-		if (l.name == "Static") //static bodies which make up the map geometry
-		{
-			for (const auto& o : l.objects)
-			{
-				std::cout << o.GetName() << " at: " << o.GetPosition().x << " " << o.GetPosition().y << " size: " << o.GetAABB().width << " " << o.GetAABB().height << std::endl;
-                std::unique_ptr<Platform> platform(new Platform(o.GetAABB().width, o.GetAABB().height, tmx::BodyCreator::Add(o, m_physicWorld)));
-                platform->setPosition(o.GetCentre());
-                m_sceneLayers[Space]->attachChild(std::move(platform));
-			}
-		}
-		else if (l.name == "Spawn")
-		{
-			for (const auto& o : l.objects)
-			{
-			    std::cout << o.GetName() << " at: " << o.GetPosition().x << " " << o.GetPosition().y << " size: " << o.GetAABB().width << " " << o.GetAABB().height << std::endl;
-			    if(o.GetName() == "player")
-                {
-                    // Hero
-                    std::unique_ptr<Astronaut> hero(new Astronaut(Actor::Hero, m_textures, m_fonts, m_physicWorld));
-                    m_player = hero.get();
-                    hero->setPosition(o.GetCentre());
-                    m_ia.addPlayer(hero.get()); // ajout de la connaissance joueur à l'ia
-                    m_sceneLayers[Space]->attachChild(std::move(hero));
-
-                }
-                if(o.GetName() == "enemy")
-                {
-                    // Enemy
-                    std::unique_ptr<Astronaut> enemy(new Astronaut(Actor::Enemy, m_textures, m_fonts, m_physicWorld));
-                    enemy->setPosition(o.GetCentre());
-                    m_ia.addEnemy(enemy.get());
-                    m_sceneLayers[Space]->attachChild(std::move(enemy));
-                }
-			}
-		}
-		else if(l.name == "GravityZone")
-		{
-		    for (const auto& o : l.objects)
-			{
-                std::cout << o.GetName() << " at: " << o.GetPosition().x << " " << o.GetPosition().y << " size: " << o.GetAABB().width << " " << o.GetAABB().height << std::endl;
-                std::unique_ptr<GravityZone> zone(new GravityZone(o.GetAABB().width, o.GetAABB().height, tmx::BodyCreator::Add(o, m_physicWorld)));
-                zone->setPosition(o.GetCentre());
-                m_sceneLayers[Space]->attachChild(std::move(zone));
-			}
-		}
-	}
+    */
 }
 
 void World::update(sf::Time dt)
@@ -172,27 +107,15 @@ void World::draw()
 {
 
     m_window.setView(m_worldView);
-    m_window.draw(ml);
     m_window.draw(m_sceneGraph);
 
     m_window.setView(m_minimapView);
-    m_window.draw(ml);
     m_window.draw(m_sceneGraph);
 }
 
 CommandQueue& World::getCommandQueue()
 {
     return m_commandQueue;
-}
-
-float World::getPlayerLife() const
-{
-    return m_player->getLife();
-}
-
-float World::getPlayerPower() const
-{
-    return m_player->getPower();
 }
 
 void World::updateSounds()

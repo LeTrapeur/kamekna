@@ -9,7 +9,7 @@
 const sf::Time TIME_PER_FRAME = sf::seconds(1.f/60.f);
 
 Application::Application():
-    m_window(sf::VideoMode(1280, 720), "Kamekna project"),
+    m_window(sf::VideoMode(1280, 720), "Framework 2D"),
     m_textures(),
     m_fonts(),
     m_player(),
@@ -17,9 +17,9 @@ Application::Application():
     m_sounds(),
     m_stateStack(State::Context(m_window, m_textures, m_fonts, m_player, m_music, m_sounds))
 {
-    m_fonts.load(Fonts::Main, "airstrip.ttf");
-    m_fonts.load(Fonts::Debug, "arial.ttf");
-    m_textures.load(Textures::TitleScreen, "titlescreen.png");
+    // load basic resources
+    m_fonts.load(Fonts::Main, "../Resources/fonts/arial.ttf");
+    m_fonts.load(Fonts::Debug, "../Resources/fonts/arial.ttf");
 
     m_statisticsText.setFont(m_fonts.get(Fonts::Debug));
     m_statisticsText.setString("DEBUG");
@@ -27,6 +27,9 @@ Application::Application():
     m_statisticsText.setColor(sf::Color::Blue);
 
     registerStates();
+    
+    // start dummy title
+    m_textures.load(Textures::TitleScreen, "../Resources/titlescreen.png");
     m_stateStack.pushState(States::Title);
 }
 
@@ -98,9 +101,9 @@ void Application::updateStatistics(sf::Time elapsedTime)
 
 void Application::registerStates()
 {
-        m_stateStack.registerState<TitleState>(States::Title);
-        m_stateStack.registerState<MenuState>(States::Menu);
-        m_stateStack.registerState<GameState>(States::Game);
-        m_stateStack.registerState<PauseState>(States::Pause);
-        m_stateStack.registerState<GameoverState>(States::Gameover);
+    m_stateStack.registerState<TitleState>(States::Title);
+    m_stateStack.registerState<MenuState>(States::Menu);
+    m_stateStack.registerState<GameState>(States::Game);
+    m_stateStack.registerState<PauseState>(States::Pause);
+    m_stateStack.registerState<GameoverState>(States::Gameover);
 }

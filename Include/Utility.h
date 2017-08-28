@@ -1,7 +1,7 @@
 #ifndef UTILITY_H
 #define UTILITY_H
 
-#include <SFML/graphics.hpp>
+#include <SFML/Graphics.hpp>
 #include <vector>
 #include <random>
 #include <ctime>

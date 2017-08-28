@@ -1,7 +1,5 @@
 #include "Player.h"
 
-#include "Astronaut.h"
-
 Player::Player()
 {
         // Set initial key bindings
@@ -115,6 +113,7 @@ sf::Keyboard::Key Player::getAssignedKey(Action action) const
 
 void Player::initializeActions()
 {
+  /*
         m_actionBinding[GoLeft].action  = derivedAction<Astronaut>([] (Astronaut& astronaut, sf::Time){astronaut.goLeft();});
         m_actionBinding[GoRight].action = derivedAction<Astronaut>([] (Astronaut& astronaut, sf::Time){astronaut.goRight();});
         m_actionBinding[Jump].action = derivedAction<Astronaut>([] (Astronaut& astronaut, sf::Time){astronaut.jump();});
@@ -123,7 +122,7 @@ void Player::initializeActions()
         m_actionBinding[ThursterUp].action = derivedAction<Astronaut>([] (Astronaut& astronaut, sf::Time){astronaut.thrusterUp();});
         m_actionBinding[ThursterDown].action = derivedAction<Astronaut>([] (Astronaut& astronaut, sf::Time){astronaut.thrusterDown();});
 
-        m_actionBinding[Fire].action = derivedAction<Astronaut>([this] (Astronaut& astronaut, sf::Time){astronaut.fire(m_mouseWorldPos);});
+        m_actionBinding[Fire].action = derivedAction<Astronaut>([this] (Astronaut& astronaut, sf::Time){astronaut.fire(m_mouseWorldPos);});*/
 }
 
 bool Player::isRealtimeAction(Action action)

@@ -4,11 +4,11 @@ SoundPlayer::SoundPlayer():
     m_soundBuffers(),
     m_sounds()
 {
-    m_soundBuffers.load(SoundEffect::AlliedGunfire, "alliedgunfire.wav");
+  /*m_soundBuffers.load(SoundEffect::AlliedGunfire, "alliedgunfire.wav");
     m_soundBuffers.load(SoundEffect::Button, "button.wav");
     m_soundBuffers.load(SoundEffect::Regenerate, "regenerate.wav");
     m_soundBuffers.load(SoundEffect::Impact, "impact.wav");
-    m_soundBuffers.load(SoundEffect::Jump, "jump.wav");
+    m_soundBuffers.load(SoundEffect::Jump, "jump.wav");*/
 }
 
 void SoundPlayer::play(SoundEffect::ID effect)

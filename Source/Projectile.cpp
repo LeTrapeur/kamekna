@@ -8,7 +8,7 @@ const float SCALE = 30.f; // Box2D works in a scale of 30 pixels = 1 meter
 Projectile::Projectile(Type type, const TextureHolder& textures, b2World& world, int damage):
     Entity(createBody(world)),
     m_type(type),
-    m_sprite(textures.get(Textures::Bullet)),
+    //m_sprite(textures.get(Textures::Bullet)),
     m_damage(damage),
     m_timeToLive(sf::seconds(10.f))
 {

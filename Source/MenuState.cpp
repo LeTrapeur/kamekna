@@ -40,9 +40,9 @@ MenuState::MenuState(StateStack& stack, Context context):
         m_options.push_back(exitOption);
 
         updateOptionText();
-
+	/* TODO Title music
         context.music->setVolume(25.f);
-        context.music->play(Music::MenuTheme);
+        context.music->play(Music::MenuTheme);*/
 }
 
 void MenuState::draw()
@@ -69,7 +69,7 @@ bool MenuState::handleEvent(const sf::Event& event)
 
     if (event.key.code == sf::Keyboard::Return)
     {
-        m_sounds.play(SoundEffect::Button);
+      //m_sounds.play(SoundEffect::Button);
         if (m_optionIndex == Play)
         {
             requestStackPop();
