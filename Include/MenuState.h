@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Text.hpp>
+#include <TGUI/TGUI.hpp>
 
 #include "State.h"
 #include "SoundPlayer.h"
@@ -27,6 +28,7 @@ class MenuState : public State
 
     private:
             sf::Sprite                      m_backgroundSprite;
+            tgui::Gui                       m_gui;
             std::vector<sf::Text>           m_options;
             std::size_t                     m_optionIndex;
 

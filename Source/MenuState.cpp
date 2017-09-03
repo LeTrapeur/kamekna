@@ -9,6 +9,7 @@
 
 MenuState::MenuState(StateStack& stack, Context context):
     State(stack, context),
+    m_gui(*context.window),
     m_options(),
     m_optionIndex(0),
     m_sounds(*context.sounds)
@@ -18,28 +19,29 @@ MenuState::MenuState(StateStack& stack, Context context):
 
         m_backgroundSprite.setTexture(texture);
 
-        sf::Text playOption;
-        playOption.setFont(font);
-        playOption.setString("Play");
-        Utility::centerOrigin(playOption);
-        playOption.setPosition(context.window->getView().getSize() / 2.f);
-        m_options.push_back(playOption);
+        // setup GUI
+        m_gui.setFont(font);
 
-        sf::Text optionsOption;
-        optionsOption.setFont(font);
-        optionsOption.setString("Options");
-        Utility::centerOrigin(optionsOption);
-        optionsOption.setPosition(playOption.getPosition() + sf::Vector2f(0.f, 50.f));
-        m_options.push_back(optionsOption);
+        tgui::Button::Ptr playButton = tgui::Button::create();
+        playButton->setSize(200, 50);
+        playButton->setPosition(context.window->getView().getSize() / 2.f);
+        playButton->setText("Start");
+        playButton->connect("pressed", [&](){ requestStackPop(); requestStackPush(States::Game); });
+        m_gui.add(playButton);
 
-        sf::Text exitOption;
-        exitOption.setFont(font);
-        exitOption.setString("Exit");
-        Utility::centerOrigin(exitOption);
-        exitOption.setPosition(optionsOption.getPosition() + sf::Vector2f(0.f, 50.f));
-        m_options.push_back(exitOption);
+        tgui::Button::Ptr optionsButton = tgui::Button::create();
+        optionsButton->setSize(200, 50);
+        optionsButton->setPosition(context.window->getView().getSize() / 2.f + sf::Vector2f(0.f, 75.f));
+        optionsButton->setText("Options");
+        m_gui.add(optionsButton);
 
-        updateOptionText();
+        tgui::Button::Ptr exitButton = tgui::Button::create();
+        exitButton->setSize(200, 50);
+        exitButton->setPosition(context.window->getView().getSize() / 2.f + sf::Vector2f(0.f, 150.f));
+        exitButton->setText("Exit");
+        exitButton->connect("pressed", [&](){ requestStackPop(); });
+        m_gui.add(exitButton);
+
 	/* TODO Title music
         context.music->setVolume(25.f);
         context.music->play(Music::MenuTheme);*/
@@ -52,6 +54,8 @@ void MenuState::draw()
     window.setView(window.getDefaultView());
     window.draw(m_backgroundSprite);
 
+    m_gui.draw();
+
     for(const sf::Text& text: m_options)
             window.draw(text);
 }
@@ -63,6 +67,7 @@ bool MenuState::update(sf::Time)
 
 bool MenuState::handleEvent(const sf::Event& event)
 {
+    m_gui.handleEvent(event);
     // The demonstration menu logic
     if (event.type != sf::Event::KeyPressed)
             return false;
@@ -72,13 +77,12 @@ bool MenuState::handleEvent(const sf::Event& event)
       //m_sounds.play(SoundEffect::Button);
         if (m_optionIndex == Play)
         {
-            requestStackPop();
-            requestStackPush(States::Game);
+
         }
         else if (m_optionIndex == Exit)
         {
             // The exit option was chosen, by removing itself, the stack will be empty, and the game will know it is time to close.
-            requestStackPop();
+            
         }
     }
 

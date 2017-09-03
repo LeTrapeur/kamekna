@@ -41,6 +41,10 @@ add_definitions     ( ${BOX2D_DEFINITIONS} )
 include_directories ( ${BOX2D_INCLUDE_DIRS} )
 link_directories    ( ${BOX2D_LIBRARY_DIRS} )
 target_link_libraries(${EXECUTABLE_NAME} ${BOX2D_LIBRARIES})
+#
+
+#TGUI setup
+target_link_libraries(${EXECUTABLE_NAME} tgui)
 # 
 
 
