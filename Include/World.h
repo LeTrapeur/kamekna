@@ -65,7 +65,8 @@ class World
         SceneNode m_sceneGraph;
         std::array<SceneNode*, LayerCount>      m_sceneLayers;
 
-        Actor*                                 m_player;
+        Actor*                                  m_player;
+        //TODO généraliser spawning pour toutes les entités
         sf::Vector2f                            m_spawnPosition;
 
         CommandQueue                            m_commandQueue;

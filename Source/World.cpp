@@ -70,10 +70,11 @@ void World::update(sf::Time dt)
 
     m_physicWorld.Step(dt.asSeconds(), 8, 4);
     m_sceneGraph.update(dt, m_commandQueue);
-
+    
+    /*
     adaptPlayerPosition();
     adaptScrolling();
-
+    */
     updateSounds();
 
     m_sceneGraph.removeWrecks();
