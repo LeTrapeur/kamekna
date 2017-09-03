@@ -2,7 +2,6 @@
 #define MENUSTATE_H
 
 #include <SFML/Graphics/Sprite.hpp>
-#include <SFML/Graphics/Text.hpp>
 #include <TGUI/TGUI.hpp>
 
 #include "State.h"
@@ -18,19 +17,10 @@ class MenuState : public State
         virtual bool                        handleEvent(const sf::Event& event);
 
         void                                updateOptionText();
-    private:
-        enum OptionNames
-        {
-            Play,
-            Options,
-            Exit,
-        };
 
     private:
             sf::Sprite                      m_backgroundSprite;
             tgui::Gui                       m_gui;
-            std::vector<sf::Text>           m_options;
-            std::size_t                     m_optionIndex;
 
             SoundPlayer&                    m_sounds;
 };
