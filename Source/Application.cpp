@@ -10,27 +10,38 @@ const sf::Time TIME_PER_FRAME = sf::seconds(1.f/60.f);
 
 Application::Application():
     m_window(sf::VideoMode(1280, 720), "Framework 2D"),
+    m_settings(),
     m_textures(),
     m_fonts(),
     m_player(),
     m_music(),
     m_sounds(),
-    m_stateStack(State::Context(m_window, m_textures, m_fonts, m_player, m_music, m_sounds))
+    m_stateStack(State::Context(m_window, m_settings, m_textures, m_fonts, m_player, m_music, m_sounds))
 {
+    // settings loading
+    m_settings.load(Settings::Default, "../Resources/settings.txt");
+    SettingsParser settings = m_settings.get(Settings::Default);
+    std::string window_title;
+    settings.get("window_title", window_title);
+    m_window.setTitle(window_title);
+
     // load basic resources
     m_fonts.load(Fonts::Main, "../Resources/fonts/arial.ttf");
     m_fonts.load(Fonts::Debug, "../Resources/fonts/arial.ttf");
+    m_textures.load(Textures::TitleScreen, "../Resources/titlescreen.png");
 
+    // stats text 
     m_statisticsText.setFont(m_fonts.get(Fonts::Debug));
     m_statisticsText.setString("DEBUG");
     m_statisticsText.setCharacterSize(10);
     m_statisticsText.setColor(sf::Color::Blue);
 
     registerStates();
-    
-    // start dummy title
-    m_textures.load(Textures::TitleScreen, "../Resources/titlescreen.png");
+
+    // start title screen
     m_stateStack.pushState(States::Title);
+
+
 }
 
 void Application::processInputs()

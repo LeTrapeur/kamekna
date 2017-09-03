@@ -2,8 +2,9 @@
 #include "StateStack.h"
 
 
-State::Context::Context(sf::RenderWindow& window, TextureHolder& textures, FontHolder& fonts, Player& player, MusicPlayer& music, SoundPlayer& sounds):
+State::Context::Context(sf::RenderWindow& window, SettingsHolder& settings, TextureHolder& textures, FontHolder& fonts, Player& player, MusicPlayer& music, SoundPlayer& sounds):
     window(&window),
+    settings(&settings),
     textures(&textures),
     fonts(&fonts),
     player(&player),

@@ -7,13 +7,13 @@
 #include <SFML/System/Time.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Text.hpp>
+#include "SettingsParser.h"
 
 #include "ResourceHolder.h"
 #include "Player.h"
 #include "MusicPlayer.h"
 #include "SoundPlayer.h"
 #include "StateStack.h"
-
 
 class Application
 {
@@ -30,6 +30,7 @@ class Application
 
     private:
         sf::RenderWindow    m_window;
+        SettingsHolder      m_settings;
         Player              m_player;
         TextureHolder       m_textures;
 	  	FontHolder	        m_fonts;

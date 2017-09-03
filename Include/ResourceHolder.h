@@ -13,6 +13,7 @@ namespace sf
     class Font;
     class SoundBuffer;
 }
+class SettingsParser;
 
 namespace Textures
 {
@@ -40,6 +41,14 @@ namespace SoundEffect
     };
 }
 
+namespace Settings
+{
+    enum ID
+    {
+        Default,
+    };
+}
+
 template <typename Resource, typename Identifier>
 class ResourceHolder
 {
@@ -59,6 +68,7 @@ class ResourceHolder
         std::map<Identifier, std::unique_ptr<Resource>>     mResourceMap;
 };
 
+typedef ResourceHolder<SettingsParser, Settings::ID>        SettingsHolder;
 typedef ResourceHolder<sf::Texture, Textures::ID>           TextureHolder;
 typedef ResourceHolder<sf::Font, Fonts::ID>                 FontHolder;
 typedef ResourceHolder<sf::SoundBuffer, SoundEffect::ID>    SoundBufferHolder;

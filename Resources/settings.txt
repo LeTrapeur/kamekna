@@ -1,0 +1,12 @@
+# if a line starts with a '#' the line is a comment and will be ignored
+# blank lines will also be ignored
+
+# the syntax is
+# key = value
+
+# screen size
+width = 1024
+height = 768
+
+# window title
+window_title = framework
