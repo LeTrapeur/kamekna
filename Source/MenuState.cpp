@@ -10,8 +10,8 @@
 MenuState::MenuState(StateStack& stack, Context context):
     State(stack, context),
     m_gui(*context.window),
-    m_options(),
-    m_optionIndex(0),
+    // m_options(),
+    // m_optionIndex(0),
     m_sounds(*context.sounds)
 {
         sf::Texture& texture = context.textures->get(Textures::TitleScreen);
@@ -56,8 +56,8 @@ void MenuState::draw()
 
     m_gui.draw();
 
-    for(const sf::Text& text: m_options)
-            window.draw(text);
+    // for(const sf::Text& text: m_options)
+    //         window.draw(text);
 }
 
 bool MenuState::update(sf::Time)
