@@ -1,6 +1,6 @@
 My 2D framework 
 ==============
-An other 2D framework.
+Another 2D framework.
 Uses SFML 2.3, Box2D 2.3, TGUI 0.8.
 
 Install (Ubuntu 16.04)
