@@ -19,7 +19,8 @@ TitleState::TitleState(StateStack& stack, Context context):
     m_text.setFont(context.fonts->get(Fonts::Main));
     m_text.setString("Press any key to start");
     Utility::centerOrigin(m_text);
-    m_text.setPosition(context.window->getView().getSize() / 2.f);
+    m_text.setPosition(context.window->getView().getSize() / 2.0f);
+    m_text.setColor(sf::Color::Yellow);
 }
 
 void TitleState::draw()

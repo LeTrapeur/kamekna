@@ -24,20 +24,20 @@ MenuState::MenuState(StateStack& stack, Context context):
 
         tgui::Button::Ptr playButton = tgui::Button::create();
         playButton->setSize(200, 50);
-        playButton->setPosition(context.window->getView().getSize() / 2.f);
+        playButton->setPosition(context.window->getView().getSize() / 2.f - sf::Vector2f(playButton->getSize() / 2.f));
         playButton->setText("Start");
         playButton->connect("pressed", [&](){ requestStackPop(); requestStackPush(States::Game); });
         m_gui.add(playButton);
 
         tgui::Button::Ptr optionsButton = tgui::Button::create();
         optionsButton->setSize(200, 50);
-        optionsButton->setPosition(context.window->getView().getSize() / 2.f + sf::Vector2f(0.f, 75.f));
+        optionsButton->setPosition((context.window->getView().getSize() / 2.f - sf::Vector2f(optionsButton->getSize() / 2.f)) + sf::Vector2f(0.f, 75.f));
         optionsButton->setText("Options");
         m_gui.add(optionsButton);
 
         tgui::Button::Ptr exitButton = tgui::Button::create();
         exitButton->setSize(200, 50);
-        exitButton->setPosition(context.window->getView().getSize() / 2.f + sf::Vector2f(0.f, 150.f));
+        exitButton->setPosition((context.window->getView().getSize() / 2.f - sf::Vector2f(exitButton->getSize() / 2.f)) + sf::Vector2f(0.f, 150.f));
         exitButton->setText("Exit");
         exitButton->connect("pressed", [&](){ requestStackPop(); });
         m_gui.add(exitButton);
