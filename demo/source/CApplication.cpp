@@ -28,6 +28,12 @@ void CApplication::loadContent() {
     m_fonts.load(Fonts::Main, "resources/fonts/arial.ttf");
     m_fonts.load(Fonts::Debug, "resources/fonts/arial.ttf");
     m_textures.load(Textures::TitleScreen, "resources/titlescreen.png");
+
+    // stats text
+    m_statisticsText.setFont(m_fonts.get(Fonts::Debug));
+    m_statisticsText.setString("DEBUG");
+    m_statisticsText.setCharacterSize(10);
+    m_statisticsText.setColor(sf::Color::Blue);
 }
 
 void CApplication::loadSettings() {
