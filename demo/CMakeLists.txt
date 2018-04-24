@@ -2,8 +2,8 @@
 cmake_minimum_required (VERSION 3.0)
 project (demo_2d_framework)
 
-include_directories(${FRK2D_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR})
-file(GLOB_RECURSE DEMO_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp ${CMAKE_CURRENT_SOURCE_DIR}/*.c)
+include_directories(${FRK2D_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR}/include)
+file(GLOB_RECURSE DEMO_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/source/*.cpp ${CMAKE_CURRENT_SOURCE_DIR}/source/*.c)
 set(EXECUTABLE_NAME "demo_FRK2D")
 add_executable(${EXECUTABLE_NAME} ${DEMO_SOURCES})
 

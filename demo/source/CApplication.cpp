@@ -7,6 +7,7 @@
 #include <FRK2D/GameState.hpp>
 #include <FRK2D/PauseState.hpp>
 #include <FRK2D/GameoverState.hpp>
+
 #include "CApplication.hpp"
 
 CApplication::CApplication():
