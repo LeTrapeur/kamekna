@@ -26,8 +26,16 @@ class Actor : public Entity
         void                    goRight();
         void                    walkRight();
         void                    glideRight();
+        void                    goUp();
+        void                    walkUp();
+        void                    glideUp();
+        void                    goDown();
+        void                    walkDown();
+        void                    glideDown();
         void                    lookLeft();
         void                    lookRight();
+        void                    lookUp();
+        void                    lookDown();
 
         void                    addFootContact();
         void                    removeFootContact();
@@ -77,6 +85,8 @@ class Actor : public Entity
         bool                    m_isJumping;
         bool                    m_isGoingLeft;
         bool                    m_isGoingRight;
+        bool                    m_isGoingUp;
+        bool                    m_isGoingDown;
 };
 
 #endif // ACTOR_H

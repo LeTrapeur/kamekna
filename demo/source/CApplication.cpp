@@ -28,6 +28,7 @@ void CApplication::loadContent() {
     m_fonts.load(Fonts::Main, "resources/fonts/arial.ttf");
     m_fonts.load(Fonts::Debug, "resources/fonts/arial.ttf");
     m_textures.load(Textures::TitleScreen, "resources/titlescreen.png");
+    m_textures.load(Textures::Player, "resources/player.png");
 
     // stats text
     m_statisticsText.setFont(m_fonts.get(Fonts::Debug));

@@ -16,12 +16,8 @@ class Player
         {
             GoLeft,
             GoRight,
-            Jump,
-            Fire,
-            ThursterLeft,
-            ThursterRight,
-            ThursterUp,
-            ThursterDown,
+            GoUp,
+            GoDown,
             ActionCount
         };
 

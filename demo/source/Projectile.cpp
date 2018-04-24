@@ -1,6 +1,6 @@
-#include <FRK2D/Projectile.hpp>
+#include "Projectile.hpp"
 
-#include <FRK2D/Category.hpp>
+#include "FRK2D/Category.hpp"
 #include <FRK2D/Utility.hpp>
 
 const float SCALE = 30.f; // Box2D works in a scale of 30 pixels = 1 meter

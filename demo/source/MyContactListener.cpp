@@ -1,8 +1,8 @@
-#include <FRK2D/MyContactListener.hpp>
+#include "MyContactListener.hpp"
 
 #include <FRK2D/Entity.hpp>
-#include <FRK2D/Actor.hpp>
-#include <FRK2D/Projectile.hpp>
+#include "Actor.hpp"
+#include "Projectile.hpp"
 
 
 MyContactListener::MyContactListener(CommandQueue& commandQueue):

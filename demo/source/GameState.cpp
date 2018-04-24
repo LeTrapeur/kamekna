@@ -4,7 +4,7 @@
 
 GameState::GameState(StateStack& stack, Context context)
 : State(stack, context)
-, m_world(*context.window, *context.fonts, *context.sounds)
+, m_world(*context.window, *context.textures, *context.fonts, *context.sounds)
 , m_player(*context.player)
 {
 

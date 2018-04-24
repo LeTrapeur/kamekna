@@ -1,9 +1,4 @@
 #include <FRK2D/IApplication.hpp>
-#include "../../demo/include/TitleState.hpp"
-#include "../../demo/include/GameState.hpp"
-#include "../../demo/include/MenuState.hpp"
-#include "../../demo/include/PauseState.hpp"
-#include "../../demo/include/GameoverState.hpp"
 
 const sf::Time TIME_PER_FRAME = sf::seconds(1.f/60.f);
 

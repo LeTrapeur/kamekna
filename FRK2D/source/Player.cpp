@@ -1,17 +1,13 @@
 #include <FRK2D/Player.hpp>
+#include "../../demo/include/Actor.hpp"
 
 Player::Player()
 {
         // Set initial key bindings
         m_keyBinding[sf::Keyboard::Q] = GoLeft;
         m_keyBinding[sf::Keyboard::D] = GoRight;
-        m_keyBinding[sf::Keyboard::Space] = Jump;
-        m_keyBinding[sf::Keyboard::A] = ThursterLeft;
-        m_keyBinding[sf::Keyboard::E] = ThursterRight;
-        m_keyBinding[sf::Keyboard::Z] = ThursterUp;
-        m_keyBinding[sf::Keyboard::S] = ThursterDown;
-
-        m_mouseBinding[sf::Mouse::Left] = Fire;
+        m_keyBinding[sf::Keyboard::Z] = GoUp;
+        m_keyBinding[sf::Keyboard::S] = GoDown;
 
         // Set initial action bindings
         initializeActions();
@@ -113,16 +109,19 @@ sf::Keyboard::Key Player::getAssignedKey(Action action) const
 
 void Player::initializeActions()
 {
-  /*
-        m_actionBinding[GoLeft].action  = derivedAction<Astronaut>([] (Astronaut& astronaut, sf::Time){astronaut.goLeft();});
-        m_actionBinding[GoRight].action = derivedAction<Astronaut>([] (Astronaut& astronaut, sf::Time){astronaut.goRight();});
-        m_actionBinding[Jump].action = derivedAction<Astronaut>([] (Astronaut& astronaut, sf::Time){astronaut.jump();});
-        m_actionBinding[ThursterLeft].action = derivedAction<Astronaut>([] (Astronaut& astronaut, sf::Time){astronaut.thrusterLeft();});
-        m_actionBinding[ThursterRight].action = derivedAction<Astronaut>([] (Astronaut& astronaut, sf::Time){astronaut.thrusterRight();});
-        m_actionBinding[ThursterUp].action = derivedAction<Astronaut>([] (Astronaut& astronaut, sf::Time){astronaut.thrusterUp();});
-        m_actionBinding[ThursterDown].action = derivedAction<Astronaut>([] (Astronaut& astronaut, sf::Time){astronaut.thrusterDown();});
 
-        m_actionBinding[Fire].action = derivedAction<Astronaut>([this] (Astronaut& astronaut, sf::Time){astronaut.fire(m_mouseWorldPos);});*/
+    m_actionBinding[GoLeft].action  = derivedAction<Actor>([] (Actor& player, sf::Time){player.goLeft();});
+    m_actionBinding[GoRight].action = derivedAction<Actor>([] (Actor& player, sf::Time){player.goRight();});
+    m_actionBinding[GoUp].action = derivedAction<Actor>([] (Actor& player, sf::Time){player.goUp();});
+    m_actionBinding[GoDown].action  = derivedAction<Actor>([] (Actor& player, sf::Time){player.goDown();});
+
+//        m_actionBinding[Jump].action = derivedAction<Astronaut>([] (Astronaut& astronaut, sf::Time){astronaut.jump();});
+//        m_actionBinding[ThursterLeft].action = derivedAction<Astronaut>([] (Astronaut& astronaut, sf::Time){astronaut.thrusterLeft();});
+//        m_actionBinding[ThursterRight].action = derivedAction<Astronaut>([] (Astronaut& astronaut, sf::Time){astronaut.thrusterRight();});
+//        m_actionBinding[ThursterUp].action = derivedAction<Astronaut>([] (Astronaut& astronaut, sf::Time){astronaut.thrusterUp();});
+//        m_actionBinding[ThursterDown].action = derivedAction<Astronaut>([] (Astronaut& astronaut, sf::Time){astronaut.thrusterDown();});
+//
+//        m_actionBinding[Fire].action = derivedAction<Astronaut>([this] (Astronaut& astronaut, sf::Time){astronaut.fire(m_mouseWorldPos);});
 }
 
 bool Player::isRealtimeAction(Action action)
@@ -131,11 +130,8 @@ bool Player::isRealtimeAction(Action action)
     {
             case GoLeft:
             case GoRight:
-            case ThursterLeft:
-            case ThursterRight:
-            case ThursterUp:
-            case ThursterDown:
-            case Fire:
+            case GoUp:
+            case GoDown:
                     return true;
 
             default:

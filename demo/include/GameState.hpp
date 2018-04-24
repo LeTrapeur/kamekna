@@ -2,7 +2,7 @@
 #define GAMESTATE_H
 
 #include <FRK2D/StateStack.hpp>
-#include <FRK2D/World.hpp>
+#include <World.hpp>
 #include <FRK2D/Player.hpp>
 
 #include <SFML/Graphics/RectangleShape.hpp>

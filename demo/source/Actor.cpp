@@ -1,4 +1,4 @@
-#include <FRK2D/Actor.hpp>
+#include "Actor.hpp"
 #include <FRK2D/ResourceHolder.hpp>
 #include <FRK2D/Utility.hpp>
 #include <FRK2D/TextNode.hpp>
@@ -21,22 +21,22 @@ Textures::ID toTextureID(Actor::Type type)
 
 Actor::Actor(Type type, const TextureHolder& textures, const FontHolder& fonts, b2World& world):
     Entity(createBody(world)),
-    //m_walkAnim(textures.get(Textures::HeroAnim)),
+    m_walkAnim(textures.get(Textures::Player)),
     m_type(type),
-    m_numFootContacts(0),
+    m_numFootContacts(1), // TODO remove old contact code
     m_life(100),
     m_lookingOrientation(LookingOrientation::Right),
     m_isJumping(false),
     m_infoDisplay()
 {
-  /*m_walkAnim.setFrameSize(sf::Vector2i(29, 37));
-	m_walkAnim.setNumFrames(3);
+    m_walkAnim.setFrameSize(sf::Vector2i(32, 32));
+	m_walkAnim.setNumFrames(1);
 	m_walkAnim.setDuration(sf::seconds(0.3f));
 	m_walkAnim.setRepeating(true);
 
     // Player
     // TODO rendre adaptable taille anim (frame)
-    sf::Rect<float> spriteBounds(0,0,29,37);// = m_sprite.getGlobalBounds();
+    sf::Rect<float> spriteBounds(0,0,32,32);// = m_sprite.getGlobalBounds();
     Transformable::setOrigin(sf::Vector2f(spriteBounds.width/2,spriteBounds.height/2));
 
     b2FixtureDef ActorFixtureDef;
@@ -44,27 +44,28 @@ Actor::Actor(Type type, const TextureHolder& textures, const FontHolder& fonts, 
     ActorShape.SetAsBox((spriteBounds.width/2.0f)/SCALE, (spriteBounds.height/2.0f)/SCALE);
     ActorFixtureDef.shape = &ActorShape;
     ActorFixtureDef.density = 1.0f;
-    ActorFixtureDef.friction = 0.3f;
+    ActorFixtureDef.friction = 0.4f;
+
     ActorFixtureDef.userData = this;
     m_body->CreateFixture(&ActorFixtureDef);
 
-        //add foot sensor fixture
-    b2PolygonShape FootShape;
-    FootShape.SetAsBox(((spriteBounds.width - 10.f)/2.0f)/SCALE, 5.f/SCALE, b2Vec2(0,(spriteBounds.height/2.0f)/SCALE), 0);
-    b2FixtureDef footSensorFixture;
-    footSensorFixture.shape = &FootShape;
-    footSensorFixture.isSensor = true;
-    footSensorFixture.userData = this;
-    m_body->CreateFixture(&footSensorFixture);
+//    //add foot sensor fixture
+//    b2PolygonShape FootShape;
+//    FootShape.SetAsBox(((spriteBounds.width - 10.f)/2.0f)/SCALE, 5.f/SCALE, b2Vec2(0,(spriteBounds.height/2.0f)/SCALE), 0);
+//    b2FixtureDef footSensorFixture;
+//    footSensorFixture.shape = &FootShape;
+//    footSensorFixture.isSensor = true;
+//    footSensorFixture.userData = this;
+//    m_body->CreateFixture(&footSensorFixture);
 
-    if(type != Actor::Hero)
-    {
-        std::string textActor(std::to_string(m_life) + " HP");
-        std::unique_ptr<TextNode> nameDisplay(new TextNode(fonts, textActor));
-        nameDisplay->setPosition(0.f, -25.f);
-        m_infoDisplay = nameDisplay.get();
-        attachChild(std::move(nameDisplay));
-	}*/
+//    if(type != Actor::Hero)
+//    {
+//        std::string textActor(std::to_string(m_life) + " HP");
+//        std::unique_ptr<TextNode> nameDisplay(new TextNode(fonts, textActor));
+//        nameDisplay->setPosition(0.f, -25.f);
+//        m_infoDisplay = nameDisplay.get();
+//        attachChild(std::move(nameDisplay));
+//	}
 
 }
 
@@ -91,14 +92,14 @@ void Actor::goLeft()
 void Actor::walkLeft()
 {
     lookLeft();
-    m_body->ApplyForce(b2Vec2(-m_body->GetMass()*10,0), m_body->GetWorldCenter(), true);
+    m_body->ApplyForce(b2Vec2(m_body->GetMass()*-10,0), m_body->GetWorldCenter(), true);
     m_isGoingLeft = false;
 }
 
 void Actor::glideLeft()
 {
     lookLeft();
-    m_body->ApplyForce(b2Vec2(-m_body->GetMass()*2,0), m_body->GetWorldCenter(), true);
+    m_body->ApplyForce(b2Vec2(m_body->GetMass()*-10,0), m_body->GetWorldCenter(), true);
     m_isGoingLeft = false;
 }
 
@@ -117,9 +118,48 @@ void Actor::walkRight()
 void Actor::glideRight()
 {
     lookRight();
-    m_body->ApplyForce(b2Vec2(m_body->GetMass()*2,0), m_body->GetWorldCenter(), true);
+    m_body->ApplyForce(b2Vec2(m_body->GetMass()*10,0), m_body->GetWorldCenter(), true);
     m_isGoingRight = false;
 }
+
+void Actor::goUp()
+{
+    m_isGoingUp = true;
+}
+
+void Actor::walkUp()
+{
+    lookUp();
+    m_body->ApplyForce(b2Vec2(m_body->GetMass()*0,-10), m_body->GetWorldCenter(), true);
+    m_isGoingUp = false;
+}
+
+void Actor::glideUp()
+{
+    lookUp();
+    m_body->ApplyForce(b2Vec2(m_body->GetMass()*0,-10), m_body->GetWorldCenter(), true);
+    m_isGoingUp = false;
+}
+
+void Actor::goDown()
+{
+    m_isGoingDown = true;
+}
+
+void Actor::walkDown()
+{
+    lookDown();
+    m_body->ApplyForce(b2Vec2(-m_body->GetMass()*0,10), m_body->GetWorldCenter(), true);
+    m_isGoingDown = false;
+}
+
+void Actor::glideDown()
+{
+    lookDown();
+    m_body->ApplyForce(b2Vec2(-m_body->GetMass()*0,10), m_body->GetWorldCenter(), true);
+    m_isGoingDown = false;
+}
+
 
 void Actor::lookLeft()
 {
@@ -130,6 +170,17 @@ void Actor::lookRight()
 {
     m_lookingOrientation = LookingOrientation::Right;
 }
+
+void Actor::lookUp()
+{
+    m_lookingOrientation = LookingOrientation::Up;
+}
+
+void Actor::lookDown()
+{
+    m_lookingOrientation = LookingOrientation::Down;
+}
+
 void Actor::updateLookingDirection()
 {
     if(m_lookingOrientation == LookingOrientation::Right)
@@ -154,6 +205,20 @@ void Actor::checkMove(sf::Time dt, CommandQueue& commands)
             walkRight();
         else
             glideRight();
+    }
+    else if(m_isGoingUp && m_body->GetLinearVelocity().y * SCALE > -200)
+    {
+        if (m_numFootContacts >= 1)
+            walkUp();
+        else
+            glideUp();
+    }
+    else if(m_isGoingDown && m_body->GetLinearVelocity().y * SCALE < 200)
+    {
+        if (m_numFootContacts >= 1)
+            walkDown();
+        else
+            glideDown();
     }
     else
         return;
@@ -226,7 +291,7 @@ b2Body* Actor::createBody(b2World& world)
     b2BodyDef ActorBodyDef;
     ActorBodyDef.type = b2_dynamicBody;
     ActorBodyDef.fixedRotation = true;
-    ActorBodyDef.linearDamping = 0.2f;
+    ActorBodyDef.linearDamping = 3.5f;
     b2Body* body = world.CreateBody(&ActorBodyDef);
 
     return body;

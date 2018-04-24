@@ -11,13 +11,13 @@
 #include <SFML/Graphics.hpp>
 #include <Box2D/Box2D.h>
 
-#include <FRK2D/MyContactListener.hpp>
+#include "MyContactListener.hpp"
 #include <FRK2D/ResourceHolder.hpp>
 #include <FRK2D/CommandQueue.hpp>
 #include <FRK2D/SceneNode.hpp>
 #include <FRK2D/SoundPlayer.hpp>
 #include <FRK2D/IA.hpp>
-#include <FRK2D/Actor.hpp>
+#include <Actor.hpp>
 
 
 class World
@@ -26,11 +26,11 @@ class World
         enum Layer
         {
             Background,
-            Space,
+            Foreground,
             LayerCount
         };
     public:
-        explicit                                World(sf::RenderWindow& window, FontHolder& fonts, SoundPlayer& sounds);
+        explicit                                World(sf::RenderWindow& window, TextureHolder& textures, FontHolder& fonts, SoundPlayer& sounds);
 
         void                                    update(sf::Time dt);
         void                                    draw();
@@ -54,7 +54,7 @@ class World
         sf::View                                m_worldView;
         sf::View                                m_minimapView;
 
-        TextureHolder                           m_textures;
+        TextureHolder&                          m_textures;
         FontHolder&                             m_fonts;
         SoundPlayer&                            m_sounds;
 
@@ -62,7 +62,7 @@ class World
         MyContactListener                       m_contactListener;
         sf::FloatRect                           m_worldBounds;
 
-        SceneNode m_sceneGraph;
+        SceneNode                               m_sceneGraph;
         std::array<SceneNode*, LayerCount>      m_sceneLayers;
 
         Actor*                                  m_player;
