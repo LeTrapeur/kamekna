@@ -18,3 +18,5 @@
 *.depend
 *.layout
 *.save
+
+/build
