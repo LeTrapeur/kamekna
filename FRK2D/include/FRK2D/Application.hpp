@@ -20,18 +20,22 @@ class Application
     public:
         Application();
         void                run();
-        void                registerStates();
+        virtual             ~Application()= default;
+        virtual void        registerStates()=0;
+        virtual void        loadContent()=0;
+        virtual void        loadSettings()=0;
 
-    private:
+    protected:
         void                processInputs();
         void                update(sf::Time elapsedTime);
         void                updateStatistics(sf::Time elapsedTime);
         void                render();
 
-    private:
+    protected:
         sf::RenderWindow    m_window;
+		Player              m_player;
+
         SettingsHolder      m_settings;
-        Player              m_player;
         TextureHolder       m_textures;
 	  	FontHolder	        m_fonts;
 	  	MusicPlayer         m_music;

@@ -5,11 +5,10 @@
 #include <FRK2D/PauseState.hpp>
 #include <FRK2D/GameoverState.hpp>
 
-
 const sf::Time TIME_PER_FRAME = sf::seconds(1.f/60.f);
 
 Application::Application():
-    m_window(sf::VideoMode(1280, 720), "Framework 2D"),
+    m_window(sf::VideoMode(800, 600), "window"),
     m_settings(),
     m_textures(),
     m_fonts(),
@@ -17,32 +16,7 @@ Application::Application():
     m_music(),
     m_sounds(),
     m_stateStack(State::Context(m_window, m_settings, m_textures, m_fonts, m_player, m_music, m_sounds))
-{
-    // settings loading
-    m_settings.load(Settings::Default, "resources/settings.txt");
-    SettingsParser settings = m_settings.get(Settings::Default);
-    std::string window_title;
-    settings.get("window_title", window_title);
-    m_window.setTitle(window_title);
-
-    // load basic resources
-    m_fonts.load(Fonts::Main, "resources/fonts/arial.ttf");
-    m_fonts.load(Fonts::Debug, "resources/fonts/arial.ttf");
-    m_textures.load(Textures::TitleScreen, "resources/titlescreen.png");
-
-    // stats text 
-    m_statisticsText.setFont(m_fonts.get(Fonts::Debug));
-    m_statisticsText.setString("DEBUG");
-    m_statisticsText.setCharacterSize(10);
-    m_statisticsText.setColor(sf::Color::Blue);
-
-    registerStates();
-
-    // start title screen
-    m_stateStack.pushState(States::Title);
-
-
-}
+{}
 
 void Application::processInputs()
 {
@@ -64,6 +38,7 @@ void Application::update(sf::Time elapsedTime)
 void Application::render()
 {
     // TODO décalage de quelques pixels entre la fenêtre et le sprite background
+
     m_window.clear(sf::Color::Black);
     m_stateStack.draw();
 
@@ -110,11 +85,3 @@ void Application::updateStatistics(sf::Time elapsedTime)
     }
 }
 
-void Application::registerStates()
-{
-    m_stateStack.registerState<TitleState>(States::Title);
-    m_stateStack.registerState<MenuState>(States::Menu);
-    m_stateStack.registerState<GameState>(States::Game);
-    m_stateStack.registerState<PauseState>(States::Pause);
-    m_stateStack.registerState<GameoverState>(States::Gameover);
-}

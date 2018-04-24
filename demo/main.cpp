@@ -1,7 +1,10 @@
-#include <FRK2D/Application.hpp>
+#include "CApplication.hpp"
 
 int main()
 {
-    Application myApp;
+    CApplication myApp;
+    myApp.loadSettings();
+    myApp.loadContent();
+    myApp.registerStates();
     myApp.run();
 }
