@@ -21,6 +21,7 @@ namespace Textures
     {
         TitleScreen,
         Player,
+        Tileset
     };
 }
 

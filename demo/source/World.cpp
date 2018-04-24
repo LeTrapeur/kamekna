@@ -4,6 +4,10 @@
 #include <FRK2D/SpriteNode.hpp>
 #include <FRK2D/SoundNode.hpp>
 #include <FRK2D/Platform.hpp>
+#include <FRK2D/TiledMapNode.hpp>
+
+#include <tmx/MapLoader.hpp>
+#include <tmx/tmx2box2d.hpp>
 
 const float SCALE = 30.f; // Box2D works in a scale of 30 pixels = 1 meter
 
@@ -19,19 +23,15 @@ World::World(sf::RenderWindow& window, TextureHolder& textures, FontHolder& font
     m_worldBounds(
                   0,
                   0,
-                  800,
-                  600
+                  384,
+                  192
                   ),
     m_player(nullptr),
-    m_spawnPosition(0 ,0),
+    m_spawnPosition(m_worldBounds.left+m_worldBounds.width/2, m_worldBounds.top+m_worldBounds.height/2),
     m_commandQueue(),
     m_contactListener(m_commandQueue)
-    //m_ia()
 {
 
-//    m_minimapView.zoom(4.0f);
-//    m_minimapView.setViewport(sf::FloatRect(0.85f, 0.f, 0.15f, 0.15f));
-//    m_minimapView.setCenter(m_spawnPosition);
     m_worldView.setCenter(m_spawnPosition);
 
     m_physicWorld.SetContactListener(&m_contactListener);
@@ -46,6 +46,7 @@ void World::loadTextures()
 
 void World::buildScene()
 {
+
     // Init layers
     for(std::size_t i = 0; i < LayerCount; ++i)
     {
@@ -55,9 +56,15 @@ void World::buildScene()
         m_sceneGraph.attachChild(std::move(layer));
     }
 
+    // Add the background sprite to the scene
+    std::unique_ptr<TiledMapNode> tiledMap(new TiledMapNode());
+    tiledMap->setPosition(m_worldBounds.left, m_worldBounds.top);
+    m_sceneLayers[Layer::Background]->attachChild(std::move(tiledMap));
+
+    // Add player
     std::unique_ptr<Actor> hero(new Actor(Actor::Hero, m_textures, m_fonts, m_physicWorld));
     m_player = hero.get();
-    //hero->setPosition(m_spawnPosition);
+    hero->setPosition(m_spawnPosition);
     m_sceneLayers[Layer::Foreground]->attachChild(std::move(hero));
 }
 
@@ -68,11 +75,7 @@ void World::update(sf::Time dt)
 
     m_physicWorld.Step(dt.asSeconds(), 8, 4);
     m_sceneGraph.update(dt, m_commandQueue);
-    
-    /*
-    adaptPlayerPosition();
-    adaptScrolling();
-    */
+
     updateSounds();
 
     m_sceneGraph.removeWrecks();
@@ -107,9 +110,6 @@ void World::draw()
 
     m_window.setView(m_worldView);
     m_window.draw(m_sceneGraph);
-
-//    m_window.setView(m_minimapView);
-//    m_window.draw(m_sceneGraph);
 }
 
 CommandQueue& World::getCommandQueue()

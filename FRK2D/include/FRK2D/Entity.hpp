@@ -32,7 +32,7 @@ class Entity : public SceneNode
         b2Body*                 m_body;
 
     private:
-        virtual void            drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
+        //virtual void            drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
         bool                    m_isDestroyed;
 
     protected:

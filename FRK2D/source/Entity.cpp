@@ -21,10 +21,10 @@ b2Body* Entity::getBody() const
     return m_body;
 }
 
-void Entity::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
-{
-    states.transform *= getTransform();
-}
+//void Entity::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
+//{
+//    states.transform *= getTransform();
+//}
 
 void Entity::updateCurrent(sf::Time dt, CommandQueue& commands)
 {
