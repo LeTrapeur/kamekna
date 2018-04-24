@@ -1,4 +1,4 @@
-#include <FRK2D/MenuState.hpp>
+#include "MenuState.hpp"
 #include <FRK2D/ResourceHolder.hpp>
 #include <FRK2D/MusicPlayer.hpp>
 #include <FRK2D/Utility.hpp>

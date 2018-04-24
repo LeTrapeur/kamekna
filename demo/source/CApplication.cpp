@@ -2,16 +2,16 @@
 // Created by tklempka on 24/04/18.
 //
 
-#include <FRK2D/TitleState.hpp>
-#include <FRK2D/MenuState.hpp>
-#include <FRK2D/GameState.hpp>
-#include <FRK2D/PauseState.hpp>
-#include <FRK2D/GameoverState.hpp>
+#include <TitleState.hpp>
+#include <MenuState.hpp>
+#include <GameState.hpp>
+#include <PauseState.hpp>
+#include <GameoverState.hpp>
 
 #include "CApplication.hpp"
 
 CApplication::CApplication():
-        Application()
+        IApplication()
 {}
 
 void CApplication::registerStates() {

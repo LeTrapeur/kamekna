@@ -5,9 +5,9 @@
 #ifndef FRK2D_PROJECT_CAPPLICATION_HPP
 #define FRK2D_PROJECT_CAPPLICATION_HPP
 
-#include <FRK2D/Application.hpp>
+#include <FRK2D/IApplication.hpp>
 
-class CApplication : public Application
+class CApplication : public IApplication
 {
     public:
                             CApplication();

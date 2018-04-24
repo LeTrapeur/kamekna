@@ -13,5 +13,3 @@ target_link_libraries (${EXECUTABLE_NAME} ${FRK2D_LIBRARIES})
 add_custom_command(TARGET ${EXECUTABLE_NAME} POST_BUILD
                    COMMAND ${CMAKE_COMMAND} -E copy_directory
                        ${CMAKE_CURRENT_SOURCE_DIR}/resources ${CMAKE_CURRENT_BINARY_DIR}/resources)
-
-

@@ -1,4 +1,5 @@
-#include <FRK2D/GameState.hpp>
+#include "GameState.hpp"
+
 #include <FRK2D/MusicPlayer.hpp>
 
 GameState::GameState(StateStack& stack, Context context)

@@ -1,4 +1,4 @@
-#include <FRK2D/TitleState.hpp>
+#include "TitleState.hpp"
 #include <FRK2D/ResourceHolder.hpp>
 #include <FRK2D/Utility.hpp>
 

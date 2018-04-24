@@ -41,9 +41,3 @@ target_link_libraries(FRK2D ${BOX2D_LIBRARIES})
 set(TGUI_LIBRARIES tgui)
 target_link_libraries(FRK2D ${TGUI_LIBRARIES})
 #
-
-
-
-
-
-

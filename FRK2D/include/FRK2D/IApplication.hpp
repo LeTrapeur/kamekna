@@ -15,12 +15,12 @@
 #include <FRK2D/SoundPlayer.hpp>
 #include <FRK2D/StateStack.hpp>
 
-class Application
+class IApplication
 {
     public:
-        Application();
+        IApplication();
         void                run();
-        virtual             ~Application()= default;
+        virtual             ~IApplication()= default;
         virtual void        registerStates()=0;
         virtual void        loadContent()=0;
         virtual void        loadSettings()=0;

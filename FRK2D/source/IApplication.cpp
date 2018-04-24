@@ -1,13 +1,13 @@
-#include <FRK2D/Application.hpp>
-#include <FRK2D/TitleState.hpp>
-#include <FRK2D/GameState.hpp>
-#include <FRK2D/MenuState.hpp>
-#include <FRK2D/PauseState.hpp>
-#include <FRK2D/GameoverState.hpp>
+#include <FRK2D/IApplication.hpp>
+#include "../../demo/include/TitleState.hpp"
+#include "../../demo/include/GameState.hpp"
+#include "../../demo/include/MenuState.hpp"
+#include "../../demo/include/PauseState.hpp"
+#include "../../demo/include/GameoverState.hpp"
 
 const sf::Time TIME_PER_FRAME = sf::seconds(1.f/60.f);
 
-Application::Application():
+IApplication::IApplication():
     m_window(sf::VideoMode(800, 600), "window"),
     m_settings(),
     m_textures(),
@@ -18,7 +18,7 @@ Application::Application():
     m_stateStack(State::Context(m_window, m_settings, m_textures, m_fonts, m_player, m_music, m_sounds))
 {}
 
-void Application::processInputs()
+void IApplication::processInputs()
 {
     sf::Event event;
     while(m_window.pollEvent(event))
@@ -30,12 +30,12 @@ void Application::processInputs()
     }
 }
 
-void Application::update(sf::Time elapsedTime)
+void IApplication::update(sf::Time elapsedTime)
 {
     m_stateStack.update(elapsedTime);
 }
 
-void Application::render()
+void IApplication::render()
 {
     m_window.clear(sf::Color::Black);
     m_stateStack.draw();
@@ -47,7 +47,7 @@ void Application::render()
 }
 
 
-void Application::run()
+void IApplication::run()
 {
     sf::Clock clock;
     sf::Time timeSinceLastUpdate = sf::Time::Zero;
@@ -68,7 +68,7 @@ void Application::run()
     }
 }
 
-void Application::updateStatistics(sf::Time elapsedTime)
+void IApplication::updateStatistics(sf::Time elapsedTime)
 {
     m_statisticsUpdateTime += elapsedTime;
     m_statisticsNumFrames += 1;
