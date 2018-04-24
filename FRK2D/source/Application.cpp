@@ -37,8 +37,6 @@ void Application::update(sf::Time elapsedTime)
 
 void Application::render()
 {
-    // TODO décalage de quelques pixels entre la fenêtre et le sprite background
-
     m_window.clear(sf::Color::Black);
     m_stateStack.draw();
 
