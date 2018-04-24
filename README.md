@@ -1,4 +1,4 @@
-My 2D framework 
+FRK2D 
 ==============
 An other 2D framework.
 Uses SFML 2.3, Box2D 2.3, TGUI 0.8.
