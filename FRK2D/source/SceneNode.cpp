@@ -72,7 +72,7 @@ void SceneNode::onCommand(const Command& command, sf::Time dt)
         (*it)->onCommand(command, dt);
 }
 
-void SceneNode::playLocalSound(CommandQueue& commands, SoundEffect::ID effect)
+void SceneNode::playLocalSound(CommandQueue& commands, SoundEffects::ID effect)
 {
     Command command;
     command.category = Category::SoundEffect;

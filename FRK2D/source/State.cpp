@@ -2,14 +2,15 @@
 #include <FRK2D/StateStack.hpp>
 
 
-State::Context::Context(sf::RenderWindow& window, SettingsHolder& settings, TextureHolder& textures, FontHolder& fonts, Player& player, MusicPlayer& music, SoundPlayer& sounds):
+State::Context::Context(sf::RenderWindow& window, SettingsHolder& settings, TextureHolder& textures, FontHolder& fonts, Player& player, MusicPlayer& music, SoundPlayer& sounds, TiledMapHolder& maps):
     window(&window),
     settings(&settings),
     textures(&textures),
     fonts(&fonts),
     player(&player),
     music(&music),
-    sounds(&sounds)
+    sounds(&sounds),
+    maps(&maps)
 {}
 
 State::State(StateStack& stack, Context context):

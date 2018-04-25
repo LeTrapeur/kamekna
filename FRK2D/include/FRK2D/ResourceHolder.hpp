@@ -6,6 +6,8 @@
 #include <memory>
 #include <stdexcept>
 #include <cassert>
+#include <tmx/MapLoader.hpp>
+#include "TiledMap.hpp"
 
 namespace sf
 {
@@ -20,8 +22,8 @@ namespace Textures
     enum ID
     {
         TitleScreen,
-        Player,
-        Tileset
+        Hero,
+        Enemy
     };
 }
 
@@ -35,15 +37,23 @@ namespace Fonts
 }
 
 
-namespace SoundEffect
+namespace SoundEffects
 {
     enum ID
     {
-      
+      Default
     };
 }
 
 namespace Settings
+{
+    enum ID
+    {
+        Default,
+    };
+}
+
+namespace TiledMaps
 {
     enum ID
     {
@@ -73,7 +83,8 @@ class ResourceHolder
 typedef ResourceHolder<SettingsParser, Settings::ID>        SettingsHolder;
 typedef ResourceHolder<sf::Texture, Textures::ID>           TextureHolder;
 typedef ResourceHolder<sf::Font, Fonts::ID>                 FontHolder;
-typedef ResourceHolder<sf::SoundBuffer, SoundEffect::ID>    SoundBufferHolder;
+typedef ResourceHolder<sf::SoundBuffer, SoundEffects::ID>   SoundBufferHolder;
+typedef ResourceHolder<TiledMap, TiledMaps::ID>             TiledMapHolder;
 
 #include "ResourceHolder.inl"
 #endif // RESOURCEHOLDER_H

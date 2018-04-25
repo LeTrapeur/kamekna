@@ -12,7 +12,7 @@ class SoundPlayer : private sf::NonCopyable
     public:
                                 SoundPlayer();
 
-        void                    play(SoundEffect::ID effect);
+        void                    play(SoundEffects::ID effect);
         void                    removeStoppedSounds();
     private:
         SoundBufferHolder       m_soundBuffers;

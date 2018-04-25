@@ -3,8 +3,8 @@
 #include "Actor.hpp"
 #include <FRK2D/SpriteNode.hpp>
 #include <FRK2D/SoundNode.hpp>
-#include <FRK2D/Platform.hpp>
-#include <FRK2D/TiledMapNode.hpp>
+#include <Platform.hpp>
+#include <FRK2D/MapNode.hpp>
 
 #include <tmx/MapLoader.hpp>
 #include <tmx/tmx2box2d.hpp>
@@ -12,14 +12,14 @@
 const float SCALE = 30.f; // Box2D works in a scale of 30 pixels = 1 meter
 
 // TODO LEVEL
-World::World(sf::RenderWindow& window, TextureHolder& textures, FontHolder& fonts, SoundPlayer& sounds):
+World::World(sf::RenderWindow& window, TextureHolder& textures, FontHolder& fonts, SoundPlayer& sounds, TiledMapHolder& maps):
     m_window(window),
     m_fonts(fonts),
     m_sounds(sounds),
     m_textures(textures),
     m_worldView(window.getDefaultView()),
     m_minimapView(window.getDefaultView()),
-    m_physicWorld(b2Vec2(0, 0.0f)),
+    m_physicWorld(tmx::sfToBoxVec(sf::Vector2f(0.f, 0.f))),
     m_worldBounds(
                   0,
                   0,
@@ -29,7 +29,8 @@ World::World(sf::RenderWindow& window, TextureHolder& textures, FontHolder& font
     m_player(nullptr),
     m_spawnPosition(m_worldBounds.left+m_worldBounds.width/2, m_worldBounds.top+m_worldBounds.height/2),
     m_commandQueue(),
-    m_contactListener(m_commandQueue)
+    m_contactListener(m_commandQueue),
+    m_maps(maps)
 {
 
     m_worldView.setCenter(m_spawnPosition);
@@ -57,9 +58,9 @@ void World::buildScene()
     }
 
     // Add the background sprite to the scene
-    std::unique_ptr<TiledMapNode> tiledMap(new TiledMapNode());
+    std::unique_ptr<MapNode> tiledMap(new MapNode(m_maps, m_physicWorld));
     tiledMap->setPosition(m_worldBounds.left, m_worldBounds.top);
-    m_sceneLayers[Layer::Background]->attachChild(std::move(tiledMap));
+    m_sceneLayers[Layer::Foreground]->attachChild(std::move(tiledMap));
 
     // Add player
     std::unique_ptr<Actor> hero(new Actor(Actor::Hero, m_textures, m_fonts, m_physicWorld));

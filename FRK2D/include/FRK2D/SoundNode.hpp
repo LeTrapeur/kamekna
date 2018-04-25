@@ -8,12 +8,12 @@ class SoundNode : public SceneNode
 {
     public:
         explicit                    SoundNode(SoundPlayer& player);
-        void                        playSound(SoundEffect::ID sound);
+        void                        playSound(SoundEffects::ID sound);
 
         virtual unsigned int        getCategory() const;
 
     private:
-        SoundPlayer& m_sounds;
+        SoundPlayer&                m_sounds;
 };
 
 #endif // SOUNDNODE_H

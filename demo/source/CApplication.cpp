@@ -28,7 +28,9 @@ void CApplication::loadContent() {
     m_fonts.load(Fonts::Main, "resources/fonts/arial.ttf");
     m_fonts.load(Fonts::Debug, "resources/fonts/arial.ttf");
     m_textures.load(Textures::TitleScreen, "resources/titlescreen.png");
-    m_textures.load(Textures::Player, "resources/player.png");
+    m_textures.load(Textures::Hero, "resources/hero.png");
+    m_textures.load(Textures::Enemy, "resources/enemy.png");
+    m_maps.load(TiledMaps::Default, "resources/level.tmx");
 
     // stats text
     m_statisticsText.setFont(m_fonts.get(Fonts::Debug));

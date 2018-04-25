@@ -30,7 +30,7 @@ class World
             LayerCount
         };
     public:
-        explicit                                World(sf::RenderWindow& window, TextureHolder& textures, FontHolder& fonts, SoundPlayer& sounds);
+        explicit                                World(sf::RenderWindow& window, TextureHolder& textures, FontHolder& fonts, SoundPlayer& sounds, TiledMapHolder& maps);
 
         void                                    update(sf::Time dt);
         void                                    draw();
@@ -57,6 +57,7 @@ class World
         TextureHolder&                          m_textures;
         FontHolder&                             m_fonts;
         SoundPlayer&                            m_sounds;
+        TiledMapHolder&                         m_maps;
 
         b2World                                 m_physicWorld;
         MyContactListener                       m_contactListener;

@@ -5,7 +5,7 @@ SoundNode::SoundNode(SoundPlayer& player):
     m_sounds(player)
 {}
 
-void SoundNode::playSound(SoundEffect::ID sound)
+void SoundNode::playSound(SoundEffects::ID sound)
 {
     m_sounds.play(sound);
 }

@@ -40,6 +40,7 @@ class IApplication
 	  	FontHolder	        m_fonts;
 	  	MusicPlayer         m_music;
 	  	SoundPlayer         m_sounds;
+        TiledMapHolder      m_maps;
 
 		StateStack          m_stateStack;
 

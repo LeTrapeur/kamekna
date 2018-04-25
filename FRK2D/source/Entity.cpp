@@ -21,10 +21,10 @@ b2Body* Entity::getBody() const
     return m_body;
 }
 
-//void Entity::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
-//{
-//    states.transform *= getTransform();
-//}
+void Entity::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
+{
+    states.transform *= getTransform();
+}
 
 void Entity::updateCurrent(sf::Time dt, CommandQueue& commands)
 {
@@ -70,7 +70,7 @@ void Entity::setGravityActivated(bool activated)
     else
         m_body->SetGravityScale(0.f);
 }
-bool Entity::getGravityAcvtivated()
+bool Entity::getGravityActivated()
 {
     return m_body->GetGravityScale() != 0;
 }

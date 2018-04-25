@@ -2,7 +2,9 @@
 cmake_minimum_required (VERSION 3.0)
 project (FRK2D VERSION 0.1 LANGUAGES CXX)
 
-file(GLOB_RECURSE FRAMEWORK_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/source/*.cpp ${CMAKE_CURRENT_SOURCE_DIR}/source/*.c)
+file(GLOB_RECURSE FRAMEWORK_SOURCES
+        ${CMAKE_CURRENT_SOURCE_DIR}/source/*.cpp ${CMAKE_CURRENT_SOURCE_DIR}/source/*.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/source/external/*.cpp ${CMAKE_CURRENT_SOURCE_DIR}/source/external/*.c)
 
 add_library(FRK2D SHARED ${FRAMEWORK_SOURCES})
 
@@ -40,4 +42,9 @@ target_link_libraries(FRK2D ${BOX2D_LIBRARIES})
 #TGUI setup
 set(TGUI_LIBRARIES tgui)
 target_link_libraries(FRK2D ${TGUI_LIBRARIES})
+#
+
+# TMX setup
+set(TMX_LIBRARIES tmx-loader)
+target_link_libraries(FRK2D ${TMX_LIBRARIES})
 #

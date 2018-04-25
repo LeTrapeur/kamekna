@@ -13,9 +13,9 @@ file(GLOB_RECURSE DEMO_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/source/*.cpp ${CMAKE_
 set(EXECUTABLE_NAME "demo_FRK2D")
 add_executable(${EXECUTABLE_NAME} ${DEMO_SOURCES})
 
-set(TMX_LIBRARIES tmx-loader)
 
-target_link_libraries (${EXECUTABLE_NAME} ${FRK2D_LIBRARIES} ${TMX_LIBRARIES})
+
+target_link_libraries (${EXECUTABLE_NAME} ${FRK2D_LIBRARIES})
 
 # Copy resource files into binary dir
 add_custom_command(TARGET ${EXECUTABLE_NAME} POST_BUILD

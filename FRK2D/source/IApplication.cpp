@@ -10,7 +10,8 @@ IApplication::IApplication():
     m_player(),
     m_music(),
     m_sounds(),
-    m_stateStack(State::Context(m_window, m_settings, m_textures, m_fonts, m_player, m_music, m_sounds))
+    m_maps(),
+    m_stateStack(State::Context(m_window, m_settings, m_textures, m_fonts, m_player, m_music, m_sounds, m_maps))
 {}
 
 void IApplication::processInputs()

@@ -9,20 +9,20 @@ const float SCALE = 30.f; // Box2D works in a scale of 30 pixels = 1 meter
 
 Textures::ID toTextureID(Actor::Type type)
 {
-  /*switch (type)
+  switch (type)
     {
         case Actor::Hero:
             return Textures::Hero;
         case Actor::Enemy:
             return Textures::Enemy;
     }
-    return Textures::Hero;*/
+    return Textures::Hero;
 }
 
 Actor::Actor(Type type, const TextureHolder& textures, const FontHolder& fonts, b2World& world):
     Entity(createBody(world)),
-    m_walkAnim(textures.get(Textures::Player)),
     m_type(type),
+    m_walkAnim(textures.get(toTextureID(m_type))),
     m_numFootContacts(1), // TODO remove old contact code
     m_life(100),
     m_lookingOrientation(LookingOrientation::Right),

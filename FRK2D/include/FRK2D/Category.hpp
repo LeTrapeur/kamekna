@@ -16,7 +16,7 @@ namespace Category
 
         SoundEffect = 1 << 6,
 
-        GravityZone = 1 << 7,
+        Map = 1 << 7,
 
         Sensor = 1 << 8,
 

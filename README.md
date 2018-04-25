@@ -39,3 +39,7 @@ cd build
 ./framework2d
 ```
 
+Credits
+-----
+https://github.com/SFML/SFML-Game-Development-Book
+https://github.com/fallahn/sfml-tmxloader

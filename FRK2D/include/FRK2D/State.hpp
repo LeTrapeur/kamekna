@@ -39,7 +39,7 @@ class State
 
         struct Context
         {
-            Context(sf::RenderWindow& window, SettingsHolder& settings, TextureHolder& textures, FontHolder& fonts, Player& player, MusicPlayer& music, SoundPlayer& sounds);
+            Context(sf::RenderWindow& window, SettingsHolder& settings, TextureHolder& textures, FontHolder& fonts, Player& player, MusicPlayer& music, SoundPlayer& sounds, TiledMapHolder& maps);
 
             sf::RenderWindow*           window;
             SettingsHolder*             settings;
@@ -48,6 +48,7 @@ class State
             Player*                     player;
             MusicPlayer*                music;
             SoundPlayer*                sounds;
+            TiledMapHolder*             maps;
         };
 
     public:

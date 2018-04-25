@@ -11,7 +11,7 @@ SoundPlayer::SoundPlayer():
     m_soundBuffers.load(SoundEffect::Jump, "jump.wav");*/
 }
 
-void SoundPlayer::play(SoundEffect::ID effect)
+void SoundPlayer::play(SoundEffects::ID effect)
 {
     m_sounds.push_back(sf::Sound(m_soundBuffers.get(effect)));
     m_sounds.back().play();
