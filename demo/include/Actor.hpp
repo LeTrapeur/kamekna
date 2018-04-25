@@ -5,6 +5,7 @@
 #include <FRK2D/ResourceHolder.hpp>
 #include <FRK2D/TextNode.hpp>
 #include <FRK2D/Animation.hpp>
+#include <FRK2D/AnimatedSprite.hpp>
 
 class Actor : public Entity
 {
@@ -19,26 +20,18 @@ class Actor : public Entity
     public:
         explicit                Actor(Type type, const TextureHolder& textures, const FontHolder& fonts, b2World& world);
 
-        void                    jump();
         void                    goLeft();
         void                    walkLeft();
-        void                    glideLeft();
         void                    goRight();
         void                    walkRight();
-        void                    glideRight();
         void                    goUp();
         void                    walkUp();
-        void                    glideUp();
         void                    goDown();
         void                    walkDown();
-        void                    glideDown();
         void                    lookLeft();
         void                    lookRight();
         void                    lookUp();
         void                    lookDown();
-
-        void                    addFootContact();
-        void                    removeFootContact();
 
         virtual unsigned int    getCategory() const;
 
@@ -51,7 +44,6 @@ class Actor : public Entity
 
     private:
         virtual void            drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
-        void                    checkJump(sf::Time dt, CommandQueue& commands);
         void                    checkMove(sf::Time dt, CommandQueue& commands);
         void                    updateLookingDirection();
 
@@ -71,9 +63,10 @@ class Actor : public Entity
         };
 
     protected:
+        AnimatedSprite          m_animatedSprite;
         Animation               m_currentAnim;
-        Animation               m_walkNone;
         Animation               m_walkLeft;
+        Animation               m_walkRight;
         Animation               m_walkUp;
         Animation               m_walkDown;
 
@@ -86,7 +79,6 @@ class Actor : public Entity
 
         LookingOrientation      m_lookingOrientation;
 
-        bool                    m_isJumping;
         bool                    m_isGoingLeft;
         bool                    m_isGoingRight;
         bool                    m_isGoingUp;

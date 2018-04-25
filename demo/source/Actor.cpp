@@ -1,9 +1,11 @@
 #include "Actor.hpp"
+
 #include <FRK2D/ResourceHolder.hpp>
 #include <FRK2D/Utility.hpp>
 #include <FRK2D/TextNode.hpp>
 
 #include <string>
+#include <FRK2D/AnimatedSprite.hpp>
 
 const float SCALE = 30.f; // Box2D works in a scale of 30 pixels = 1 meter
 
@@ -22,41 +24,46 @@ const float SCALE = 30.f; // Box2D works in a scale of 30 pixels = 1 meter
 Actor::Actor(Type type, const TextureHolder& textures, const FontHolder& fonts, b2World& world):
     Entity(createBody(world)),
     m_type(type),
-    m_walkLeft(textures.get(Textures::HeroLeft)),
-    m_walkUp(textures.get(Textures::HeroUp)),
-    m_walkDown(textures.get(Textures::HeroDown)),
-    m_walkNone(textures.get(Textures::Hero)),
+    m_animatedSprite(sf::seconds(0.2), true, false),
+    m_walkLeft(),
+    m_walkRight(),
+    m_walkUp(),
+    m_walkDown(),
     m_numFootContacts(1), // TODO remove old contact code
     m_life(100),
     m_lookingOrientation(LookingOrientation::Right),
-    m_isJumping(false),
     m_infoDisplay()
 {
-    m_walkLeft.setFrameSize(sf::Vector2i(31, 32));
-    m_walkLeft.setNumFrames(3);
-    m_walkLeft.setDuration(sf::seconds(0.4f));
-    m_walkLeft.setRepeating(false);
+    // set up the animations for all four directions (set spritesheet and push frames)
+    m_walkDown.setSpriteSheet(textures.get(Textures::Hero));
+    m_walkDown.addFrame(sf::IntRect(32, 0, 32, 32));
+    m_walkDown.addFrame(sf::IntRect(64, 0, 32, 32));
+    m_walkDown.addFrame(sf::IntRect(32, 0, 32, 32));
+    m_walkDown.addFrame(sf::IntRect( 0, 0, 32, 32));
 
-    m_walkUp.setFrameSize(sf::Vector2i(31, 32));
-    m_walkUp.setNumFrames(3);
-    m_walkUp.setDuration(sf::seconds(0.4f));
-    m_walkUp.setRepeating(false);
+    m_walkLeft.setSpriteSheet(textures.get(Textures::Hero));
+    m_walkLeft.addFrame(sf::IntRect(32, 32, 32, 32));
+    m_walkLeft.addFrame(sf::IntRect(64, 32, 32, 32));
+    m_walkLeft.addFrame(sf::IntRect(32, 32, 32, 32));
+    m_walkLeft.addFrame(sf::IntRect( 0, 32, 32, 32));
 
-    m_walkDown.setFrameSize(sf::Vector2i(31, 32));
-    m_walkDown.setNumFrames(3);
-    m_walkDown.setDuration(sf::seconds(0.4f));
-    m_walkDown.setRepeating(false);
+    m_walkRight.setSpriteSheet(textures.get(Textures::Hero));
+    m_walkRight.addFrame(sf::IntRect(32, 64, 32, 32));
+    m_walkRight.addFrame(sf::IntRect(64, 64, 32, 32));
+    m_walkRight.addFrame(sf::IntRect(32, 64, 32, 32));
+    m_walkRight.addFrame(sf::IntRect( 0, 64, 32, 32));
 
-    m_walkNone.setFrameSize(sf::Vector2i(31, 32));
-    m_walkNone.setNumFrames(1);
-    m_walkNone.setDuration(sf::seconds(1.f));
-    m_walkNone.setRepeating(false);
+    m_walkUp.setSpriteSheet(textures.get(Textures::Hero));
+    m_walkUp.addFrame(sf::IntRect(32, 96, 32, 32));
+    m_walkUp.addFrame(sf::IntRect(64, 96, 32, 32));
+    m_walkUp.addFrame(sf::IntRect(32, 96, 32, 32));
+    m_walkUp.addFrame(sf::IntRect( 0, 96, 32, 32));
 
-    m_currentAnim = m_walkLeft;
+    m_currentAnim = m_walkDown;
 
     // Player
     // TODO rendre adaptable taille anim (frame)
-    sf::Rect<float> spriteBounds(0,0,31,32);// = m_sprite.getGlobalBounds();
+    sf::Rect<float> spriteBounds(0,0,32,32);// = m_sprite.getGlobalBounds();
     Transformable::setOrigin(sf::Vector2f(spriteBounds.width/2,spriteBounds.height/2));
 
     b2FixtureDef ActorFixtureDef;
@@ -69,15 +76,6 @@ Actor::Actor(Type type, const TextureHolder& textures, const FontHolder& fonts, 
     ActorFixtureDef.userData = this;
     m_body->CreateFixture(&ActorFixtureDef);
 
-//    //add foot sensor fixture
-//    b2PolygonShape FootShape;
-//    FootShape.SetAsBox(((spriteBounds.width - 10.f)/2.0f)/SCALE, 5.f/SCALE, b2Vec2(0,(spriteBounds.height/2.0f)/SCALE), 0);
-//    b2FixtureDef footSensorFixture;
-//    footSensorFixture.shape = &FootShape;
-//    footSensorFixture.isSensor = true;
-//    footSensorFixture.userData = this;
-//    m_body->CreateFixture(&footSensorFixture);
-
 //    if(type != Actor::Hero)
 //    {
 //        std::string textActor(std::to_string(m_life) + " HP");
@@ -87,21 +85,6 @@ Actor::Actor(Type type, const TextureHolder& textures, const FontHolder& fonts, 
 //        attachChild(std::move(nameDisplay));
 //	}
 
-}
-
-void Actor::jump()
-{
-    m_isJumping = true;
-}
-// TODO constantes magiques vitesses !
-void Actor::checkJump(sf::Time dt, CommandQueue& commands)
-{
-  /*if(m_isJumping && m_numFootContacts >= 1)
-    {
-        playLocalSound(commands, SoundEffect::Jump);
-        m_body->ApplyLinearImpulse(b2Vec2(0,-m_body->GetMass()*8), m_body->GetWorldCenter(), true);
-	}*/
-    m_isJumping = true;
 }
 
 void Actor::goLeft()
@@ -117,26 +100,12 @@ void Actor::walkLeft()
     m_isGoingLeft = false;
 }
 
-void Actor::glideLeft()
-{
-    lookLeft();
-    m_body->ApplyForce(b2Vec2(m_body->GetMass()*-10,0), m_body->GetWorldCenter(), true);
-    m_isGoingLeft = false;
-}
-
 void Actor::goRight()
 {
     m_isGoingRight = true;
 }
 
 void Actor::walkRight()
-{
-    lookRight();
-    m_body->ApplyForce(b2Vec2(m_body->GetMass()*10,0), m_body->GetWorldCenter(), true);
-    m_isGoingRight = false;
-}
-
-void Actor::glideRight()
 {
     lookRight();
     m_body->ApplyForce(b2Vec2(m_body->GetMass()*10,0), m_body->GetWorldCenter(), true);
@@ -155,13 +124,6 @@ void Actor::walkUp()
     m_isGoingUp = false;
 }
 
-void Actor::glideUp()
-{
-    lookUp();
-    m_body->ApplyForce(b2Vec2(m_body->GetMass()*0,-10), m_body->GetWorldCenter(), true);
-    m_isGoingUp = false;
-}
-
 void Actor::goDown()
 {
     m_isGoingDown = true;
@@ -173,14 +135,6 @@ void Actor::walkDown()
     m_body->ApplyForce(b2Vec2(-m_body->GetMass()*0,10), m_body->GetWorldCenter(), true);
     m_isGoingDown = false;
 }
-
-void Actor::glideDown()
-{
-    lookDown();
-    m_body->ApplyForce(b2Vec2(-m_body->GetMass()*0,10), m_body->GetWorldCenter(), true);
-    m_isGoingDown = false;
-}
-
 
 void Actor::lookLeft()
 {
@@ -210,53 +164,38 @@ void Actor::updateLookingDirection()
         this->setScale(-1.f, 1.f);
 }
 
-
+const int THRESHOLD_VELOCITY = 200;
 void Actor::checkMove(sf::Time dt, CommandQueue& commands)
 {
-    if(m_isGoingLeft && m_body->GetLinearVelocity().x * SCALE > -200)
+    if(m_isGoingLeft && m_body->GetLinearVelocity().x * SCALE > -THRESHOLD_VELOCITY)
     {
-        if(m_currentAnim.isFinished())
-            m_currentAnim = m_walkLeft;
+        m_currentAnim = m_walkLeft;
         walkLeft();
     }
-    else if(m_isGoingRight && m_body->GetLinearVelocity().x * SCALE < 200)
+    else if(m_isGoingRight && m_body->GetLinearVelocity().x * SCALE < THRESHOLD_VELOCITY)
     {
-        if(m_currentAnim.isFinished())
-            m_currentAnim = m_walkLeft;
+        m_currentAnim = m_walkRight;
         walkRight();
     }
-    else if(m_isGoingUp && m_body->GetLinearVelocity().y * SCALE > -200)
+    else if(m_isGoingUp && m_body->GetLinearVelocity().y * SCALE > -THRESHOLD_VELOCITY)
     {
-        if(m_currentAnim.isFinished())
-            m_currentAnim = m_walkUp;
+        m_currentAnim = m_walkUp;
         walkUp();
     }
-    else if(m_isGoingDown && m_body->GetLinearVelocity().y * SCALE < 200)
+    else if(m_isGoingDown && m_body->GetLinearVelocity().y * SCALE < THRESHOLD_VELOCITY)
     {
-        if(m_currentAnim.isFinished())
-            m_currentAnim = m_walkDown;
+        m_currentAnim = m_walkDown;
         walkDown();
     }
     else
-        if(m_currentAnim.isFinished())
-            m_currentAnim = m_walkNone;
-}
+        m_animatedSprite.stop();
 
-void Actor::addFootContact()
-{
-    m_numFootContacts++;
-}
-
-void Actor::removeFootContact()
-{
-    m_numFootContacts--;
-    if(m_numFootContacts <= 0)
-        m_numFootContacts = 0;
+    m_animatedSprite.play(m_currentAnim);
 }
 
 void Actor::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
 {
-    target.draw(m_currentAnim, states);
+    target.draw(m_animatedSprite, states);
 }
 
 float Actor::getLife() const
@@ -280,10 +219,9 @@ void Actor::updateText()
 void Actor::updateCurrent(sf::Time dt, CommandQueue& commands)
 {
     updateText();
-    checkJump(dt, commands);
     checkMove(dt, commands);
-    updateLookingDirection();
-    m_currentAnim.update(dt);
+    //updateLookingDirection();
+    m_animatedSprite.update(dt);
 
     Entity::updateCurrent(dt, commands);
 

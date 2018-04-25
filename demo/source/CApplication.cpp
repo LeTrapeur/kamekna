@@ -31,7 +31,7 @@ void CApplication::loadContent() {
     m_textures.load(Textures::HeroLeft, "resources/anim_left.png");
     m_textures.load(Textures::HeroUp, "resources/anim_up.png");
     m_textures.load(Textures::HeroDown, "resources/anim_down.png");
-    m_textures.load(Textures::Hero, "resources/hero.png");
+    m_textures.load(Textures::Hero, "resources/character_sheet.png");
 
     m_textures.load(Textures::Enemy, "resources/anim_left.png");
     m_maps.load(TiledMaps::Default, "resources/level.tmx");
