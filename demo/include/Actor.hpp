@@ -71,7 +71,11 @@ class Actor : public Entity
         };
 
     protected:
-        Animation               m_walkAnim;
+        Animation               m_currentAnim;
+        Animation               m_walkNone;
+        Animation               m_walkLeft;
+        Animation               m_walkUp;
+        Animation               m_walkDown;
 
         int                     m_numFootContacts;
 

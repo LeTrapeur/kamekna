@@ -7,36 +7,56 @@
 
 const float SCALE = 30.f; // Box2D works in a scale of 30 pixels = 1 meter
 
-Textures::ID toTextureID(Actor::Type type)
-{
-  switch (type)
-    {
-        case Actor::Hero:
-            return Textures::Hero;
-        case Actor::Enemy:
-            return Textures::Enemy;
-    }
-    return Textures::Hero;
-}
+//Textures::ID toTextureID(Actor::Type type)
+//{
+//  switch (type)
+//    {
+//        case Actor::Hero:
+//            return Textures::Hero;
+//        case Actor::Enemy:
+//            return Textures::Enemy;
+//    }
+//    return Textures::Hero;
+//}
 
 Actor::Actor(Type type, const TextureHolder& textures, const FontHolder& fonts, b2World& world):
     Entity(createBody(world)),
     m_type(type),
-    m_walkAnim(textures.get(toTextureID(m_type))),
+    m_walkLeft(textures.get(Textures::HeroLeft)),
+    m_walkUp(textures.get(Textures::HeroUp)),
+    m_walkDown(textures.get(Textures::HeroDown)),
+    m_walkNone(textures.get(Textures::Hero)),
     m_numFootContacts(1), // TODO remove old contact code
     m_life(100),
     m_lookingOrientation(LookingOrientation::Right),
     m_isJumping(false),
     m_infoDisplay()
 {
-    m_walkAnim.setFrameSize(sf::Vector2i(32, 32));
-	m_walkAnim.setNumFrames(1);
-	m_walkAnim.setDuration(sf::seconds(0.3f));
-	m_walkAnim.setRepeating(true);
+    m_walkLeft.setFrameSize(sf::Vector2i(31, 32));
+    m_walkLeft.setNumFrames(3);
+    m_walkLeft.setDuration(sf::seconds(0.4f));
+    m_walkLeft.setRepeating(false);
+
+    m_walkUp.setFrameSize(sf::Vector2i(31, 32));
+    m_walkUp.setNumFrames(3);
+    m_walkUp.setDuration(sf::seconds(0.4f));
+    m_walkUp.setRepeating(false);
+
+    m_walkDown.setFrameSize(sf::Vector2i(31, 32));
+    m_walkDown.setNumFrames(3);
+    m_walkDown.setDuration(sf::seconds(0.4f));
+    m_walkDown.setRepeating(false);
+
+    m_walkNone.setFrameSize(sf::Vector2i(31, 32));
+    m_walkNone.setNumFrames(1);
+    m_walkNone.setDuration(sf::seconds(1.f));
+    m_walkNone.setRepeating(false);
+
+    m_currentAnim = m_walkLeft;
 
     // Player
     // TODO rendre adaptable taille anim (frame)
-    sf::Rect<float> spriteBounds(0,0,32,32);// = m_sprite.getGlobalBounds();
+    sf::Rect<float> spriteBounds(0,0,31,32);// = m_sprite.getGlobalBounds();
     Transformable::setOrigin(sf::Vector2f(spriteBounds.width/2,spriteBounds.height/2));
 
     b2FixtureDef ActorFixtureDef;
@@ -91,6 +111,7 @@ void Actor::goLeft()
 
 void Actor::walkLeft()
 {
+
     lookLeft();
     m_body->ApplyForce(b2Vec2(m_body->GetMass()*-10,0), m_body->GetWorldCenter(), true);
     m_isGoingLeft = false;
@@ -194,34 +215,31 @@ void Actor::checkMove(sf::Time dt, CommandQueue& commands)
 {
     if(m_isGoingLeft && m_body->GetLinearVelocity().x * SCALE > -200)
     {
-        if (m_numFootContacts >= 1)
-            walkLeft();
-        else
-            glideLeft();
+        if(m_currentAnim.isFinished())
+            m_currentAnim = m_walkLeft;
+        walkLeft();
     }
     else if(m_isGoingRight && m_body->GetLinearVelocity().x * SCALE < 200)
     {
-        if (m_numFootContacts >= 1)
-            walkRight();
-        else
-            glideRight();
+        if(m_currentAnim.isFinished())
+            m_currentAnim = m_walkLeft;
+        walkRight();
     }
     else if(m_isGoingUp && m_body->GetLinearVelocity().y * SCALE > -200)
     {
-        if (m_numFootContacts >= 1)
-            walkUp();
-        else
-            glideUp();
+        if(m_currentAnim.isFinished())
+            m_currentAnim = m_walkUp;
+        walkUp();
     }
     else if(m_isGoingDown && m_body->GetLinearVelocity().y * SCALE < 200)
     {
-        if (m_numFootContacts >= 1)
-            walkDown();
-        else
-            glideDown();
+        if(m_currentAnim.isFinished())
+            m_currentAnim = m_walkDown;
+        walkDown();
     }
     else
-        return;
+        if(m_currentAnim.isFinished())
+            m_currentAnim = m_walkNone;
 }
 
 void Actor::addFootContact()
@@ -238,7 +256,7 @@ void Actor::removeFootContact()
 
 void Actor::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
 {
-    target.draw(m_walkAnim, states);
+    target.draw(m_currentAnim, states);
 }
 
 float Actor::getLife() const
@@ -265,7 +283,7 @@ void Actor::updateCurrent(sf::Time dt, CommandQueue& commands)
     checkJump(dt, commands);
     checkMove(dt, commands);
     updateLookingDirection();
-    m_walkAnim.update(dt);
+    m_currentAnim.update(dt);
 
     Entity::updateCurrent(dt, commands);
 

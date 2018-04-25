@@ -23,6 +23,9 @@ namespace Textures
     {
         TitleScreen,
         Hero,
+        HeroLeft,
+        HeroUp,
+        HeroDown,
         Enemy
     };
 }

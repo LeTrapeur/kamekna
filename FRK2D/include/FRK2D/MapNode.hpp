@@ -12,7 +12,7 @@
 class MapNode : public SceneNode
 {
 public:
-    explicit            MapNode(TiledMapHolder& maps, b2World& world, bool debug = true);
+    explicit            MapNode(TiledMapHolder& maps, b2World& world, bool debug = false);
 
     void                loadMap(TiledMaps::ID map);
 
