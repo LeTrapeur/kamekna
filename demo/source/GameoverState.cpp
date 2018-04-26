@@ -20,12 +20,12 @@ GameoverState::GameoverState(StateStack& stack, Context context):
     m_gameoverText.setFont(font);
     m_gameoverText.setString("Game Over ...");
     m_gameoverText.setCharacterSize(70);
-    Utility::centerOrigin(m_gameoverText);
+    FRK2D::Utility::centerOrigin(m_gameoverText);
     m_gameoverText.setPosition(0.5f * viewSize.x, 0.4f * viewSize.y);
 
     m_instructionText.setFont(font);
     m_instructionText.setString("(Press Backspace to return to the main menu)");
-    Utility::centerOrigin(m_instructionText);
+    FRK2D::Utility::centerOrigin(m_instructionText);
     m_instructionText.setPosition(0.5f * viewSize.x, 0.6f * viewSize.y);
 
     getContext().music->setPaused(true);

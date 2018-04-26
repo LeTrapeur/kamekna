@@ -65,6 +65,7 @@ class Actor : public Entity
     protected:
         AnimatedSprite          m_animatedSprite;
         Animation               m_currentAnim;
+
         Animation               m_walkLeft;
         Animation               m_walkRight;
         Animation               m_walkUp;

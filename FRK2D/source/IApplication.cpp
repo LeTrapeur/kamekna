@@ -3,7 +3,7 @@
 const sf::Time TIME_PER_FRAME = sf::seconds(1.f/60.f);
 
 IApplication::IApplication():
-    m_window(sf::VideoMode(800, 600), "window"),
+    m_window(sf::VideoMode(1024, 768), "window"),
     m_settings(),
     m_textures(),
     m_fonts(),

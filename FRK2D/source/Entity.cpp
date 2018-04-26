@@ -31,7 +31,7 @@ void Entity::updateCurrent(sf::Time dt, CommandQueue& commands)
     if(m_body->GetType() == b2_dynamicBody)
     {
         setPosition(m_body->GetWorldCenter().x * SCALE, m_body->GetWorldCenter().y * SCALE);
-        setRotation(m_body->GetAngle() * Utility::pi()/180);
+        setRotation(m_body->GetAngle() * FRK2D::Utility::pi()/180);
     }
 }
 
@@ -49,7 +49,7 @@ void Entity::setPosition(const sf::Vector2f& pos)
 void Entity::setRotation(float angle)
 {
     this->rotate(angle);
-    m_body->SetTransform(b2Vec2(sf::Transformable::getPosition().x/SCALE, sf::Transformable::getPosition().y/SCALE), (angle*Utility::pi())/180);
+    m_body->SetTransform(b2Vec2(sf::Transformable::getPosition().x/SCALE, sf::Transformable::getPosition().y/SCALE), (angle*FRK2D::Utility::pi())/180);
 }
 
 void Entity::resetForces()

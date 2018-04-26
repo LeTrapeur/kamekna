@@ -12,7 +12,7 @@
 class MapNode : public SceneNode
 {
 public:
-    explicit            MapNode(TiledMapHolder& maps, b2World& world, bool debug = false);
+    explicit            MapNode(tmx::MapLoader& map, b2World& world, bool debug = false);
 
     void                loadMap(TiledMaps::ID map);
 
@@ -21,14 +21,15 @@ private:
     virtual void        drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
 
 private:
-    TiledMapHolder&                         m_maps;
-    tmx::MapLoader*                         m_map;
+    tmx::MapLoader&                         m_map; // We have to keep a reference on this one because drawing layer one by one is not possible (internal culling with views)
+    tmx::MapLayer                           m_sceneryLayer;
+    tmx::MapLayer                           m_staticGeometryLayer;
 
     bool                                    m_debug;
     std::vector<std::unique_ptr<sf::Shape>> m_debugBoxes;
     std::vector<DebugShape>                 m_debugShapes;
 
-    unsigned int getCategory() const;
+    unsigned int                            getCategory() const;
 };
 
 #endif //FRK2D_PROJECT_TILEDMAPNODE_HPP

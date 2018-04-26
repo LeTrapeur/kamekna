@@ -23,8 +23,8 @@ World::World(sf::RenderWindow& window, TextureHolder& textures, FontHolder& font
     m_worldBounds(
                   0,
                   0,
-                  384,
-                  192
+                  1024,
+                  768 - 128 // HACK To counter tmx::map not transformable
                   ),
     m_player(nullptr),
     m_spawnPosition(m_worldBounds.left+m_worldBounds.width/2, m_worldBounds.top+m_worldBounds.height/2),
@@ -33,7 +33,7 @@ World::World(sf::RenderWindow& window, TextureHolder& textures, FontHolder& font
     m_maps(maps)
 {
 
-    m_worldView.setCenter(m_spawnPosition);
+    m_worldView.setCenter(1024/2.f, 768/2.f - 128); // HACK To counter tmx::map not transformable
 
     m_physicWorld.SetContactListener(&m_contactListener);
 
@@ -58,14 +58,14 @@ void World::buildScene()
     }
 
     // Add the background sprite to the scene
-    std::unique_ptr<MapNode> tiledMap(new MapNode(m_maps, m_physicWorld));
-    tiledMap->setPosition(m_worldBounds.left, m_worldBounds.top);
+    auto& map = *m_maps.get(TiledMaps::Default).getMap();
+    std::unique_ptr<MapNode> tiledMap(new MapNode(map, m_physicWorld));
     m_sceneLayers[Layer::Foreground]->attachChild(std::move(tiledMap));
 
     // Add player
     std::unique_ptr<Actor> hero(new Actor(Actor::Hero, m_textures, m_fonts, m_physicWorld));
     m_player = hero.get();
-    hero->setPosition(m_spawnPosition);
+    hero->setPosition(m_worldBounds.left + m_worldBounds.width/2.f, m_worldBounds.top + m_worldBounds.height/2.f);
     m_sceneLayers[Layer::Foreground]->attachChild(std::move(hero));
 }
 

@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.4" orientation="orthogonal" renderorder="right-down" width="12" height="6" tilewidth="32" tileheight="32" infinite="0" nextobjectid="43">
- <tileset firstgid="1" name="tileset" tilewidth="32" tileheight="32" spacing="1" margin="1" tilecount="48" columns="8">
-  <image source="images/tileset.png" width="265" height="199"/>
+<map version="1.0" tiledversion="1.1.4" orientation="orthogonal" renderorder="right-down" width="16" height="10" tilewidth="64" tileheight="64" infinite="0" nextobjectid="23">
+ <tileset firstgid="1" name="boi" tilewidth="64" tileheight="64" spacing="1" margin="1" tilecount="126" columns="14">
+  <image source="images/boi.png" width="936" height="624"/>
  </tileset>
- <layer name="scenery" width="12" height="6">
+ <layer name="scenery" width="16" height="10">
   <data encoding="base64" compression="zlib">
-   eJzjYmBg4CIRy+HBbEDMDsQcSOrl8ajnA2J+IBYg0nwxIBYHYgks6jXw6FMjw58gDAAOlQV9
+   eJx9kksSgkAMRMHfVlS2guhSPnqDPlqOlqP5NGCpxbh4i0m601OV5FmWLWAJK1jDZh6jZ2gMreGxHLb0CtjBHg5QzmP0DI2htSK8dqRXQQ0naOAMl0SNt1G3Krx2pdZCBz0McIN7osbbqFsb3q/8fmQudxhpRvD4MXj5uw//XO7vvMnPH8RfhEf9Rw4e1X/mteF9zlAVWpEhMkSGLjHz7aPm9ByNo/Upnx2IXYidiN2IHalMQM/ROFovwuvcgLgFcRPiNsSNaJOAnqNxtL4Irz8ALu80BA==
   </data>
  </layer>
  <objectgroup name="static">
-  <object id="38" x="0" y="0" width="384" height="32"/>
-  <object id="39" x="0" y="160" width="384" height="32"/>
-  <object id="40" x="352" y="32" width="32" height="128"/>
-  <object id="41" x="0" y="32" width="32" height="128"/>
+  <object id="1" x="0" y="0" width="1024" height="64"/>
+  <object id="2" x="0" y="64" width="64" height="512"/>
+  <object id="3" x="0" y="576" width="1024"/>
+  <object id="7" x="960" y="64" width="64" height="512"/>
+  <object id="15" x="64" y="64" width="32" height="512"/>
+  <object id="18" x="928" y="64" width="32" height="480"/>
+  <object id="19" x="0" y="576" width="1024" height="64"/>
+  <object id="21" x="96" y="544" width="864" height="32"/>
  </objectgroup>
 </map>

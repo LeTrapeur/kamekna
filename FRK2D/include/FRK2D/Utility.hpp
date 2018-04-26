@@ -6,25 +6,27 @@
 #include <random>
 #include <ctime>
 
-namespace Utility
+namespace FRK2D
 {
-    int Orientation(const sf::Vector2f& p1, const sf::Vector2f& p2, const sf::Vector2f& p);
+    namespace Utility
+    {
+        int Orientation(const sf::Vector2f& p1, const sf::Vector2f& p2, const sf::Vector2f& p);
 
-    sf::Vector2f getMostLeft(const std::vector< sf::Vector2f >& pts);
+        sf::Vector2f getMostLeft(const std::vector< sf::Vector2f >& pts);
 
-    std::vector< sf::Vector2f > ConvexHull(const std::vector< sf::Vector2f >& points);
+        std::vector< sf::Vector2f > ConvexHull(const std::vector< sf::Vector2f >& points);
 
-    float randomFloatGenerator(float a, float b);
+        float randomFloatGenerator(float a, float b);
 
-    void centerOrigin(sf::Sprite& sprite);
+        void centerOrigin(sf::Sprite& sprite);
 
-    void centerOrigin(sf::Text& text);
+        void centerOrigin(sf::Text& text);
 
-    float length(sf::Vector2f vector);
+        float length(sf::Vector2f vector);
 
-    sf::Vector2f unitVector(sf::Vector2f vector);
+        sf::Vector2f unitVector(sf::Vector2f vector);
 
-    constexpr float pi() { return std::atan(1)*4; }
+        constexpr float pi() { return std::atan(1)*4; }
+    }
 }
-
 #endif // UTILITY_H

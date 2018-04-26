@@ -13,12 +13,12 @@ TitleState::TitleState(StateStack& stack, Context context):
     m_textEffectTime(sf::Time::Zero)
 {
     m_backgroundSprite.setTexture(context.textures->get(Textures::TitleScreen));
-    Utility::centerOrigin(m_backgroundSprite);
+    FRK2D::Utility::centerOrigin(m_backgroundSprite);
     m_backgroundSprite.setPosition(context.window->getView().getSize() / 2.f);
 
     m_text.setFont(context.fonts->get(Fonts::Main));
     m_text.setString("Press any key to start");
-    Utility::centerOrigin(m_text);
+    FRK2D::Utility::centerOrigin(m_text);
     m_text.setPosition(context.window->getView().getSize() / 2.0f);
     m_text.setColor(sf::Color::Yellow);
 }

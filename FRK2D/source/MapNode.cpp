@@ -10,23 +10,29 @@
 #include <Box2D/Collision/Shapes/b2CircleShape.h>
 
 #include "FRK2D/MapNode.hpp"
-
-MapNode::MapNode(TiledMapHolder& maps, b2World& world, bool debug):
-    m_maps(maps),
-    m_map(m_maps.get(TiledMaps::Default).getMap()),
+//*maps.get(TiledMaps::Default).getMap()
+//todo destructor b2body
+MapNode::MapNode(tmx::MapLoader& map, b2World& world, bool debug):
+    m_map(map),
+    m_sceneryLayer(tmx::MapLayerType::Layer),
+    m_staticGeometryLayer(tmx::MapLayerType::ObjectGroup),
     m_debug(debug)
 {
-    auto& layers = m_map->getLayers();
+    auto& layers = m_map.getLayers();
     tmx::BodyCreator bodyCreator;
     for (auto& l : layers)
     {
+        if (l.name == "scenery") //static bodies which make up the map geometry
+        {
+            m_sceneryLayer = l;
+        }
+
         if (l.name == "static") //static bodies which make up the map geometry
         {
             for (auto& o : l.objects)
             {
 
                 b2Body* b = bodyCreator.add(o, world);
-                //b->SetTransform(b2Vec2(tmx::sfToBoxVec(o.getPosition())), 0.f);
 
                 if(m_debug)
                 {
@@ -67,7 +73,7 @@ MapNode::MapNode(TiledMapHolder& maps, b2World& world, bool debug):
 
 void MapNode::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const {
 
-    target.draw(*m_map, states);
+    target.draw(m_map, states);
     if(m_debug)
     {
         for (const auto& s : m_debugShapes)

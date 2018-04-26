@@ -42,4 +42,7 @@ cd build
 Credits
 -----
 https://github.com/SFML/SFML-Game-Development-Book
+
 https://github.com/fallahn/sfml-tmxloader
+
+https://github.com/SFML/SFML/wiki/Source:-AnimatedSprite

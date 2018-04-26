@@ -36,34 +36,34 @@ Actor::Actor(Type type, const TextureHolder& textures, const FontHolder& fonts, 
 {
     // set up the animations for all four directions (set spritesheet and push frames)
     m_walkDown.setSpriteSheet(textures.get(Textures::Hero));
-    m_walkDown.addFrame(sf::IntRect(32, 0, 32, 32));
-    m_walkDown.addFrame(sf::IntRect(64, 0, 32, 32));
-    m_walkDown.addFrame(sf::IntRect(32, 0, 32, 32));
-    m_walkDown.addFrame(sf::IntRect( 0, 0, 32, 32));
+    m_walkDown.addFrame(sf::IntRect(56, 0, 54, 66));
+    m_walkDown.addFrame(sf::IntRect(112, 0, 54, 66));
+    m_walkDown.addFrame(sf::IntRect(56, 0, 54, 66));
+    m_walkDown.addFrame(sf::IntRect( 0, 0, 54, 66));
 
     m_walkLeft.setSpriteSheet(textures.get(Textures::Hero));
-    m_walkLeft.addFrame(sf::IntRect(32, 32, 32, 32));
-    m_walkLeft.addFrame(sf::IntRect(64, 32, 32, 32));
-    m_walkLeft.addFrame(sf::IntRect(32, 32, 32, 32));
-    m_walkLeft.addFrame(sf::IntRect( 0, 32, 32, 32));
+    m_walkLeft.addFrame(sf::IntRect(56, 68, 54, 66));
+    m_walkLeft.addFrame(sf::IntRect(112, 68, 54, 66));
+    m_walkLeft.addFrame(sf::IntRect(56, 68, 54, 66));
+    m_walkLeft.addFrame(sf::IntRect( 0, 68, 54, 66));
 
     m_walkRight.setSpriteSheet(textures.get(Textures::Hero));
-    m_walkRight.addFrame(sf::IntRect(32, 64, 32, 32));
-    m_walkRight.addFrame(sf::IntRect(64, 64, 32, 32));
-    m_walkRight.addFrame(sf::IntRect(32, 64, 32, 32));
-    m_walkRight.addFrame(sf::IntRect( 0, 64, 32, 32));
+    m_walkRight.addFrame(sf::IntRect(56, 136, 54, 66));
+    m_walkRight.addFrame(sf::IntRect(112, 136, 54, 66));
+    m_walkRight.addFrame(sf::IntRect(56, 136, 54, 66));
+    m_walkRight.addFrame(sf::IntRect( 0, 136, 54, 66));
 
     m_walkUp.setSpriteSheet(textures.get(Textures::Hero));
-    m_walkUp.addFrame(sf::IntRect(32, 96, 32, 32));
-    m_walkUp.addFrame(sf::IntRect(64, 96, 32, 32));
-    m_walkUp.addFrame(sf::IntRect(32, 96, 32, 32));
-    m_walkUp.addFrame(sf::IntRect( 0, 96, 32, 32));
+    m_walkUp.addFrame(sf::IntRect(56, 204, 54, 66));
+    m_walkUp.addFrame(sf::IntRect(112, 204, 54, 66));
+    m_walkUp.addFrame(sf::IntRect(56, 204, 54, 66));
+    m_walkUp.addFrame(sf::IntRect( 0, 204, 54, 66));
 
     m_currentAnim = m_walkDown;
 
     // Player
     // TODO rendre adaptable taille anim (frame)
-    sf::Rect<float> spriteBounds(0,0,32,32);// = m_sprite.getGlobalBounds();
+    sf::Rect<float> spriteBounds(0,0,54,66);// = m_sprite.getGlobalBounds();
     Transformable::setOrigin(sf::Vector2f(spriteBounds.width/2,spriteBounds.height/2));
 
     b2FixtureDef ActorFixtureDef;
@@ -78,11 +78,13 @@ Actor::Actor(Type type, const TextureHolder& textures, const FontHolder& fonts, 
 
 //    if(type != Actor::Hero)
 //    {
-//        std::string textActor(std::to_string(m_life) + " HP");
-//        std::unique_ptr<TextNode> nameDisplay(new TextNode(fonts, textActor));
-//        nameDisplay->setPosition(0.f, -25.f);
-//        m_infoDisplay = nameDisplay.get();
-//        attachChild(std::move(nameDisplay));
+        std::string textActor(std::to_string(m_life) + " HP");
+        std::unique_ptr<TextNode> infoDisplay(new TextNode(fonts, textActor));
+        infoDisplay->setPosition(spriteBounds.width/2.0f, -20.f);
+        infoDisplay->scale(0.75f, 0.75f);
+
+        m_infoDisplay = infoDisplay.get();
+        attachChild(std::move(infoDisplay));
 //	}
 
 }
@@ -92,11 +94,13 @@ void Actor::goLeft()
     m_isGoingLeft = true;
 }
 
+
+const int WALK_FORCE = 30;
 void Actor::walkLeft()
 {
 
     lookLeft();
-    m_body->ApplyForce(b2Vec2(m_body->GetMass()*-10,0), m_body->GetWorldCenter(), true);
+    m_body->ApplyForce(b2Vec2(m_body->GetMass()*-WALK_FORCE,0), m_body->GetWorldCenter(), true);
     m_isGoingLeft = false;
 }
 
@@ -108,7 +112,7 @@ void Actor::goRight()
 void Actor::walkRight()
 {
     lookRight();
-    m_body->ApplyForce(b2Vec2(m_body->GetMass()*10,0), m_body->GetWorldCenter(), true);
+    m_body->ApplyForce(b2Vec2(m_body->GetMass()*WALK_FORCE,0), m_body->GetWorldCenter(), true);
     m_isGoingRight = false;
 }
 
@@ -120,7 +124,7 @@ void Actor::goUp()
 void Actor::walkUp()
 {
     lookUp();
-    m_body->ApplyForce(b2Vec2(m_body->GetMass()*0,-10), m_body->GetWorldCenter(), true);
+    m_body->ApplyForce(b2Vec2(0,m_body->GetMass()*-WALK_FORCE), m_body->GetWorldCenter(), true);
     m_isGoingUp = false;
 }
 
@@ -132,7 +136,7 @@ void Actor::goDown()
 void Actor::walkDown()
 {
     lookDown();
-    m_body->ApplyForce(b2Vec2(-m_body->GetMass()*0,10), m_body->GetWorldCenter(), true);
+    m_body->ApplyForce(b2Vec2(0,m_body->GetMass()*WALK_FORCE), m_body->GetWorldCenter(), true);
     m_isGoingDown = false;
 }
 
@@ -164,7 +168,7 @@ void Actor::updateLookingDirection()
         this->setScale(-1.f, 1.f);
 }
 
-const int THRESHOLD_VELOCITY = 200;
+const int THRESHOLD_VELOCITY = 1000;
 void Actor::checkMove(sf::Time dt, CommandQueue& commands)
 {
     if(m_isGoingLeft && m_body->GetLinearVelocity().x * SCALE > -THRESHOLD_VELOCITY)
