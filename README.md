@@ -22,7 +22,16 @@ sudo add-apt-repository ppa:texus/tgui-0.8
 sudo apt-get update
 sudo apt-get install libtgui-dev
 ```
-Build 
+* sfml-tmxloader
+```
+git clone https://github.com/fallahn/sfml-tmxloader.git
+cd build
+rm -rf *
+cmake ..
+sudo make install
+```
+
+Build FRK2D and the demo project
 ```
 git clone https://github.com/tristankpka/2D-Framework.git
 cd 2D-Framework
@@ -36,6 +45,6 @@ Run
 To run the test project :
 ```
 cd build
-./framework2d
+./framework
 ```
 
