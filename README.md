@@ -8,7 +8,7 @@ Install (Ubuntu 16.04)
 Install the required libs
 * SFML
 ```
-sudo apt-get install libsfml-dev libsfml-graphics2.3v5 libsfml-system2.3v5 libsfml audio2.3v5  libsfml-network2.3v5 libsfml-window2.3v5
+sudo apt-get install libsfml-dev libsfml-graphics2.3v5 libsfml-system2.3v5 libsfml-audio2.3v5  libsfml-network2.3v5 libsfml-window2.3v5
 ```
   
    
